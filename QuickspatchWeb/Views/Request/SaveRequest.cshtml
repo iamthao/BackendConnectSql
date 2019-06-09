@@ -1,0 +1,269 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@{
+    Layout = null;
+}
+@model QuickspatchWeb.Models.ViewModelBase
+
+<style type="text/css">
+    .tooltip {
+        z-index: 2000;
+    }
+     .border-mid {
+         border-left: 1px solid #ccc !important;
+         border-top: none !important;
+     }
+
+    .header-request {
+        width: 97%;
+    }
+
+    .list-request {
+        overflow-y: scroll;
+        height: 80%;
+    }
+
+    .no {
+        width: 5%;
+    }
+
+    .from {
+        width: 25%;
+    }
+
+    .to {
+        width: 25%;
+    }
+
+    .sending {
+        width: 15%;
+    }
+
+    .arr-from {
+        width: 15%;
+    }
+
+    .arr-to {
+        width: 15%;
+    }
+
+    .title-list-request {
+        position: relative;
+        left: 25%;
+        top: 43%;
+    }
+
+    .form-control {
+        height: 2.34em;
+    }
+
+    .btn-action {
+        padding: 10px 8px 7px 7px !important;
+    }
+
+    .k-dropdown-wrap .k-select {
+        width: 1.7em;
+    }
+
+    .btn-action:hover {
+        color: #fff;
+        background-color: #337ab7 !important;
+        border-color: #2e6da4;
+    }
+
+    .date-picker-100 {
+        width: 100%;
+    }
+    a:hover, a:focus {
+        text-decoration: none;
+    }
+    .row-tr {
+        cursor: pointer;
+    }
+    .row-blue {
+        background-color: #008de7;
+    }
+    .row-blue td {
+        color: white;
+    }
+    .des-blue {
+        color: #008de7; 
+    }
+
+    .row-blue:hover {
+        background-color: #005de7 !important;
+        color: white;
+    }
+
+    .row-red {
+        background-color: #FF4136;
+    }
+    .row-red td {
+        color: white;
+    }
+    .row-red:hover {
+        background-color: #FF1136 !important;
+        color: white;
+    }
+    .des-red {
+        color: #FF4136; 
+    }
+    .row-yellow {
+        background-color: #FFDC00;
+        color: white;
+    }
+    .row-yellow:hover {
+        background-color: #FFBC00 !important;
+        color: white;
+    }
+    .row-yellow td {
+        color: white;
+    }
+    .des-yellow {
+        color: #FFDC00; 
+    }
+    .dropdown-cus {
+        position: absolute !important;
+        width: 89% !important;
+    }
+</style>
+
+<div class="smart-form" id="form-create-request" ng-controller="SaveRequestController">
+    <fieldset class="col-md-5">
+        <section class="col col-6 ">
+            <label>
+                <span class="red">*</span> From
+            </label>
+            <a href="javascript:void(0);" style="float: right" ng-click="setFromDefault();">Default</a>
+            <dropdown-request drop-id="from" drop-type="location" bind-obj="data" bind-val="LocationFrom" refer-val="LocationTo" refer-ctr="to"></dropdown-request>
+        </section>
+        <section class="col col-6 ">
+            <label>
+                <span class="red">*</span> To
+            </label>
+            <a href="javascript:void(0);" style="float: right" ng-click="setToDefault();">Default</a>
+            <dropdown-request drop-id="to" drop-type="location" bind-obj="data" bind-val="LocationTo" refer-val="LocationFrom" refer-ctr="from"></dropdown-request>
+        </section>
+        <section class="col col-6 ">
+            <label>
+                <span class="red">*</span> @Model.DisplayNameForCourier
+            </label>
+            <a href="javascript:void(0);" style="float: right" ng-click="setAutoAssign();">Auto Assign</a>
+            <dropdown-request drop-id="courier" drop-type="courier" bind-obj="data" bind-val="CourierId"></dropdown-request>
+        </section>
+
+        <section class="col col-6 ">
+            <label>
+                <span class="red">*</span> Dispatch Time
+            </label>
+            <label class="checkbox pull-right red" style="margin-top: -11px;"><input type="checkbox" ng-model="data.IsStat"><i></i> Priority Job</label>
+            <time-request time-id="dispatch-time" bind-obj="data" bind-val="SendingTime"></time-request>
+        </section>
+        <section class="col col-12 ">
+            <section class="col col-6" style="padding-left: 0">
+                <label>
+                    <span class="red">*</span> Arrival Window From
+                </label>
+                <time-request time-id="start-time" bind-obj="data" bind-val="StartTime"></time-request>
+            </section>
+            <section class="col col-6" style="padding-right: 0">
+                <label>
+                    <span class="red">*</span> Arrival Window To
+                </label>
+                <time-request time-id="end-time" bind-obj="data" bind-val="EndTime"></time-request>
+            </section>
+        </section>
+
+        <section class="col col-12">
+            <label>
+                Notes
+            </label>
+            <label class="input">
+                <textarea class="form-control" rows="3" ng-model="data.Description" style="resize: none"></textarea>
+            </label>
+        </section>
+        <section class="col col-12">
+            <div class="btn-group pull-right">
+                <button class="btn btn-default" type="button" ng-click="cancel()" ng-disabled="isLoading" ng-show="loadDataComplete"><i class="fa fa-remove"></i> Cancel</button>
+                <button class="btn btn-primary" type="button" ng-if="data.Id == 0" ng-show="!isLoading" ng-click="send()"><i class="fa fa-plus"></i> Send</button>
+                <button class="btn btn-primary" ng-if="data.Id != 0" type="button" ng-show="!isLoading" ng-click="update()"><i class="fa fa-save"></i> Update</button>
+                <button class="btn btn-primary" ng-if="isLoading"><img src="/Content/quickspatch/img/loading.gif" alt="" height="14"></button>
+            </div>
+        </section>
+    </fieldset>
+    <fieldset class="col-md-6  border-mid" style="width: 52%">
+        <section id="list-request-of-courier" class="col col-12" ng-controller="RequestsCourierController">
+            <label class="title-list-request" ng-if="requests.length == 0 && courierId == 0">Select "@Model.DisplayNameForCourier" to show current request(s).</label>
+            <label class="title-list-request" ng-if="requests.length == 0 && courierId != 0">The "{{courierName}}" does not have any request(s).</label>
+            <label ng-if="requests.length > 0">"{{courierName}}" request(s)</label>
+            <span ng-if="requests.length > 0" class="pull-right"><span class="fa fa-square des-blue"></span> Request valid. <span class="fa fa-square des-red"></span> Request invalid. <span class="fa fa-square des-yellow"></span> Request conflict.</span>
+            <script id="rowTemplate" type="text/x-kendo-tmpl">
+                <tr data-uid="#: uid #" class="row-tr #= IsInvalid ? 'row-red': IsWarning? 'row-yellow':  RequestId == 0 || IsUpdate? 'row-blue': ''#" ng-click="getMapForRequest(dataItem);">
+                    <td data-toggle="tooltip" title="Tooltip on top">#: RequestNo #</td>
+                    <td>#: LocationFromName #</td>
+                    <td>#: LocationToName #</td>
+                    @*<td>#= TravelTime != null? kendo.toString(TravelTime._d, 'h:mm tt'): '' #</td>*@
+                    @*<td ng-bind="TravelTime"></td>*@
+                    <td>#= StartTime != null? kendo.toString(StartTime._d, 'h:mm tt'): '' #</td>
+                    <td>#= EndTime != null? kendo.toString(EndTime._d, 'hh:mm tt'): '' #</td>
+                </tr>
+            </script>
+            <div ng-if="requests.length > 0" kendo-grid="requestsCourierGrid" options="mainGridOptions" id="requests-courier-grid"></div>
+
+        </section>
+        <section id="tracking-of-request" class="col col-12">
+            <label>Tracking</label>
+            <hr />
+            <div id="create-request-courier-map" style="width: 100%; height: 100%" ng-controller="MapRequestController">
+                <div ng-if="Map.show" style="width: 680px" id="content-map">
+                    <ui-gmap-google-map center='Map.Center' zoom='Map.Zoom' style="height: 100%;" bounds="Map.Bounds" control="Map.control">
+                        @*<ui-gmap-marker coords="Marker.Coords" options="Marker.Options" idkey="Marker.Id"></ui-gmap-marker>*@
+                        <ui-gmap-polylines models="Map.Polys" path="'path'" stroke="'stroke'" visible="'visible'" geodesic="'geodesic'" editable="'editable'" draggable="'draggable'" static="true"></ui-gmap-polylines>
+                        
+                        <ui-gmap-marker ng-repeat="m in Marker" coords="m.Coords" options="m.Options" idkey="m.Id" click='m.Click'>
+
+                            <ui-gmap-window ng-cloak coords="map.Coords" show="m.Show">
+                                <table>
+                                    <tr>
+                                        <td rowspan="3"><img src="{{m.Avatar}}" alt="" title="{{m.FullName}}" width="48" style="margin-right: 10px" /></td>
+                                        <td>Name: <b>{{m.FullName}}</b></td>
+                                    </tr>
+                                    <tr><td>Current Req: <b>{{m.RequestNo}}</b></td></tr>
+                                    <tr><td>Current Speed: <b>{{m.CurrentVelocity}} (mph)</b></td></tr>
+                                </table>
+
+                            </ui-gmap-window>
+                        </ui-gmap-marker>
+                        <ui-gmap-marker coords="MarkerStartDirection.Coords" options="MarkerStartDirection.Options" idkey="MarkerStartDirection.Id" ng-if="showMarkerStart">
+
+                        </ui-gmap-marker>
+                        <ui-gmap-marker coords="MarkerEndDirection.Coords" options="MarkerEndDirection.Options" idkey="MarkerEndDirection.Id" ng-if="showMarkerEnd" click="currentEndOnClick()">
+                            <ui-gmap-window options="currentEndWindowOptions" closeclick="currentEndCloseClick()" ng-if="showWindowEnd" show="showMarkerEnd && showMarkerStart">
+                                <div ng-class="windowcss">
+                                    <i class="fa fa-car" aria-hidden="true"></i> <strong>{{distanceAndDurationCurrent.durationHour}}</strong><br />
+                                    <i style="margin-left: 17px;">{{distanceAndDurationCurrent.distanceMiles}}</i>
+                                </div>
+                            </ui-gmap-window>
+                        </ui-gmap-marker>
+
+                    </ui-gmap-google-map>
+                </div>
+
+                <button class="btn btn-default" style="position: absolute;z-index: 999;margin-top: -40px;margin-left: 10px" ng-click="loadAll()" title="Show all couriers online"><i class="fa fa-map-marker"></i><i class="fa fa-map-marker"></i><i class="fa fa-map-marker"></i></button>
+            </div>
+        </section>
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+    function rezise() {
+        var rootHeight = $('#popupWindow').height() / 2 - 35;
+        $('#list-request-of-courier').css('height', rootHeight);
+        $('#tracking-of-request').css('height', rootHeight);
+    }
+
+    $('#content-map').css('width', $('#tracking-of-request').width());
+    rezise();
+    $('#dispatch-time').removeClass('k-textbox');
+
+   
+</script>

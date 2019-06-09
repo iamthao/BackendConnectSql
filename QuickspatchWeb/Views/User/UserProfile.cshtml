@@ -1,0 +1,116 @@
+﻿@using QuickspatchWeb.Models.User
+@model DashboardUserProfileViewModel
+@{
+    Layout = null;
+}
+<div class="panel panel-table" ng-controller="userProfileController">
+    <div id="content-container" style="margin-left: 15px; margin-right: 15px; margin-top: 20px; margin-bottom: -20px;">
+        <fieldset class="account-section ">
+            <div class="row" style="margin-bottom: -20px">
+                <div class="col-sm-offset-1 col-sm-11" style="margin-left: 0">
+                    <div class="list-group">
+                        <h4 class="list-group-item-heading"><i class="fa fa-user"></i> &nbsp;My Profile</h4>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </fieldset>
+        <div class="col-md-4 " style="text-align: center;margin-bottom: 20px;">
+
+            <img src="@Model.Avatar" class="effect1 img-rounded" style="max-height: 150px; max-width: 150px" />
+
+            <p>
+                &nbsp;
+            <p>
+                (450x450)
+            </p>
+            <a href="javascript:void(0)" ng-click="EditAvatar()" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile Picture</a>
+        </div>
+        <div class="col-md-8" style="padding-bottom: 10px;">
+            <fieldset class="account-section  ">
+                <legend style="border: 0" class="label-legend">Contact Information</legend>
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-5 form-group">
+                        <label>Name</label>
+                        <div>
+                            @Model.FirstName @Model.MiddleName @Model.LastName
+                        </div>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>Username</label>
+                        <div>
+                            @Model.UserName
+                        </div>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>User Role</label>
+                        <div>
+                            @Model.UserRoleName                     
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-5 form-group">
+                        <label>Email</label>
+                        <div>
+                            @Model.Email
+                        </div>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>Mobile Phone</label>
+                        <div>
+                            @Model.MobilePhone
+                        </div>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>Home Phone</label>
+                        <div>
+                            @Model.HomePhone
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </fieldset>
+            <fieldset class="account-section  ">
+                @*<legend style="border: 0" class="label-legend">Actions</legend>*@
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-11 form-group">
+                        <a href="javascript:void(0)" ng-click="EditProfile()" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fa fa-edit"></i> Edit profile</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp; 
+                        <a href="javascript:void(0)" ng-click="ShowChangePasswordForm()" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fa fa-key"></i> Change password</a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        
+    </div>
+</div>
+<style>
+    .effect1 {
+        -webkit-box-shadow: 0 10px 6px -6px #777;
+        -moz-box-shadow: 0 10px 6px -6px #777;
+        box-shadow: 0 10px 6px -6px #777;
+        border: 5px solid #dddddd;
+    }
+
+    .account-section label {
+        font-size: 11px;
+        font-weight: 600;
+        color: /*#999*/ black;
+        text-transform: uppercase;
+    }
+
+    .label-legend {
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: /*#999*/ black;
+        text-transform: uppercase;
+    }
+</style>
+<script>
+    $(function () {
+        $("#content-container").css({ 'min-height': $(window).height() - 80 });
+    });
+</script>
+

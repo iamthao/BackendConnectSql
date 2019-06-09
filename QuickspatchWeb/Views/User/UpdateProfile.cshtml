@@ -1,0 +1,50 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@using QuickspatchWeb.Models
+@using QuickspatchWeb.Models.User
+@model DashboardUserProfileViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+    
+}
+
+<fieldset ng-controller="updateProfileController">
+    
+    @Html.CustomTextBox("UserName", "Username", "User.UserName",  6, required: true, length: 100, isReadonly: true, isDisabled: true)
+    @Html.CustomTextBox("Email", "Email", "User.Email", 6, required: true, length: 100)
+    @Html.CustomTextBox("FirstName", "First Name", "User.FirstName", 5, required: true, length: 50)
+    @Html.CustomTextBox("MiddleName", "Mid Name", "User.MiddleName", 2, length: 50)
+    @Html.CustomTextBox("LastName", "Last Name", "User.LastName", 5, required: true, length: 50)
+    @Html.CustomPhone("HomePhone", "Home Phone", "User.HomePhone", 6, isRequired: true)
+    @Html.CustomPhone("MobilePhone", "Mobile Phone", "User.MobilePhone", 6, isRequired: true)
+   
+   
+
+</fieldset>
+
+<script type="text/javascript">
+    function UpdateProfileViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Password = @Html.Raw(Json.Encode(Model.Password));
+        self.UserName = @Html.Raw(Json.Encode(Model.UserName));
+        self.UserRoleId = @Html.Raw(Json.Encode(Model.UserRoleId));
+        self.FirstName = @Html.Raw(Json.Encode(Model.FirstName));
+        self.LastName = @Html.Raw(Json.Encode(Model.LastName));
+        self.MiddleName = @Html.Raw(Json.Encode(Model.MiddleName));
+        self.HomePhone = @Html.Raw(Json.Encode(Model.HomePhone));
+        self.MobilePhone = @Html.Raw(Json.Encode(Model.MobilePhone));
+        self.Email = @Html.Raw(Json.Encode(Model.Email));
+        self.LastModified = @Html.Raw(Json.Encode(Model.LastModified));
+        self.IsActive=@Html.Raw(Json.Encode(Model.IsActive));
+
+    }
+</script>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Update", "fa-save", FooterActionEnum.Save, "updateProfileController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "updateProfileController", false)
+
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}

@@ -1,0 +1,37 @@
+﻿@model QuickspatchWeb.Models.Request.DashboardRequestIndexViewModel
+@{
+    Layout = null;
+}
+
+<div @*class="row"*@ ng-controller="requestIndexController">
+
+
+    @*<div class="col-md-4 col-lg-4 my-col">
+        @Html.Partial("_PartialHoldingRequest", @Model.DisplayNameForCourier)
+    </div>
+    <div class="col-md-8 col-lg-8">
+        @Html.Partial("_PartialRequest", @Model.DisplayNameForCourier)
+    </div>*@
+
+    <div class="panel panel-table">
+        <ul class="nav nav-tabs" id="create-request-tab">
+            <li class="active "><a href="javascript:void(0)" data-target="#request" data-toggle="tab" aria-controls="request" ng-click="selectTab(1);"><span class="panel-title-small">Request</span></a></li>
+            <li ><a href="javascript:void(0)" data-target="#holding-request" aria-controls="holding-request" data-toggle="tab" ng-click="selectTab(2);"><span class=" panel-title-small"> Holding Request</span></a></li>
+        </ul>
+        <div class="tab-content" id="request-tab-control">
+            <div class="tab-pane active" id="request">
+                <div ng-if="tabIndex==1">
+                    <div ng-include="'/Request/PartialRequest'"> </div>
+                </div>
+            </div>   
+            <div class="tab-pane " id="holding-request">
+                <div ng-if="tabIndex==2">
+                    <div ng-include="'/Request/PartialHoldingRequest'"> </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="save-request-popup"></div>
+</div>
+

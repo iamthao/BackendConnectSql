@@ -1,0 +1,20 @@
+﻿@using Framework.DomainModel.ValueObject
+@using QuickspatchWeb.Models
+@using QuickspatchWeb.Models.UserRole
+@model QuickspatchWeb.Models.UserRole.DashboardUserRoleDataViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+    var userRoleShareViewModel = Model.SharedViewModel as DashboardUserRoleShareViewModel;
+    var isGlobalAdmin = userRoleShareViewModel.AppRoleName == AppRole.GlobalAdmin.ToString();
+}
+
+<div ng-controller="updateUserRoleController" data-ng-init="init(@Model.Id)">
+    @Html.Partial("_Shared", Model.SharedViewModel)
+</div>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Update", "fa-save", FooterActionEnum.Save, "updateUserRoleController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "updateUserRoleController", false)
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}

@@ -1,0 +1,43 @@
+﻿@using Framework.DomainModel.ValueObject
+@using QuickspatchWeb.Models
+@model QuickspatchWeb.Models.UserRole.DashboardUserRoleIndexViewModel
+@{
+    Layout = null;
+}
+
+<script type="text/x-kendo-template" id="userRoleGridCommandTemplate">
+    <div class="btn-group">
+        #if(AppRoleName != 'GlobalAdmin'){# 
+        <button class="btn btn-default" ng-click="Edit(${ Id });"><i class="fa fa-edit"></i></button>
+           
+        <button class="btn btn-default" ng-click="Delete(${ Id });"><i class="fa fa-remove"></i></button>
+        #}#
+    </div>
+</script>
+<div class="panel panel-table">
+    <div class="panel-heading">
+        <div class="panel-title-small">Manage Roles</div>
+    </div>
+
+    <div id="content-container" ng-controller="userRoleController">
+        @Html.Partial("~/Views/Shared/Grid/_ReadOnlyGrid.cshtml", @Model.GridViewModel)
+    </div>
+</div>
+<script>
+    function resizeGrid() {
+        var gridElement = $("#UserRole"),
+            dataArea = gridElement.find(".k-grid-content"),
+            gridHeight = gridElement.innerHeight(),
+            otherElements = gridElement.children().not(".k-grid-content"),
+            otherElementsHeight = 0;
+        otherElements.each(function () {
+            otherElementsHeight += $(this).outerHeight();
+        });
+        dataArea.height(gridHeight - otherElementsHeight);
+    }
+
+    $(window).resize(function () {
+   
+        resizeGrid();
+    });
+</script>

@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{239D75AB-0684-4BD4-B94B-9BED3EB5F44C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ServiceLayer</RootNamespace>
+    <AssemblyName>ServiceLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.identitymodel.services" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TuesPechkin">
+      <HintPath>..\packages\TuesPechkin.1.0.3.0\lib\net20\TuesPechkin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authentication\AuthenticationService.cs" />
+    <Compile Include="Authentication\ClaimsManager.cs" />
+    <Compile Include="Authentication\FormAuthenticationService.cs" />
+    <Compile Include="Authentication\QuickspatchPrincipal.cs" />
+    <Compile Include="Authorization\IOperationAuthorization.cs" />
+    <Compile Include="Authorization\OperationAuthorization.cs" />
+    <Compile Include="BusinessRules\Common\DataAnnotationBusinessRule.cs" />
+    <Compile Include="BusinessRules\Contact\ContactRule.cs" />
+    <Compile Include="BusinessRules\Courier\CourierRule.cs" />
+    <Compile Include="BusinessRules\FranchiseeConfiguration\FranchiseeConfigurationRule.cs" />
+    <Compile Include="BusinessRules\Franchisee\FranchiseeRule.cs" />
+    <Compile Include="BusinessRules\Request\RequestRule.cs" />
+    <Compile Include="BusinessRules\Location\LocationRule.cs" />
+    <Compile Include="BusinessRules\HoldingRequest\HoldingRequestRule.cs" />
+    <Compile Include="BusinessRules\Module\ModuleRule.cs" />
+    <Compile Include="BusinessRules\Schedule\ScheduleRule.cs" />
+    <Compile Include="BusinessRules\SystemConfiguration\SystemConfigurationRule.cs" />
+    <Compile Include="BusinessRules\Template\TemplateRule.cs" />
+    <Compile Include="BusinessRules\UserRole\UserRoleRule.cs" />
+    <Compile Include="BusinessRules\User\UserRule.cs" />
+    <Compile Include="CountryOrRegionService.cs" />
+    <Compile Include="Common\MenuExtractData.cs" />
+    <Compile Include="ConfigFranchiseeService.cs" />
+    <Compile Include="GetLocationAPIService.cs" />
+    <Compile Include="GoogleService.cs" />
+    <Compile Include="Mapping\AutoMapperProfileThread.cs" />
+    <Compile Include="Mapping\AutoMapperStartupTask.cs" />
+    <Compile Include="Mapping\CourierMappingProfile.cs" />
+    <Compile Include="Mapping\LocationMappingProfile.cs" />
+    <Compile Include="Mapping\NoteRequestMappingProfile.cs" />
+    <Compile Include="Mapping\RequestHistoryMappingProfile.cs" />
+    <Compile Include="Mapping\TrackingMappingProfile.cs" />
+    <Compile Include="Mapping\UserMappingProfile.cs" />
+    <Compile Include="FranchiseeConfigurationService.cs" />
+    <Compile Include="NoteRequestService.cs" />
+    <Compile Include="RequestHistoryService.cs" />
+    <Compile Include="ContactService.cs" />
+    <Compile Include="TableVersionService.cs" />
+    <Compile Include="SystemConfigurationService.cs" />
+    <Compile Include="TemplateService.cs" />
+    <Compile Include="SystemPrintPdfService.RequestReport.cs">
+      <DependentUpon>SystemPrintPdfService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleService.cs" />
+    <Compile Include="CustomerService.cs" />
+    <Compile Include="DocumentTypeService.cs" />
+    <Compile Include="FranchiseeModuleService.cs" />
+    <Compile Include="FranchiseeTenantService.cs" />
+    <Compile Include="GridConfigService.cs" />
+    <Compile Include="LocationService.cs" />
+    <Compile Include="HoldingRequestService.cs" />
+    <Compile Include="MasterFileService.cs" />
+    <Compile Include="ModuleDocumentTypeOperationService.cs" />
+    <Compile Include="CourierService.cs" />
+    <Compile Include="RequestService.cs" />
+    <Compile Include="ModuleService.cs" />
+    <Compile Include="PackageHistoryService.cs" />
+    <Compile Include="SystemEventService.cs" />
+    <Compile Include="StaticValueService.cs" />
+    <Compile Include="StateService.cs" />
+    <Compile Include="SystemPrintPdfService.cs" />
+    <Compile Include="SystemPrintPdfServiceBackUp.cs" />
+    <Compile Include="TempUploadFileService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrackingService.cs" />
+    <Compile Include="UserRoleService.cs" />
+    <Compile Include="RegisterService.cs" />
+    <Compile Include="UserService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Configuration\ConfigValues.csproj">
+      <Project>{E936BACE-2AFD-4FC4-B6A9-5F726B8F2122}</Project>
+      <Name>ConfigValues</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Database.Persistance\Database.Persistance.csproj">
+      <Project>{DD2E9637-BDA1-4A33-BB30-CB9CA4412BFE}</Project>
+      <Name>Database.Persistance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.BusinessRule\Framework.BusinessRule.csproj">
+      <Project>{1EF08624-C727-4F0B-ABCD-A49ADC3EB8BA}</Project>
+      <Name>Framework.BusinessRule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.DomainModel\Framework.DomainModel.csproj">
+      <Project>{04587770-630F-4A36-924D-861A74E02171}</Project>
+      <Name>Framework.DomainModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Exceptions\Framework.Exceptions.csproj">
+      <Project>{C8D7FDB3-AD8C-4EF3-AFD3-0D8F661390C3}</Project>
+      <Name>Framework.Exceptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Mapping\Framework.Mapping.csproj">
+      <Project>{f7be2340-918c-40e7-ba8a-00ac98005eb8}</Project>
+      <Name>Framework.Mapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Paging\Framework.Paging.csproj">
+      <Project>{F20AD8A5-6759-467C-848C-D7F9544CF9BD}</Project>
+      <Name>Framework.Paging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.QueryEngine\Framework.QueryEngine.csproj">
+      <Project>{57A5848D-E248-43C5-AB62-8E21D94F1551}</Project>
+      <Name>Framework.QueryEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Repositories\Framework.Repositories.csproj">
+      <Project>{1A84274B-CC21-43F0-A586-D02AC32E0190}</Project>
+      <Name>Framework.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Service\Framework.Service.csproj">
+      <Project>{60FC5F14-C3E8-4A32-A0F0-17BBD23524F7}</Project>
+      <Name>Framework.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Utility\Framework.Utility.csproj">
+      <Project>{C476D7B3-7814-48AA-87A1-ECAE8E8A7F4F}</Project>
+      <Name>Framework.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Web\Framework.Web.csproj">
+      <Project>{5AEB85E3-F139-43F1-B884-7F4455A4FA6B}</Project>
+      <Name>Framework.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repositories.Interfaces\Repositories.Interfaces.csproj">
+      <Project>{AE067565-C1EB-48E0-9A27-028DEB48101D}</Project>
+      <Name>Repositories.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceLayer.Interfaces\ServiceLayer.Interfaces.csproj">
+      <Project>{AE20F222-13BB-4182-B07E-C254C615788E}</Project>
+      <Name>ServiceLayer.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Import Project="..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

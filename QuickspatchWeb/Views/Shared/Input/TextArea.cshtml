@@ -1,0 +1,17 @@
+﻿@model QuickspatchWeb.Models.Input.AreaTextViewModel
+<section class="col col-@Model.Col @Model.MoreClass">
+    @if (!string.IsNullOrEmpty(Model.Label))
+    {
+        <label>
+            @if (Model.RequiredAttribute == "required=\"required\"")
+            {
+                <span class='red'>*</span>
+            }@Model.Label
+        </label>
+    }
+
+    <label class="input" style="@(!string.IsNullOrEmpty(Model.Label)?"":"width:100%")">
+        <textarea id="@Model.Id" rows="@Model.Rows" cols="@Model.Cols" style="height: @Model.HeightStr !important;resize: none; padding:1%;width:98%" class="@Model.Class"
+                  ng-model="@Model.DataBindingValue" placeholder="@Model.PlaceHolderText" @Model.ReadOnlyAttr maxlength="@Model.MaxLength"></textarea>
+    </label>
+</section>

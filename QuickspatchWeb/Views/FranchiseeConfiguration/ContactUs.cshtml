@@ -1,0 +1,48 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@{
+    Layout = null;
+}
+
+<div class="portlet-content" data-ng-controller="contactUsController">
+    <form class="smart-form" role="form" style="width:100%; margin:0;padding: 0;">
+        <div class="popup-body modal-body" style="overflow-y: auto; overflow-x: hidden;">
+            <fieldset>
+                @Html.CustomTextBox("FullName", "Full Name", "User.FullName", 6, required: true, length: 150)
+                @Html.CustomTextBox("Email", "Email", "User.Email", 6, required: true, length: 150)
+
+                @Html.CustomTextBox("Subject", "Subject", "User.Subject", 12, required: true, length: 200)
+
+
+                <section class="col col-12">
+                    <label>
+                        <span style="color: red">*</span>Content 
+                    </label>
+                    <label class="input">
+                        <textarea id="mmessage" class="form-control" name="mmessage" ng-model="User.Content" style="min-height: 120px;resize: none"></textarea>
+                    </label>
+                </section>
+            </fieldset>
+        </div>
+        <div class="popup-footer">
+            <!--footer-->
+            <div style="padding: 10px">
+                @*<button class="btn btn-primary pull-left" type="button" ng-click="ResetPassword()"><i class="fa fa-key"></i> Reset Password Default</button>*@
+                <div class="pull-right">
+                    <button class="btn btn-primary" type="button" ng-click="Send()"><i class="fa fa-send"></i> Send</button>
+                    <button class="btn btn-default" type="button" ng-click="Cancel()"><i class="fa fa-remove"></i> Cancel</button>
+
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function UserViewModel() {
+        var self = this;
+        self.FullName = "";
+        self.Email = "";
+        self.Subject = "";
+        self.Content = "";
+    }
+</script>

@@ -1,0 +1,46 @@
+﻿@*@model List<QuickspatchWeb.Models.Request.DashboardRequestShareViewModel>*@
+@using QuickspatchWeb.HtmlHelpers
+@using QuickspatchWeb.Models.Request
+@model QuickspatchWeb.Models.DashboardViewModel
+
+<div id="request-status-controller" class="panel panel-table" ng-controller="requestStatusController">
+    <div class="panel-heading">
+        <div style="width: 100%; display: table">
+            <div class="panel-title-small" style="display: table-cell; width: 40%; min-width: 170px">Requests status (<b ng-bind-html="SelectedCourier"></b>)</div>
+            <div style="text-align: center; display: table-cell; width: 50%">
+                <span class="panel-title courier-selected-title" ng-bind-html="SelectedRequestStatus" style="line-height: 15px;width: 100%;"></span>
+            </div>
+            <div style="display: table-cell; width: 10%; text-align: right">
+                <span class="btn icon no-border" style="padding: 0 !important;" ng-click="refreshRequestStatus()" name="panel-maximize"><i class="fa fa-refresh"></i></span>
+                <span class="btn icon no-border" style="padding: 0 !important;" ng-click="fullscreenOn($event)" name="panel-maximize"><i class="fa fa-expand"></i></span>
+                <span class="btn icon no-border" style="padding: 0 !important;display: none" ng-click="fullscreenOff($event)" name="panel-minimize"><i class="fa fa-compress"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-content screen-fit-2">
+        <div class="col-sm-3 my-col no-padding" style="border-right: 1px solid #ddd;">
+            @*<div style="width: 100%;float: left;text-align: center;position: absolute;z-index: 999;"><a ng-click="showAllRequestStatus()">View all</a></div>*@
+            <div id="donut-chart" style="width: 100%;" class="reponsive-chart"></div>
+        </div>
+
+        <div class="col-sm-9 no-padding" style="height: 100%">
+            <div kendo-grid="requestChartGrid" k-options="mainGridOptions" id="request-completion" class="reponsive-grid hidden-pager"></div>
+        </div>
+    </div>
+    <div id="reassign-courier" class="smart-form card" style="display: none; position: absolute; width: 250px; z-index: 1000">
+        <form class="smart-form">
+            <fieldset class="panel-control border-bottom no-padding">
+                @Html.Lookup("ReAssignCourierId", "Courier", "ReAssignCourier", "ReAssignCourierId", 12, urlToReadData: "Courier/GetLookup", isRequired: true, showAddEdit: false)
+                <section class="col col-12">
+                    <div class="btn-group pull-right">
+
+                        <button class="btn btn-default" type="button" ng-click="callReAssignCourier()"><i class="fa fa-remove"></i> Cancel</button>
+                        <button class="btn btn-primary" type="button" ng-click="assignCourier()"><i class="fa fa-user"></i> Assign</button>
+                    </div>
+                </section>
+
+            </fieldset>
+        </form>
+    </div>
+
+</div>

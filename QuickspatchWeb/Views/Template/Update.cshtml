@@ -1,0 +1,18 @@
+﻿@using Framework.DomainModel.ValueObject
+@using QuickspatchWeb.Models
+@using QuickspatchWeb.Models.UserRole
+@model QuickspatchWeb.Models.Template.DashboardTemplateDataViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+}
+
+<div ng-controller="updateTemplateController" data-ng-init="init(@Model.Id)">
+    @Html.Partial("_Shared", Model.SharedViewModel)
+</div>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Update", "fa-save", FooterActionEnum.Save, "updateTemplateController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "updateTemplateController", false)
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}

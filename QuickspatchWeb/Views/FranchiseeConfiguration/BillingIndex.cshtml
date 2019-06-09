@@ -1,0 +1,188 @@
+﻿@using System.Configuration
+@using Framework.Utility
+@using QuickspatchWeb.Models.FranchiseeConfiguration
+@model BillingInfoViewModel
+@{
+    Layout = null;
+}
+@{
+    var paymentUrl = ConfigurationManager.AppSettings["PaymentUrl"];
+}
+
+<style type="text/css">
+    .modal-dialog.modal-lg {
+        width: 98%;
+    }
+</style>
+<div id="billing-index-controller" ng-controller="billingIndexController">
+    <div id="content-container" style="margin-left: 15px; margin-right: 15px; margin-top: 20px; margin-bottom: -20px;">
+        <fieldset class="account-section" style="text-align: center; margin-top: 10px;" id="loading-billing">
+            <img src="~/Content/quickspatch/img/loading-blue.gif" />
+        </fieldset>
+        <div id="content-billing">
+            <fieldset class="account-section ">
+                <div class="row" style="margin-bottom: -20px">
+                    <div class="col-sm-offset-1 col-sm-9" style="margin-left: 0">
+                        <div class="list-group">
+                            <h3 class="list-group-item-heading">Billing settings</h3>
+                            <p class="list-group-item-text help-block">Information regarding your account, subscription and billing.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <button class="btn btn-primary btn-sm center_btn" ng-click="activate(); " ng-show="isTrial">Activate</button>
+                    </div>
+                </div>
+                <hr />
+            </fieldset>
+            <!--Account-->
+
+            <fieldset class="account-section">
+                <legend style="border: 0" class="label-legend">Account</legend>
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-3 form-group">
+                        <label>Current Package</label>
+                        <div>
+                            {{currentPackage}}&nbsp;&nbsp;<a ng-click="upgrade();" style="cursor: pointer;">Change Plan</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>Account status</label>
+                        <div>
+                            {{accountStatus}}
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Next Billing Date</label>
+                        <div> {{nextBillingDate}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-3 form-group">
+                        <label>Account owner</label>
+                        <div> {{accountOwner}}</div>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>Account Name</label>
+                        <div> {{accountName}}</div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>URL</label>
+                        <div> {{urlInfo}}</div>
+                    </div>
+                </div>
+                <hr />
+            </fieldset>
+
+            <!--Biiling Info-->
+            <fieldset class="account-section" ng-show="!isTrial">
+                <legend style="border: 0" class="label-legend">Payment Info</legend>
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-3 form-group">
+                        <label>Name</label>
+                        <div> {{name}}</div>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>Phone</label>
+                        <div> {{phone}}</div>
+                    </div>
+                    <div class="col-sm-5 form-group">
+                        <label>Address</label>
+                        <div> {{address}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-3 form-group">
+                        <label>City</label>
+                        <div> {{city}}</div>
+                    </div>
+                    <div class="col-sm-3 form-group">
+                        <label>State</label>
+                        <div> {{state}}</div>
+                    </div>
+                    <div class="col-sm-5 form-group">
+                        <label>Zip</label>
+                        <div> {{zip}}</div>
+                    </div>
+                </div>
+                <div class="row" ng-show="!isTrial">
+                    <div class="col-sm-offset-1 col-sm-11 form-group">
+                        <button class="btn btn-primary btn-sm center_btn" ng-click="changeBillingInfo(); ">Change Information</button>
+                        @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Change Information Popup</button>*@
+
+                        <div class="modal fade bs-example-modal-lg" id="modal-cpg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        <h4 class="modal-title" id="myLargeModalLabel">PAYMENT INFO</h4>
+                                    </div> 
+                                    <div class="modal-body" id="modal-body-cpg">
+                                        <iframe id="iframe-cpg" width="100%" height="100%" ng-src="{{currentProjectUrl}}"></iframe>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr />
+            </fieldset>
+
+            <!--DANGER ZONE-->
+            <fieldset class="account-section" style="margin-bottom: 10px; padding-bottom: 20px" ng-show="!isTrial">
+                <legend style="border: 0" class="label-legend">DANGER ZONE</legend>
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-5 " ng-show="!isCloseAccount">
+                        <h3>Close account</h3>
+                        <div>
+                            <p>Your account will be terminated effective immediately. Warning this action can not be undone.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-2 col-md-5 " ng-show="isCloseAccount">
+                        <h3>Reopen account</h3>
+                        <div>
+                            <p>You must reopen account to countinue change package and change information.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="margin-top: 6px">
+                        <button class="btn btn-danger btn-sm center_btn" ng-show="!isCloseAccount" ng-click="closeAccount();">Close Account</button>
+                        <button class="btn btn-danger btn-sm center_btn" ng-show="isCloseAccount" ng-click="cancelCloseAccount();">Reopen Account</button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#content-container").css({ 'min-height': $(window).height() - 130 });
+        $('#modal-body-cpg').css({ 'height': $(window).height() - 130 });
+    });
+
+    function close(data) {
+        var scope = angular.element('#billing-index-controller').scope();
+        if (scope != undefined) {
+            scope.refresh();
+            scope.currentProjectUrl = '';
+            $('#modal-cpg').modal('hide');
+        }
+    }
+</script>
+<style>
+    .account-section label {
+        font-size: 11px;
+        font-weight: 600;
+        color: /*#999*/ black;
+        text-transform: uppercase;
+    }
+
+    .label-legend {
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: /*#999*/ black;
+        text-transform: uppercase;
+    }
+</style>

@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+@using Framework.Utility
+@model Framework.DomainModel.ValueObject.WarningInfoVo
+
+<style type="text/css">
+    .left-margin-info {
+        margin-left: 10px;
+    }
+    /* Tooltip */
+    .warning-tooltip + .tooltip > .tooltip-inner {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+        width: auto;
+        min-width: 300px;
+        max-width: 600px;
+    }
+    /* Tooltip on top */
+    .warning-tooltip + .tooltip.top > .tooltip-arrow {
+        border-top: 5px solid #337ab7;
+    }
+    /* Tooltip on bottom */
+    .warning-tooltip + .tooltip.bottom > .tooltip-arrow {
+        border-bottom: 5px solid #337ab7;
+    }
+    /* Tooltip on left */
+    .warning-tooltip + .tooltip.left > .tooltip-arrow {
+        border-left: 5px solid #337ab7;
+    }
+    /* Tooltip on right */
+    .warning-tooltip + .tooltip.right > .tooltip-arrow {
+        border-right: 5px solid #337ab7;
+    }
+</style>
+
+<div class="row" style="margin: 10px">
+    @if (!string.IsNullOrEmpty(Model.PreviousRequestNo))
+    {
+        <div class="col-md-11 form-group">
+            <p><strong>This request has been conflict with current schedule:</strong></p>
+            <p>
+                Estimate Arrival Time of previous request
+                <a class="warning-tooltip" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+               <h5>The information:</h5>
+                <ul>
+                    <li><strong>From:</strong> @Model.PreviousFromAddress</li>
+                    <li><strong>To:</strong> @Model.PreviousToAddress</li>
+                    <li><strong>Sending Time:</strong> @Model.PreviousSendingTime.GetValueOrDefault().ToClientTime("HH:mm")</li>
+                    <li><strong>Arrival Window From:</strong> @Model.PreviousStartTime.GetValueOrDefault().ToClientTime("HH:mm")</li>
+                    <li><strong>Arrival Window To:</strong> @Model.PreviousEndTime.GetValueOrDefault().ToClientTime("HH:mm")</li>
+                </ul>
+            ">@Model.PreviousRequestNo</a>
+                is @Model.PreviousEndTime.GetValueOrDefault().ToClientTime("HH:mm")
+            </p>
+            <p>
+                Estimate request time for this request: <a class="warning-tooltip" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                <ul style='list-style-type: none;'>
+                    <li>Previous Request Arrival Time: <strong>@Model.PreviousEndTime.GetValueOrDefault().ToClientTime("HH:mm")</strong></li>
+                    <li>@Model.PreviousToAddressName <span class='fa fa-arrow-right'></span> @Model.FromAddressName: <strong>@Model.StrTimeEndFrom</strong></li>
+                    <li>@Model.FromAddressName <span class='fa fa-arrow-right'></span> @Model.ToAddressName: <strong>@Model.StrTimeFromEnd</strong></li>
+                    <li>Estimate request time of this request: <strong>@Model.PreviousEndTime.GetValueOrDefault().ToClientTime("HH:mm") + @Model.StrTimeEndFrom + @Model.StrTimeFromEnd = @Model.EstimateActualTime.ToClientTime("HH:mm")</strong></li>
+                </ul>">@Model.EstimateActualTime.ToClientTime("HH:mm")</a>.
+            </p>
+            <p>Arrival time of this request from @Model.StartTime.ToClientTime("HH:mm") to @Model.EndTime.ToClientTime("HH:mm"). This is conflict.</p>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-11 form-group">
+            <p><strong>This request has been conflict with current schedule:</strong></p>
+            <p>
+                Estimate request time for this request: <a class="warning-tooltip" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                <ul style='list-style-type: none;'>
+                    <li>Sending Time: <strong>@Model.SendingTime.ToClientTime("HH:mm")</strong></li>
+                    <li>Arrival Window From <span class='fa fa-arrow-right'></span> Arrival Window To: <strong>@Model.StrTimeFromEnd</strong></li>
+                    <li>Estimate request time of this request: <strong>@Model.SendingTime.ToClientTime("HH:mm") + @Model.StrTimeFromEnd = @Model.EstimateActualTime.ToClientTime("HH:mm")</strong></li>
+                </ul>">@Model.EstimateActualTime.ToClientTime("HH:mm")</a>.
+            </p>
+            <p>Arrival time of this request from @Model.StartTime.ToClientTime("HH:mm") to @Model.EndTime.ToClientTime("HH:mm"). This is conflict.</p>
+        </div>
+    }
+</div>
+<div class="row" style="width: 100%;position: fixed; bottom: 0; margin-left: 20px">
+    <div class="col-md-11 form-group">
+        <button class="btn btn-default pull-right" onclick="closeWarningDetail()">Close</button>
+    </div>
+</div>
+<script type="text/javascript">
+    function closeWarningDetail() {
+        $('#popupWindow').data('kendoWindow').close();
+    }
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+

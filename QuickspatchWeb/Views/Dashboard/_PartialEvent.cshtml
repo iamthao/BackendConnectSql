@@ -1,0 +1,19 @@
+﻿<div class="panel panel-table" ng-controller="eventController" ng-init="loadEventEnd()" >
+    <div class="panel-heading">
+        <div class="panel-title-small">
+            Events
+            <div class="pull-right">
+                <span class="btn icon no-border" style="padding: 0 !important;" ng-click="loadEventEnd()" name="panel-maximize"><i class="fa fa-refresh"></i></span>
+                <span class="btn icon no-border" style="padding: 0 !important;" ng-click="fullscreenOn($event)" name="panel-maximize"><i class="fa fa-expand"></i></span>
+                <span class="btn icon no-border" style="padding: 0 !important;display: none" ng-click="fullscreenOff($event)" name="panel-minimize"><i class="fa fa-compress"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-content screen-fit-2">
+        <ul id="event-list" style="padding: 0; overflow: auto;" class="reponsive-list"></ul>
+        <script type="text/x-kendo-template" id="eventListViewTemplate">
+            <div class="event" style="#if(IsNew){# color: red; #}#"><i style="font-size:10px; margin-right:5px;">At #: kendo.toString(moment().utc(CreatedOnDateTime).toDate(),'MM/dd/yyyy hh:mm tt') # : </i> <span>${Description}</span></div>
+        </script>
+
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿@model QuickspatchWeb.Models.FranchiseeTenant.DashboardFranchiseeTenantIndexViewModel
+@{
+    Layout = null;
+}
+
+<script type="text/x-kendo-template" id="commandFranchisee">
+    <div class="btn-group">
+        <button class="btn btn-sm btn-default" ng-click="EditModule(${ Id });" title="Module"><i class="fa fa-tasks"></i></button>
+        <button class="btn btn-sm btn-default" ng-click="Edit(${ Id });" title="Edit"><i class="fa fa-edit"></i></button>
+        #if(IsActive==true){#
+        <button class="btn btn-sm btn-default" ng-click="Deactivate(${ Id });" title="Deactive"><i class="fa fa-lock"></i></button>
+        #}else{#
+        <button class="btn btn-sm btn-default" ng-click="Activate(${ Id });" title="Active"><i class="fa fa-unlock"></i></button>
+        #}#
+        
+    </div>
+</script>
+
+<div class="panel panel-table">
+    <div class="panel-heading">
+        <div class="panel-title-small">Manage Franchisees</div>
+    </div>
+
+    <div id="content-container" ng-controller="franchiseeController">
+        @Html.Partial("~/Views/Shared/Grid/_ReadOnlyGrid.cshtml", @Model.GridViewModel)
+    </div>
+</div>
+
+<script type="text/x-kendo-template" id="franchiseeTenantTemplate">
+
+    #if(IsActive == true){#
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="fa fa-check" style="color:\\#5cb85c"></span>
+    #}#
+    #if(IsActive == false){#
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="fa fa-times" style="color:\\#d9534f"></span>
+    #}#
+
+</script>

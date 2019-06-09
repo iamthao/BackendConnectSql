@@ -1,0 +1,14 @@
+﻿<div id="cl-wrapper" data-ng-controller="shell as vm">
+    <div class="cl-sidebar" data-ng-include="'/app/layout/sidebar.html'"></div>
+    <div class="container-fluid" id="pcont">
+        <div data-ng-include="'/app/layout/topnav.html'"></div>
+
+        <div data-ng-show="vm.isBusy" class="page-splash dissolve-animation">
+            <div data-cc-spinner="vm.spinnerOptions"></div>
+            <div class="h3 text-center page-splash-message page-splash-message-subtle">{{vm.busyMessage}}</div>
+        </div>
+        <div data-ng-view class="hide-fade"></div>
+    </div>
+</div>
+
+

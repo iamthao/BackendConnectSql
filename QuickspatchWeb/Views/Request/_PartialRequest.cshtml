@@ -1,0 +1,150 @@
+﻿@using iTextSharp.text.pdf.qrcode
+@using QuickspatchWeb.HtmlHelpers
+@using QuickspatchWeb.Models.Request
+@model string
+<div @*class="panel panel-table"*@ ng-controller="requestController" ng-init="init('@Model')">
+    @*<div class="panel-heading">
+        <div class="panel-title">Requests</div>
+    </div>*@
+    <div class="panel-control border-bottom">
+
+        <div class="row">
+            <div class="col-sm-4 col-xs-12">
+                <div>
+                    <button id="btn-new-request" class="btn btn-primary" type="button" ng-click="callSendRequestCard(true)"><i class="fa fa-plus"></i> New </button>
+
+                    @Html.Partial("_CreateRequest", new DashboardRequestShareViewModel())
+                    <div class="btn-group" id="dropdown-export">
+                        <button data-toggle="dropdown" class="btn dropdown-toggle" type="button" ng-click="clickExport()">
+                            <i class="fa fa-file-excel-o"></i>&nbsp;Export excel &nbsp;<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="javascript:;">
+                                    <input type='radio' name='chk-export' id="chk-1000" value="1000" class="k-radio" checked="checked" />
+                                    <label class="k-radio-label" for="chk-1000"> &nbsp;1000 rows</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <input type='radio' name='chk-export' id="chk-5000" value="5000" class="k-radio" />
+                                    <label class="k-radio-label" for="chk-5000"> &nbsp;5000 rows</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <input type='radio' name='chk-export' id="chk-10000" value="10000" class="k-radio" />
+                                    <label class="k-radio-label" for="chk-10000"> &nbsp;10000 rows</label>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <input type='radio' name='chk-export' id="chk-all" value="-1" class="k-radio" />
+                                    <label class="k-radio-label" for="chk-all"> &nbsp;All</label>
+                                </a>
+                            </li>
+
+
+                            <li class="divider"></li>
+                            <li style="padding:0 5px 5px  5px;overflow: hidden;text-align: center;">
+                                <button class="btn btn-primary" id="btn-export" ng-click="export()"><i class="fa fa-file-excel-o"></i> Export</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <div class="pull-right daterange-filter" id="reportrange" title="Filter by Created Date">
+                    <i class="fa fa-calendar"></i>
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-sm-4 col-xs-12">
+                <div class="k-widget search-box">
+                    <span class="k-picker-wrap k-state-default">
+                        <input type="text" class="k-input" placeholder="Search ..." value="" ng-model="SearchRequest" ng-enter="search()">
+                        <span class="k-select" ng-click="search()">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-content  screen-fit-1">
+        @*Add list request here*@
+        <div kendo-grid k-options="mainGridOptions('@Model')" id="request-grid"></div>
+        <a id="dlink" style="display:none;"></a>
+        <script type="text/x-kendo-template" id="requestStatus">
+            #if(Status != null){#
+            <span class="label label-#:Status.toLowerCase().replace(/\s+/g,'')#">#=Status#</span>
+            #}#
+        </script>
+        <script type="text/x-kendo-template" id="requestButtons">
+            <div class="btn-group">
+                #if(Status == 'Not Sent'){#
+                <button class="btn btn-sm btn-default btn-edit-request" title="Edit request" data-ng-click="editRequest(dataItem);"><i class="fa fa-edit"></i></button>
+                #}#
+                <button class="btn btn-sm btn-default btn-copy-request" title="Copy request" data-ng-click="copyRequest(dataItem);"><i class="fa fa-copy"></i></button>
+
+                <button class="btn btn-sm btn-default btn-note-request" title="Show detail" data-ng-click="showNoteRequest(dataItem,true);"><i class="fa fa-ellipsis-h"></i></button>
+
+                #if(Status != 'Cancelled' && Status != 'Completed' && IsExpired != true){#
+                <button class="btn btn-sm btn-default btn-cancel-request" title="Cancel request" data-ng-click="cancelRequestForm(dataItem,true);"><i class="fa fa-ban"></i></button>
+                #}#
+
+                @*#if(IsExpired != true && IsSchedule != true && (Status == 'Declined' || Status == 'Abandoned'|| Status == 'Not Sent')){#
+                <button class="btn btn-sm btn-default btn-reassign-request" title="Re-assign courier" data-ng-click="callReAssignCourier(dataItem,true);"><i class="fa fa-user"></i></button>
+                #}#*@
+                
+                @*#if(Status == 'Completed' && IsAgreed == true){#
+                <button class="btn btn-sm btn-default btn-copy-request" title="View agreement" data-ng-click="viewDeliveryAgreement(dataItem);"><i class="fa fa-credit-card"></i></button>
+                #}#*@
+                
+            </div>
+        </script>
+        <div id="cancel-request" ng-show="IsShowCancelRequestForm" class="card border-info" style="position: absolute; z-index:100; width: 300px; padding: 10px;">
+
+            <form class="smart-form">
+                <fieldset class="panel-control border-bottom no-padding">
+                    <section class="col col-12">
+                        <label ng-bind="ContentCancel"></label>
+                    </section>
+                    <section class="col col-12">
+                        <div class="btn-group pull-right">
+                            <button class="btn btn-default" type="button" ng-click="cancelRequestForm(null,false);"><i class="fa fa-remove"></i> No</button>
+                            <button class="btn btn-primary" type="button" ng-click="cancelRequest()"><i class="fa fa-check"></i> Yes</button>
+                        </div>
+                    </section>
+
+                </fieldset>
+            </form>
+        </div>
+        <div id="re-assign-courier" ng-show="IsShowReAssignCourierForm" class="card border-info" style="position: absolute; z-index:100; width: 250px; padding: 10px;">
+
+            <form class="smart-form">
+                <fieldset class="panel-control border-bottom no-padding">
+                    @Html.Lookup("ReAssignCourierId", "{{CourierDisplayName}}", "ReAssignCourier", "ReAssignCourierId", 12, urlToReadData: "Courier/GetLookup", isRequired: true, showAddEdit: false)
+                    <section class="col col-12">
+                        <div class="btn-group pull-right">
+
+                            <button class="btn btn-default" type="button" ng-click="callReAssignCourier(null,false)"><i class="fa fa-remove"></i> Cancel</button>
+                            <button class="btn btn-primary" type="button" ng-click="assignCourier()"><i class="fa fa-user"></i> Assign</button>
+                        </div>
+                    </section>
+
+                </fieldset>
+            </form>
+        </div>
+        @*noterequest*@
+        <div id="show-note-request" ng-show="IsShowNoteRequestForm" class="card border-info" style="position: absolute; z-index:100; width: 500px; padding: 10px;">
+
+            <form class="smart-form">
+                <fieldset class="panel-control border-bottom no-padding">
+                    <div kendo-grid k-options="noteGridOptions" id="noterequest-grid"></div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div id="popupContainer"></div>
+</div>

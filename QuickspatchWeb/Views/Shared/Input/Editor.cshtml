@@ -1,0 +1,99 @@
+﻿@model QuickspatchWeb.Models.Input.EditorViewModel
+<section id="editor-@Model.Id" class="col col-@Model.Col">
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.Label
+    </label>
+
+    <label class="input">
+        <textarea kendo-editor data-tools="['bold',
+                  'italic' ,
+                  'underline' ,
+                  'strikethrough' ,
+                  'justifyLeft' ,
+                  'justifyCenter' ,
+                  'justifyRight' ,
+                  'justifyFull' ,
+                  'insertUnorderedList' ,
+                  'insertOrderedList' ,
+                  'indent' ,
+                  'outdent' ,
+                  'createLink' ,
+                  'unlink' ,
+                  'insertImage' ,
+                  'viewHtml' ,
+                  'createTable']" rows="10" cols="30" id="@Model.Id" style="width:@(Model.Width)px,height:@(Model.Height)px;" ng-model="@Model.DataBindingValue"></textarea>
+    </label>
+
+    <script>
+        $(document).ready(function () {
+            var id = '@Model.Id';
+            var urlread = '@Model.UrlRead';
+            var urldestroy = '@Model.UrlDestroy';
+            var urlcreate = '@Model.UrlCreate';
+            var urlthumb = '@Model.UrlThumb';
+            var urlupload = '@Model.UrlUpload';
+            var urlimage = '@Model.UrlImage';
+            var idValControl = '#' + id;
+            
+            //$(idValControl).kendoEditor({
+            //    tools: [
+                    //"bold",
+                    //"italic",
+                    //"underline",
+                    //"strikethrough",
+                    //"justifyLeft",
+                    //"justifyCenter",
+                    //"justifyRight",
+                    //"justifyFull",
+                    //"insertUnorderedList",
+                    //"insertOrderedList",
+                    //"indent",
+                    //"outdent",
+                    //"createLink",
+                    //"unlink",
+                    //"insertImage",
+            //        "subscript",
+            //        "superscript",
+            //        "foreColor",
+            //        "backColor",
+            //        "createTable",
+            //        "addRowAbove",
+            //        "addRowBelow",
+            //        "addColumnLeft",
+            //        "addColumnRight",
+            //        "deleteRow",
+            //        "deleteColumn",
+            //        "viewHtml",
+            //        "fontSize"
+            //    ],
+            //    imageBrowser: {
+            //        messages: {
+            //            dropFilesHere: "Drop files here"
+            //        },
+            //        transport: {
+            //            read: urlread,
+            //            destroy: {
+            //                url: urldestroy,
+            //                type: "POST"
+            //            },
+            //            create: {
+            //                url: urlcreate,
+            //                type: "POST"
+            //            },
+            //            thumbnailUrl: urlthumb,
+            //            uploadUrl: urlupload,
+            //            imageUrl: urlimage
+            //        }
+            //    },
+            //    change: function (e) {
+            //        Postbox.messages.notifySubscribers(e.sender.value(), Postbox.KENDO_EDITOR_CHANGE);
+            //    }
+            //});
+            $('#editor-' + id).find('table.k-editor').css('height', '@(Model.Height)px');
+        });
+    </script>
+
+</section>

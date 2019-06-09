@@ -1,0 +1,18 @@
+﻿@using QuickspatchWeb.Models
+@using QuickspatchWeb.Models.Customer
+@model DashboardCustomerDataViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+}
+
+<div ng-controller="createCustomerController">
+    @Html.Partial("_Shared", Model.SharedViewModel)
+</div>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Create", "fa-save", FooterActionEnum.Save, "createCustomerController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "createCustomerController", false)
+
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}

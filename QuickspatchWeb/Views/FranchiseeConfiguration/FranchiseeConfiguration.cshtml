@@ -1,0 +1,185 @@
+﻿@using Framework.Utility
+@using QuickspatchWeb.Models.FranchiseeConfiguration
+@model DashboardFranchiseeConfigurationDataViewModel
+@{
+    Layout = null;
+    var franchiseeConfig = Model != null ? (DashboardFranchiseeConfigurationShareViewModel)Model.SharedViewModel : null;
+}
+<style type="text/css">
+    .k-grid-header th.k-header, .k-filter-row th {
+        border-bottom: 1px solid #eee;
+    }
+</style>
+<div ng-controller="franchiseeConfigurationController" id="franchisee-configuration-controller">
+    <div id="content-container" style="margin-left: 15px;margin-right: 15px;margin-top: 20px;margin-bottom: -20px;">
+        <fieldset class="account-section" style="text-align: center; margin-top: 10px;" id="loading-billing">
+            <img src="~/Content/quickspatch/img/loading-blue.gif" />
+        </fieldset>
+        <div id="content-billing">
+            <div class="col-sm-4">
+                <div style="margin: 20px; padding: 10px; border: 1px solid #ccc; ">
+                    <img src='{{Logo}}' alt="" style="vertical-align: middle;" height="50" />
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <fieldset class="account-section  ">
+                    <legend style="border: 0" class="label-legend">Organization Information</legend>
+                    <div class="row">
+
+                        <div class="col-sm-offset-1 col-sm-4 form-group">
+                            <label>Name</label>
+                            <div>
+                                {{Name}}
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Email</label>
+                            <div>
+                                {{PrimaryContactEmail}}
+                            </div>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <div>
+                                <button class="btn btn-primary" ng-click="Edit(FranchiseeId)"><i class="fa fa-edit"></i> Edit Information</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-4 form-group">
+                            <label>Phone</label>
+                            <div>
+                                {{PrimaryContactPhone}}
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Cell</label>
+                            <div>
+                                {{PrimaryContactCellNumber}}
+                            </div>
+                        </div>
+                        <div class="col-sm-3 form-group">
+                            <label>FAX</label>
+                            <div>
+                                {{PrimaryContactFax}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-11 form-group">
+                            <label>Address</label>
+                            <div>
+                                {{Address}}
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </fieldset>
+                <fieldset class="account-section  ">
+                    <legend style="border: 0" class="label-legend">License Information</legend>
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-11 form-group">
+                            <label>License Key</label>
+                            <div>
+                                {{LicenseKey}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-5 form-group">
+                            <label>Active Date</label>
+                            <div>
+                                {{StartActiveDate}}
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Expired Date</label>
+                            <div>
+                                {{EndActiveDate}}
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </fieldset>
+                <fieldset class="account-section  ">
+                    <div class="row">
+                        <div class="col-sm-6 form-group" style="margin-left: 0; margin-bottom: 0;">
+                            <span style="margin-bottom: 10px; font-size: 14px; font-weight: 600;color: /*#999*/ black;text-transform: uppercase;">Contact Lists</span>
+                        </div>
+                        <div class="col-sm-6 form-group " style="margin-left: 0; text-align: right;margin-bottom: 0;">
+                            <button class="btn btn-default btn-primary" ng-click="addContact()"><span class="fa fa-plus"></span> Add</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-11 form-group" style="">
+                            <div kendo-grid k-options="listContactGridOptions" id="contact-grid"></div>
+                        </div>
+                    </div>
+                    <hr />
+                </fieldset>
+                @*<fieldset class="account-section  ">
+                    <div class="row">
+                        <div class="col-sm-6 form-group" style="margin-left: 0; margin-bottom: 0;">
+                            <span style="margin-bottom: 10px; font-size: 14px; font-weight: 600;color: /*#999*/ black;text-transform: uppercase;">Location Default</span>
+                        </div>
+                        <div class="col-sm-6 form-group " style="margin-left: 0; text-align: right;margin-bottom: 0;">
+                            <button class="btn btn-default btn-primary" ng-click="updateLocation()"><span class="fa fa-edit"></span> Update</button>
+                        </div>
+                    </div>
+                    <div class="row" style=" margin-bottom: 10px;">
+                        <div class="col-sm-offset-1 col-sm-5 form-group">
+                            <label>From</label>
+                            <div>
+                                <strong>{{LocationFromName}}</strong>
+                                <p style="margin: 0;padding: 0;font-size: 0.8em;">{{LocationFromAddress}}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>To</label>
+                            <div>
+                                <strong> {{LocationToName}}</strong>
+                                <p style="margin: 0;padding: 0;font-size: 0.8em;">{{LocationToAddress}}</p>
+                            </div>
+                        </div>
+                    </div>                   
+                </fieldset>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#content-container").css({ 'min-height': $(window).height() - 120 });
+    });
+</script>
+<script type="text/x-kendo-template" id="commandButtons">
+    <div class="btn-group">
+        <button class="btn btn-sm btn-default" ng-click="editContact(${ Id });"><i class="fa fa-edit"></i></button>
+        <button class="btn btn-sm btn-default" ng-click="deleteContact(${ Id });"><i class="fa fa-remove"></i></button>
+    </div>
+</script>
+<style>
+    .account-section label {
+        font-size: 11px;
+        font-weight: 600;
+        color: /*#999*/ black;
+        text-transform: uppercase;
+    }
+
+    .label-legend {
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: /*#999*/ black;
+        text-transform: uppercase;
+    }
+
+    hr {
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+
+    .k-grid-content {
+        max-height: 300px;
+    }
+</style>

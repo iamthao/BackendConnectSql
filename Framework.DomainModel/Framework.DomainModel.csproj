@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{04587770-630F-4A36-924D-861A74E02171}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework.DomainModel</RootNamespace>
+    <AssemblyName>Framework.DomainModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\XmlDataTypeEnum.cs" />
+    <Compile Include="DataTransferObject\AddPackageHistoryDto.cs" />
+    <Compile Include="DataTransferObject\CheckConnectDto.cs" />
+    <Compile Include="DataTransferObject\ContactDto.cs" />
+    <Compile Include="DataTransferObject\CourierDto.cs" />
+    <Compile Include="DataTransferObject\DtoBase.cs" />
+    <Compile Include="DataTransferObject\DtoForgotPassword.cs" />
+    <Compile Include="DataTransferObject\FeedbackStatus.cs" />
+    <Compile Include="DataTransferObject\FeedbackViewModel.cs" />
+    <Compile Include="DataTransferObject\FranchiseeTenantUpdatePaymentDto.cs" />
+    <Compile Include="DataTransferObject\FranchisseNameAndLicenseDto.cs" />
+    <Compile Include="DataTransferObject\GetPaymentInfoItemDto.cs" />
+    <Compile Include="DataTransferObject\ListRequestDto.cs" />
+    <Compile Include="DataTransferObject\LocationDto.cs" />
+    <Compile Include="DataTransferObject\ModuleForFranchiseeDto.cs" />
+    <Compile Include="DataTransferObject\PackageHistoryDto.cs" />
+    <Compile Include="DataTransferObject\PaymentInfoApiDto.cs" />
+    <Compile Include="DataTransferObject\PaymentTransactionItem.cs" />
+    <Compile Include="DataTransferObject\RegisterInfo.cs" />
+    <Compile Include="DataTransferObject\RequestDto.cs" />
+    <Compile Include="DataTransferObject\RequestHistoryDto.cs" />
+    <Compile Include="DataTransferObject\RequestStatusDto.cs" />
+    <Compile Include="DataTransferObject\SubscriptionPaymentDto.cs" />
+    <Compile Include="DataTransferObject\TrackingDto.cs" />
+    <Compile Include="DataTransferObject\TrackingRequestDto.cs" />
+    <Compile Include="DataTransferObject\TransactionDetailDto.cs" />
+    <Compile Include="DataTransferObject\TransactionDto.cs" />
+    <Compile Include="DataTransferObject\TransactionInfoDto.cs" />
+    <Compile Include="DataTransferObject\UpdateRequestDto.cs" />
+    <Compile Include="DataTransferObject\UpdateSingleNoteRequestDto.cs" />
+    <Compile Include="DataTransferObject\UserDto.cs" />
+    <Compile Include="DataTransferObject\UserLoginForWebApiDto.cs" />
+    <Compile Include="DataTransferObject\UsernameAndPasswordDto.cs" />
+    <Compile Include="DataTransferObject\UtcDto.cs" />
+    <Compile Include="Entities\AutomateSendRequest.cs" />
+    <Compile Include="Entities\Common\DriverReportQueryInfo.cs" />
+    <Compile Include="Entities\Common\GoogleMapPoint.cs" />
+    <Compile Include="Entities\Common\GoogleMapResultObject.cs" />
+    <Compile Include="Entities\Common\ReportQueryInfo.cs" />
+    <Compile Include="Entities\Common\HoldingRequestQueryInfo.cs" />
+    <Compile Include="Entities\Common\TransactionQueryInfo.cs" />
+    <Compile Include="Entities\Common\NotifyDeclineQueryInfo.cs" />
+    <Compile Include="Entities\Common\UserQueryInfo.cs" />
+    <Compile Include="Entities\CountryOrRegion.cs" />
+    <Compile Include="Entities\Common\BusinessRuleResult.cs" />
+    <Compile Include="Entities\Common\DashboardRequestQueryInfo.cs" />
+    <Compile Include="Entities\Common\DocumentTypeKey.cs" />
+    <Compile Include="Entities\Common\LocationQueryInfo.cs" />
+    <Compile Include="Entities\Common\LookupQuery.cs" />
+    <Compile Include="Entities\Common\QueryInfo.cs" />
+    <Compile Include="Entities\Common\NoteRequestQueryInfo.cs" />
+    <Compile Include="Entities\Common\RequestQueryInfo.cs" />
+    <Compile Include="Entities\Common\Sort.cs" />
+    <Compile Include="Entities\Courier.cs" />
+    <Compile Include="Entities\Customer.cs" />
+    <Compile Include="Entities\DocumentType.cs" />
+    <Compile Include="Entities\FranchiseeModule.cs" />
+    <Compile Include="Entities\FranchiseeConfiguration.cs" />
+    <Compile Include="Entities\FranchiseeTenant.cs" />
+    <Compile Include="Entities\GridConfig.cs" />
+    <Compile Include="Entities\HoldingRequest.cs" />
+    <Compile Include="Entities\Industry.cs" />
+    <Compile Include="Entities\Location.cs" />
+    <Compile Include="Entities\Mapping\AutomateSendRequestMap.cs" />
+    <Compile Include="Entities\Mapping\CountryOrRegionMap.cs" />
+    <Compile Include="Entities\Mapping\CourierMap.cs" />
+    <Compile Include="Entities\Mapping\CustomerMap.cs" />
+    <Compile Include="Entities\Mapping\DocumentTypeMap.cs" />
+    <Compile Include="Entities\Mapping\FranchiseeModuleMap.cs" />
+    <Compile Include="Entities\Mapping\FranchiseeConfigurationMap.cs" />
+    <Compile Include="Entities\Mapping\FranchiseeTenantMap.cs" />
+    <Compile Include="Entities\Mapping\GridConfigMap.cs" />
+    <Compile Include="Entities\Mapping\HoldingRequestMap.cs" />
+    <Compile Include="Entities\Mapping\IndustryMap.cs" />
+    <Compile Include="Entities\Mapping\LocationMap.cs" />
+    <Compile Include="Entities\Mapping\ModuleDocumentTypeOperationMap.cs" />
+    <Compile Include="Entities\Mapping\ModuleMap.cs" />
+    <Compile Include="Entities\Mapping\NoteRequestMap.cs" />
+    <Compile Include="Entities\Mapping\RegisterMap.cs" />
+    <Compile Include="Entities\Mapping\RequestHistoryMap.cs" />
+    <Compile Include="Entities\Mapping\RequestMap.cs" />
+    <Compile Include="Entities\Mapping\ScheduleMap.cs" />
+    <Compile Include="Entities\Mapping\SecurityOperationMap.cs" />
+    <Compile Include="Entities\Mapping\ServiceConfigurationMap.cs" />
+    <Compile Include="Entities\Mapping\PackageHistoryMap.cs" />
+    <Compile Include="Entities\Mapping\ConfigFranchiseeMap.cs" />
+    <Compile Include="Entities\Mapping\ContactMap.cs" />
+    <Compile Include="Entities\Mapping\TableVersionMap.cs" />
+    <Compile Include="Entities\Mapping\SystemConfigurationMap.cs" />
+    <Compile Include="Entities\Mapping\TemplateMap.cs" />
+    <Compile Include="Entities\Mapping\SystemEventMap.cs" />
+    <Compile Include="Entities\Mapping\StaticValueMap.cs" />
+    <Compile Include="Entities\Mapping\StateMap.cs" />
+    <Compile Include="Entities\Mapping\TrackingMap.cs" />
+    <Compile Include="Entities\Mapping\UserMap.cs" />
+    <Compile Include="Entities\Mapping\QuickspatchEntityTypeConfiguration.cs" />
+    <Compile Include="Entities\Mapping\UserRoleFunctionMap.cs" />
+    <Compile Include="Entities\Mapping\UserRoleMap.cs" />
+    <Compile Include="Entities\Module.cs" />
+    <Compile Include="Entities\ModuleDocumentTypeOperation.cs" />
+    <Compile Include="Entities\NoteRequest.cs" />
+    <Compile Include="Entities\Register.cs" />
+    <Compile Include="Entities\Request.cs" />
+    <Compile Include="Entities\RequestHistory.cs" />
+    <Compile Include="Entities\Schedule.cs" />
+    <Compile Include="Entities\SecurityOperation.cs" />
+    <Compile Include="Entities\Security\QuickspatchClientType.cs" />
+    <Compile Include="Entities\Security\OperationAction.cs" />
+    <Compile Include="Entities\ServiceConfiguration.cs" />
+    <Compile Include="Entities\PackageHistory.cs" />
+    <Compile Include="Entities\ConfigFranchisee.cs" />
+    <Compile Include="Entities\Contact.cs" />
+    <Compile Include="Entities\TableVersion.cs" />
+    <Compile Include="Entities\SystemConfiguration.cs" />
+    <Compile Include="Entities\Template.cs" />
+    <Compile Include="Entities\SystemEvent.cs" />
+    <Compile Include="Entities\State.cs" />
+    <Compile Include="Entities\StaticValue.cs" />
+    <Compile Include="Entities\Tracking.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserRole.cs" />
+    <Compile Include="Entities\UserRoleFunction.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="Interfaces\ClaimsDeclaration.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
+    <Compile Include="Interfaces\IQuickspatchIdentity.cs" />
+    <Compile Include="Interfaces\IQuickspatchPrincipal.cs" />
+    <Compile Include="Interfaces\IQueryInfo.cs" />
+    <Compile Include="Interfaces\QuickspatchIdentity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObject\AppRole.cs" />
+    <Compile Include="ValueObject\AutoAssignCourierGridVo.cs" />
+    <Compile Include="ValueObject\ContactGridVo.cs" />
+    <Compile Include="ValueObject\CountryOrRegionGridVo.cs" />
+    <Compile Include="ValueObject\DeliveryAgreementReportVo.cs" />
+    <Compile Include="ValueObject\GoogleGetDistance.cs" />
+    <Compile Include="ValueObject\LatLngVo.cs" />
+    <Compile Include="ValueObject\LocationDefaultVo.cs" />
+    <Compile Include="ValueObject\LocationLookupItemVo.cs" />
+    <Compile Include="ValueObject\NoteRequestDetail.cs" />
+    <Compile Include="ValueObject\PackageInfoItemVo.cs" />
+    <Compile Include="ValueObject\NotifyDeclineGridVo.cs" />
+    <Compile Include="ValueObject\DashboardRequestChartVo.cs" />
+    <Compile Include="ValueObject\GoogleGetLocation.cs" />
+    <Compile Include="ValueObject\PackageInfoVo.cs" />
+    <Compile Include="ValueObject\RequestCourierGridVo.cs" />
+    <Compile Include="ValueObject\SystemConfigurationGridVo.cs" />
+    <Compile Include="ValueObject\TemplateGridVo.cs" />
+    <Compile Include="ValueObject\PictureAndNoteVo.cs" />
+    <Compile Include="ValueObject\TransactionHistoryGridVo.cs" />
+    <Compile Include="ValueObject\RequestDeliveryAgreementVo.cs" />
+    <Compile Include="ValueObject\RequestReportVo.cs" />
+    <Compile Include="ValueObject\StaticValueGridVo.cs" />
+    <Compile Include="ValueObject\NoteRequestGridVo.cs" />
+    <Compile Include="ValueObject\PieChartData.cs" />
+    <Compile Include="ValueObject\RequestStatusGridVo.cs" />
+    <Compile Include="ValueObject\DetailScheduleMonthlyOfCourierGridVo.cs" />
+    <Compile Include="ValueObject\DetailScheduleWeeklyOfCourierGridVo.cs" />
+    <Compile Include="ValueObject\ScheduleOfCourierGridVo.cs" />
+    <Compile Include="ValueObject\CourierScheduleGridVo.cs" />
+    <Compile Include="ValueObject\CourierGridVo.cs" />
+    <Compile Include="ValueObject\CustomerGridVo.cs" />
+    <Compile Include="ValueObject\FranchiseeTenantGridVo.cs" />
+    <Compile Include="ValueObject\HoldingRequestVo.cs" />
+    <Compile Include="ValueObject\LocationGridVo.cs" />
+    <Compile Include="ValueObject\LookupItemVo.cs" />
+    <Compile Include="ValueObject\MenuViewModel.cs" />
+    <Compile Include="ValueObject\ModuleDocumentTypeOperationGridVo.cs" />
+    <Compile Include="ValueObject\RequestGridVo.cs" />
+    <Compile Include="ValueObject\ModuleGridVo.cs" />
+    <Compile Include="ValueObject\ReadOnlyGridVo.cs" />
+    <Compile Include="ValueObject\SendHoldingRequestItemVo.cs" />
+    <Compile Include="ValueObject\SystemEventGridVo.cs" />
+    <Compile Include="ValueObject\StateGridVo.cs" />
+    <Compile Include="ValueObject\Tenant.cs" />
+    <Compile Include="ValueObject\CourierOnlineVo.cs" />
+    <Compile Include="ValueObject\TrackingVo.cs" />
+    <Compile Include="ValueObject\PackageHistoryGridVo.cs" />
+    <Compile Include="ValueObject\UserGridVo.cs" />
+    <Compile Include="ValueObject\UserRoleFunctionGridVo.cs" />
+    <Compile Include="ValueObject\UserRoleGridVo.cs" />
+    <Compile Include="ValueObject\WarningScheduleVo.cs" />
+    <Compile Include="ValueObject\WarningInfoVo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.DataAnnotations\Framework.DataAnnotations.csproj">
+      <Project>{4294fadf-f4e6-4385-99c1-0b51d91a06f4}</Project>
+      <Name>Framework.DataAnnotations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Service\Framework.Service.csproj">
+      <Project>{60fc5f14-c3e8-4a32-a0f0-17bbd23524f7}</Project>
+      <Name>Framework.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Utility\Framework.Utility.csproj">
+      <Project>{C476D7B3-7814-48AA-87A1-ECAE8E8A7F4F}</Project>
+      <Name>Framework.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

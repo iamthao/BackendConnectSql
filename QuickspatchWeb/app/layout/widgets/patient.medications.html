@@ -1,0 +1,37 @@
+﻿<div class="block-flat">
+    <div data-cc-widget-header title="Medications"></div>
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-4"><h4 class="text-primary">Morphine Equivalent:&nbsp;<span class="text-danger"><strong>500 Med</strong></span></h4></div>
+            <div class="col-sm-8"><div class="alert alert-danger" role="alert"><h4>There are some medication interactions that need your attention! <a href="#">More Details</a></h4></div></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <h4 class="text-danger">Medications List</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="badge badge-danger"><i class="fa fa-angle-right"></i></span>
+                        <strong>All Medications</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="badge badge-danger"><i class="fa fa-angle-right"></i></span>
+                        <strong>Internal Medications</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="badge badge-danger"><i class="fa fa-angle-right"></i></span>
+                        <strong>External Medications</strong>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <h4 class="text-danger">Allergies</h4>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="allergy in allergies">
+                        <span class="badge badge-danger"></span>
+                        <span ng-class="(allergy.Severity == 'Critical')? 'text-danger' : 'text-primary'"><strong>{{allergy.Name}}:</strong> {{allergy.ReactDescription}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

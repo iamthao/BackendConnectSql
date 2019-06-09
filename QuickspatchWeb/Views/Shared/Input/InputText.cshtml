@@ -1,0 +1,24 @@
+﻿@model QuickspatchWeb.Models.Input.InputTextViewModel
+<section class="col col-@Model.Col @Model.MoreClass">
+    @if (!string.IsNullOrEmpty(Model.Label))
+    {
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.Label
+    </label>
+    }
+    <label class="input">
+        @if (Model.IsDisabled)
+        {
+            <input id="@Model.Id" @Model.TextboxType maxlength='@Model.Length' class="@Model.Class k-textbox"
+                   ng-model="@Model.DataBindingValue" placeholder="@Model.PlaceHolderText" disabled="disabled" autocomplete="@Model.AutoComplete" />
+        }
+        else
+        {
+            <input id="@Model.Id" @Model.TextboxType maxlength='@Model.Length' class="@Model.Class"
+                   ng-model="@Model.DataBindingValue" placeholder="@Model.PlaceHolderText" @Model.ReadOnlyAttr autocomplete="@Model.AutoComplete"/>
+        }
+    </label>
+</section>

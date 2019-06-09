@@ -1,0 +1,51 @@
+﻿<div>
+    <table style="margin: 0 auto;background: #f2f2f2; padding: 50px;width: 500px;">
+        <tr>
+            <td colspan="2" align="center">
+                <h2>{{RequestNo}}</h2>
+                <img src="/Content/quickspatch/img/{{imageName}}.png" style="position: absolute;left: 56%;top: 1%; height: 130px">
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="20%"><b>From: </b></td>
+            <td width="80%"><p style="margin-left: 10px;"><b>{{RequestFromName}}</b></p></td>
+        </tr>
+        <tr>
+            <td align="right" width="20%"></td>
+            <td width="80%"><p style="margin-left: 10px;">{{RequestFrom}}</p></td>
+        </tr>
+        <tr>
+            <td align="right"><b>To: </b></td>
+            <td><p style="margin-left: 10px;"><b>{{RequestToName}}</b></p></td>
+        </tr>
+        <tr>
+            <td align="right"></td>
+            <td><p style="margin-left: 10px;">{{RequestTo}}</p></td>
+        </tr>
+        <tr>
+            <td align="right"><b>Times: </b></td>
+            <td><p style="margin-left: 10px;">{{RequestTimes}} minutes</p></td>
+        </tr>
+        <tr>
+            <td align="right"><b>Distances: </b></td>
+            <td><p style="margin-left: 10px;">{{RequestDistance}} miles</p></td>
+        </tr>
+        <tr>
+            <td align="right" valign="top">
+                {% if RequestAgreed %}
+                <input type="checkbox" checked="checked" />
+                {% else %}
+                <input type="checkbox" />
+                {% endif %}
+            </td>
+            <td colspan="2">
+                <i>I agree I have read and accepted the User Agreement and Privacy Policy.</i>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <img src="/FileUpload/Temps/{{fileName}}" />
+            </td>
+        </tr>
+    </table>
+</div>

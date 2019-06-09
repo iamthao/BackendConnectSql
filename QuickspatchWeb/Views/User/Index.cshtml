@@ -1,0 +1,50 @@
+﻿@model QuickspatchWeb.Models.User.DashboardUserIndexViewModel
+@{
+    Layout = null;
+}
+<div class="panel panel-table">
+    <div class="panel-heading">
+        <div class="panel-title-small">Manage Users</div>
+    </div>
+
+    <div id="content-container" ng-controller="userController">
+        @Html.Partial("~/Views/Shared/Grid/_ReadOnlyGrid.cshtml", @Model.GridViewModel)
+    </div>
+</div>
+<script type="text/x-kendo-template" id="userTemplate">
+    
+        #if(IsActive == true){#
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            @*<input type='checkbox' id="chk-#= Id#" class="k-checkbox-label" checked="checked" disabled />*@
+                <span class="fa fa-check" style="color:\\#5cb85c"></span>
+        #}#
+        #if(IsActive == false){#
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            @*<input type='checkbox' class="k-checkbox-label" disabled />*@    
+            <span class="fa fa-times" style="color:\\#d9534f"></span>
+        #}#
+        
+</script>
+<script>
+    $("#dropdown-export").hide();
+</script>  
+<script>
+    function resizeGrid() {
+        var gridElement = $("#User"),
+            dataArea = gridElement.find(".k-grid-content"),
+            gridHeight = gridElement.innerHeight(),
+            otherElements = gridElement.children().not(".k-grid-content"),
+            otherElementsHeight = 0;
+        otherElements.each(function () {
+            otherElementsHeight += $(this).outerHeight();
+        });
+        dataArea.height(gridHeight - otherElementsHeight);
+    }
+
+    $(window).resize(function () {
+     
+        resizeGrid();
+    });
+</script>
+

@@ -1,0 +1,228 @@
+﻿@using System.Configuration
+@{
+    Layout = null;
+}
+@{
+    var url = ConfigurationManager.AppSettings["Url"];
+}
+<style type="text/css">
+    .modal-dialog.modal-lg {
+        width: 98%;
+    }
+</style>
+<div id="billing-package-controller" ng-controller="billingPackageController">
+    <div id="content-container">       
+        <div class="row" id="package" style="margin-left: 30px; margin-right: 30px; margin-top: 10px;">         
+            <div class=" col-md-12 " role="group" style="text-align: center ;margin-bottom:10px" >
+                <div class="btn-group">
+                    <button id="choose-monthly" type="button" class="btn btn-default radio-button-left chosee-type-payment" ng-click="chooseMonthly();">Monthly billing</button>
+                    <button id="choose-annually" type="button" class="btn btn-default radio-button-right " ng-click="chooseAnnually();">&nbsp;&nbsp;Annual billing&nbsp;</button>
+                </div>
+            </div>
+            @*<div class=" col-md-12 " role="group" style="text-align: center; margin-top: 10px; min-height: 30px;">
+                &nbsp;<span ng-show="!showMonthly" style="  font-size: 16px; ">up to 20% discount</span>
+            </div>*@
+            @* Monthly *@
+            <div class="col-md-12" ng-show="showMonthly">
+                <article id="plans" style="padding-top: 0">
+                    <div class="row planRow">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <section id="package-standard">
+
+                                <h2>
+                                    10 Couriers
+                                </h2>
+                                <ul>                                 
+                                    <li style="height: 80px; padding-top: 30px;"><span class="price-label">$144</span> <span class="annually"> /month</span></li>
+                                    <li></li>
+                                    <span class=" outerBtn">
+                                        <button id="button-standard" name="planBtn" value="38" class="planBtn btn btn-sm btn-choose-plan font-billing" type="button" ng-click="selectStandard();">Choose plan</button>
+                                    </span>
+                                </ul>
+                            </section>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <section id="package-prenium">
+                                <h2>25 Couriers</h2>
+                                <ul>                                
+                                    <li style="height: 80px; padding-top: 30px;"><span class="price-label">$300</span> <span class="annually"> /month</span></li>
+                                    <li></li>
+                                    <span class=" outerBtn">
+                                        <button id="button-prenium" name="planBtn" value="39" class="planBtn btn btn-sm btn-choose-plan font-billing" type="button" ng-click="selectPrenium();">Choose plan</button>
+                                    </span>
+                                </ul>
+                            </section>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <section id="package-enterprise">
+                                <h2>50 Couriers</h2>
+                                <ul>
+                                    <li style="height: 80px; padding-top: 30px;"><span class="price-label">$480</span> <span class="annually"> /month</span></li>
+                                    <li></li>
+                                    <span class="outerBtn">
+                                        <button id="button-enterprise" name="planBtn" value="40" class="planBtn btn btn-sm btn-choose-plan font-billing" type="button" ng-click="selectEnterprise();">Choose plan</button>
+                                    </span>
+                                </ul>
+                            </section>
+                        </div>
+                        @*<div class="col-md-3 col-sm-6 col-xs-12">
+                            <section id="package-enterprise-plus">
+                                <h2>115 Couriers</h2>
+                                <ul>
+                                    <li style="height: 70px; padding-top: 30px;"><span class="price-label">$624</span> <span class="annually"> /month</span></li>
+                                    <li></li>
+                                    <span class=" outerBtn">
+                                        <button id="button-enterprise-plus" name="planBtn" value="40" class="planBtn btn btn-sm btn-choose-plan font-billing" type="button" ng-click="selectEnterprisePlus();">Choose plan</button>
+                                    </span>
+                                </ul>
+                            </section>
+                        </div>*@
+                    </div>
+                </article>
+            </div>
+            @* Annually *@
+            <div class="col-md-12" ng-show="!showMonthly">
+                <article id="plans" style="padding-top: 0">
+                    <div class="row planRow">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <section id="package-standard-annually">
+                                <h2>10 Couriers</h2>
+                                <ul>
+                                    <li style="height: 80px">
+                                        <span class="price-label">$120</span> <span class="annually"> /month</span>
+                                        <br />
+                                        <span class="annually">Paid annually</span>
+                                        <br />
+                                        <span class="annually">(Save $288)</span>
+                                    </li>
+                                    <li></li>
+                                    <span class=" outerBtn">
+                                        <button id="button-standard-annually" name="planBtn" value="38" class="planBtn btn btn-sm btn-choose-plan font-billing" type="button" ng-click="selectStandardAnnually();">Choose plan</button>
+                                    </span>
+                                </ul>
+                            </section>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <section id="package-prenium-annually">
+                                <h2>25 Couriers</h2>
+                                <ul>
+                                    <li style="height: 80px">
+                                        <span class="price-label">$250</span> <span class="annually"> /month</span>
+                                        <br />
+                                        <span class="annually">Paid annually</span>
+                                        <br />
+                                        <span class="annually">(Save $600)</span>
+                                    </li>
+                                    <li></li>
+                                    <span class=" outerBtn">
+                                        <button id="button-prenium-annually" name="planBtn" value="39" class="planBtn btn btn-sm btn-choose-plan font-billing" type="button" ng-click="selectPreniumAnnually();">Choose plan</button>
+                                    </span>
+                                </ul>
+                            </section>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <section id="package-enterprise-annually">
+                                <h2>50 Couriers</h2>
+                                <ul>
+                                    <li style="height: 80px">
+                                        <span class="price-label">$400</span> <span class="annually"> /month</span>
+                                        <br />
+                                        <span class="annually">Paid annually</span>
+                                        <br />
+                                        <span class="annually">(Save $960)</span>
+                                       
+                                    </li>
+                                    <li></li>
+                                    <span class=" outerBtn">
+                                        <button id="button-enterprise-annually" name="planBtn" value="40" class="planBtn btn btn-sm btn-choose-plan font-billing" type="button" ng-click="selectEnterpriseAnnually();">Choose plan</button>
+                                    </span>
+                                </ul>
+                            </section>
+                        </div>
+                        @*<div class="col-md-3 col-sm-6 col-xs-12">
+                            <section id="package-enterprise-plus-annually">
+                                <h2>115 Couriers</h2>
+                                <ul>
+                                    <li style="height: 70px">
+                                        <span class="price-label">$499</span> <span class="annually"> /month</span>
+                                        <br />
+                                        <span class="annually">Paid annually</span>
+                                    </li>
+                                    <li></li>
+                                    <span class=" outerBtn">
+                                        <button id="button-enterprise-plus-annually" name="planBtn" value="40" class="planBtn btn btn-sm btn-choose-plan font-billing" type="button" ng-click="selectEnterprisePlusAnnually();">Choose plan</button>
+                                    </span>
+                                </ul>
+                            </section>
+                        </div>*@
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 30px; margin-right: 30px; margin-top: 0; margin-bottom: 10px">
+            <div class="col-md-12" style="text-align: center">
+                <button class="planBtn btn btn-sm btn-choose-plan" style="height: 42px; width: 112px;-webkit-border-radius: 25px;" ng-click="submitPackage();">&nbsp;&nbsp;&nbsp;Submit&nbsp;&nbsp;&nbsp;</button>
+                <div class="modal fade bs-example-modal-lg" id="modal-cpg-change-package" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                <h4 class="modal-title" id="myLargeModalLabel">PAYMENT INFO</h4>
+                            </div>
+                            <div class="modal-body" id="modal-cpg-body-change-package">
+                                <iframe id="ifram-cpg-change-package" width="100%" height="100%" ng-src="{{currentProjectUrl}}"></iframe>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="package-plus" class="row" style="margin-left: 30px; margin-right: 30px; margin-top: 40px; margin-bottom: 15px; padding-left: 15px; padding-right: 15px;">
+            <div class="col-md-3 col-sm-12 col-xs-12"></div>
+            <div class="col-md-6 col-sm-12 col-xs-12 content " style="min-height: 60px">
+                <div class="col-sm-9 col-xs-12" itemprop="description"><h4 style="margin-top: 15px">50+ Couriers</h4></div>
+                <div class="col-sm-3 col-xs-12" style="padding-top: 3px;text-align: right">
+                    <button class="planBtn btn btn-sm btn-contact" style="height: 42px; width: 112px; -webkit-border-radius: 25px; " ng-click="showContactUs();">Contact Us</button>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 col-xs-12"></div>
+        </div>
+        <div class="row" style="margin-left: 30px; margin-right: 30px; margin-top: 20px; margin-bottom: 20px;">
+            <div class="col-md-12" style="text-align: center">
+                <a ng-click="goBack();" style=" cursor: pointer; cursor: hand;">Go back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#content-container").css({ 'min-height': $(window).height() - 150 });
+        $('#modal-cpg-body-change-package').css({ 'height': $(window).height() - 130 });
+    });
+
+    function close(data) {
+        $('#modal-cpg-change-package').modal('hide');
+        var scope = angular.element('#billing-package-controller').scope();
+        if (scope != undefined) {
+            scope.currentProjectUrl = '';
+            if (data != 0) {
+                if (window.location.hash == '#/franchiseeconfiguration') {
+                    window.location.href = '@url#/franchiseeconfiguration?tabIndex=2';
+                } else {
+                    window.location.reload();
+                }
+            }
+            setTimeout(function () {
+
+            }, 1500);
+
+        }
+    }
+</script>
+

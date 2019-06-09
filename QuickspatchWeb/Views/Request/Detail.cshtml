@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<div ng-controller="requestDetailController" style="padding: 0px 20px;">
+    <div class="panel panel-table">
+        <ul class="nav nav-tabs" id="request-tab">
+            <li ng-class="classTracking" ng-show="!visibleTracking"><a href="javascript:void(0)" data-target="#tracking" aria-controls="tracking" data-toggle="tab" ng-click="selectTab(1);"><span class=" panel-title-small">Tracking</span></a></li>
+            <li ng-class="classDetail"><a href="javascript:void(0)" data-target="#detail" data-toggle="tab" aria-controls="detail" ng-click="selectTab(2);"><span class="panel-title-small">Note Detail</span></a></li>
+            <li><a href="javascript:void(0)" data-target="#complete" data-toggle="tab" aria-controls="complete" ng-click="selectTab(3);"><span class="panel-title-small">Complete Detail</span></a></li>
+        </ul>
+        <div class="tab-content" id="franchisee-tab-control">
+            <div class="tab-pane" ng-class="classTracking" id="tracking">
+                <div ng-show="tabIndex==1">
+                    <div ng-include="'/Request/DetailTracking'"> </div>
+                </div>
+            </div>
+            <div class="tab-pane" ng-class="classDetail" id="detail">
+                <div ng-if="tabIndex==2">
+                    <div ng-include="'/Request/DetailRequest'"> </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="complete">
+                <div ng-if="tabIndex==3">
+                    <div ng-include="'/Request/DetailComplete'"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

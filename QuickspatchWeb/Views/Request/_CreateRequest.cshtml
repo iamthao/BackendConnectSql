@@ -1,0 +1,141 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Request.DashboardRequestShareViewModel
+<form id="form-request" class="smart-form card" ng-show="ShowFormRequest" style="position:fixed; width:1000px; z-index: 1000; left: 325px;" ng-controller="createRequestController">
+    <div class="row">
+        <div class="col-md-6">
+            <fieldset class="panel-control border-bottom no-padding" style="margin-left: 5px;">
+                <section class="col col-6 no-margin">
+                    <div class="col col-6 no-padding format-label">
+                        <label><span class='red'>*</span> From</label>
+                    </div>
+                    <div class="col col-6 no-padding" style="margin-top: -7px;">
+                        <label class="checkbox pull-right"><input type="checkbox" ng-model="Request.SetDefaultFrom" id="SetDefaultFrom" /><i></i> Get Default</label>
+                    </div>
+                    @Html.Lookup("RequestLocationFrom", "", "LocationFrom", "Request.LocationFrom", 12, urlToReadData: "Location/GetLookup", isRequired: true, showAddEdit: true, addLookupPopupFunction: "AddLookupLocationFrom()", editLookupPopupFunction: "EditLookupLocationFrom()", moreClass: "no-padding")
+                </section>
+                <section class="col col-6 no-margin">
+                    <div class="col col-6 no-padding format-label">
+                        <label><span class='red'>*</span> To</label>
+                    </div>
+                    <div class="col col-6 no-padding" style="margin-top: -7px;">
+                        <label class="checkbox pull-right"><input type="checkbox" ng-model="Request.SetDefaultTo" id="SetDefaultTo" /><i></i> Get Default</label>
+                    </div>
+                    @Html.Lookup("RequestLocationTo", "", "LocationTo", "Request.LocationTo", 12, urlToReadData: "Location/GetLookup", isRequired: true, showAddEdit: true, addLookupPopupFunction: "AddLookupLocationTo()", editLookupPopupFunction: "EditLookupLocationTo()", moreClass: "no-padding")
+                </section>
+                @*@Html.Lookup("RequestLocationFrom", "From", "LocationFrom", "Request.LocationFrom", 6, urlToReadData: "Location/GetLookup", isRequired: true, showAddEdit: true, addLookupPopupFunction: "AddLookupLocationFrom()", editLookupPopupFunction: "EditLookupLocationFrom()")
+            @Html.Lookup("RequestLocationTo", "To", "LocationTo", "Request.LocationTo", 6, urlToReadData: "Location/GetLookup", isRequired: true, showAddEdit: true, addLookupPopupFunction: "AddLookupLocationTo()", editLookupPopupFunction: "EditLookupLocationTo()")*@
+                <section class="col col-6 no-margin">
+                    <div class="col col-6 no-padding format-label">
+                        <label><span class='red'>*</span> @Model.DisplayNameForCourier</label>
+                    </div>
+                    <div class="col col-6 no-padding" style="margin-top: -7px;">
+                        <label class="checkbox pull-right" ng-show="ShowRequestAutoAssign"><input type="checkbox" ng-model="Request.AutoAssign" id="RequestAutoAssign" /><i></i> Auto assign</label>
+                    </div>
+                    @Html.Lookup("RequestCourierId", "", "Courier", "Request.CourierId", 12, urlToReadData: "Courier/GetLookup", showAddEdit: false, isRequired: true, moreClass: "no-padding")
+                </section>
+                <section class="col col-6 no-margin">
+                    <div class="col col-6 no-padding">
+                        <label><span class='red'>*</span> Dispatch Time</label>
+                    </div>
+                    <div class="col col-6 no-padding" style="margin-top: -7px;">
+                        <label class="checkbox pull-right red"><input type="checkbox" ng-model="Request.IsStat" /><i></i> Priority Job</label>
+                    </div>
+                    @Html.CustomTimePicker("SendingTime", "", "Request.SendingTime", 12, "hh:mm tt", hasMin: true, moreClass: "no-padding")
+
+                </section>
+
+
+
+
+
+                @Html.CustomTimePicker("RequestStartTime", "Arrival Window From", "Request.StartTime", 6, "hh:mm tt", required: true, hasMin: true)
+                @Html.CustomTimePicker("RequestEndTime", "Arrival Window To", "Request.EndTime", 6, "hh:mm tt", required: true, hasMin: true)
+                @Html.CustomTextArea("Description", "Notes", "Request.Description", placeHolderText: "Take notes here...", height: 50, col: 12)
+                <section class="col col-12 no-margin">
+                    <div class="btn-group pull-right">
+
+                        <button class="btn btn-default" type="button" ng-click="cancelRequest()"><i class="fa fa-remove"></i> Cancel</button>
+                        <button class="btn btn-primary" ng-show="!IsShowLoading&&!IsUpdate" type="button" ng-click="SendRequest()"><i class="fa fa-plus"></i> Send</button>
+                        <button class="btn btn-primary" ng-show="!IsShowLoading&&IsUpdate" type="button" ng-click="EditRequest()"><i class="fa fa-save"></i> Update</button>
+                        <button class="btn btn-primary" ng-show="IsShowLoading"><img src="@(Url.Content("~/Content/quickspatch/img/loading.gif"))" alt="" height="14" /></button>
+                    </div>
+                </section>
+
+            </fieldset>
+        </div>
+        <div class="col-md-6">
+            <div id="create-request-courier-map" style="width: 100%; height: 100%" ng-controller="mapCreateRequestController">
+                <div ng-if="Map.show" style="width: 490px">
+                    <ui-gmap-google-map center='Map.Center' zoom='Map.Zoom' style="height: 100%;" bounds="Map.Bounds" control="Map.control">
+                        @*<ui-gmap-marker coords="Marker.Coords" options="Marker.Options" idkey="Marker.Id"></ui-gmap-marker>*@
+                        <ui-gmap-polylines models="Map.Polys" path="'path'" stroke="'stroke'" visible="'visible'" geodesic="'geodesic'" editable="'editable'" draggable="'draggable'" static="true"></ui-gmap-polylines>
+                        <ui-gmap-marker ng-repeat="m in Marker" coords="m.Coords" options="m.Options" idkey="m.Id" click='m.Click'>
+
+                            <ui-gmap-window ng-cloak coords="map.Coords" show="m.Show">
+                                <table>
+                                    <tr>
+                                        <td rowspan="3"><img src="{{m.Avatar}}" alt="" title="{{m.FullName}}" width="48" style="margin-right: 10px" /></td>
+                                        <td>Name: <b>{{m.FullName}}</b></td>
+                                    </tr>
+                                    <tr><td>Current Req: <b>{{m.RequestNo}}</b></td></tr>
+                                    <tr><td>Current Speed: <b>{{m.CurrentVelocity}} (mph)</b></td></tr>
+                                </table>
+
+                            </ui-gmap-window>
+                        </ui-gmap-marker>
+                        <ui-gmap-marker coords="MarkerStartDirection.Coords" options="MarkerStartDirection.Options" idkey="MarkerStartDirection.Id"></ui-gmap-marker>
+                        <ui-gmap-marker coords="MarkerEndDirection.Coords" options="MarkerEndDirection.Options" idkey="MarkerEndDirection.Id"></ui-gmap-marker>
+                    </ui-gmap-google-map>
+                </div>
+                
+                <button class="btn btn-default" style="position: absolute;z-index: 999;margin-top: -40px;margin-left: 10px" ng-click="loadAll()" title="Show all couriers online"><i class="fa fa-map-marker"></i><i class="fa fa-map-marker"></i><i class="fa fa-map-marker"></i></button>
+            </div>
+        </div>
+    </div>
+   
+</form>
+<script type="text/javascript">
+    function RequestViewModel() {
+        var self = this;
+        self.Id = 0;
+        self.LocationFrom = 0;
+        self.LocationTo = 0;
+        self.CourierId = 0;
+        self.IsStat = false;
+        self.SendingTime = '';
+        self.StartTime = '';
+        self.EndTime = '';
+        self.Description = '';
+        self.AutoAssign = false;
+        self.SetDefaultFrom = false;
+        self.SetDefaultTo = false;
+    }
+</script>
+@*<div id="new-request-card" class="card" style="position:absolute; width:300px; z-index: 1000; display: none" ng-controller="createRequestController">
+        <div style="text-align: center; width: 100%"><span class="badge badge-primary" title="Reference code" data-toggle="tooltip" data-placement="top" style="cursor: default">RQ20150501_A1</span></div>
+        <div title="Choose the start location." data-toggle="tooltip" data-placement="top">
+            <input id="location-list-from" value="0" style="margin-top: 10px; width: 100%" />
+        </div>
+        <div title="Choose the target location." data-toggle="tooltip" data-placement="top">
+            <input id="location-list-to" value="0" style="margin-top: 10px; width: 100%" />
+        </div>
+        <div data-placement="top" title='The courier who processes this request. Select "Auto assign courier" to let the system automatically choose the nearest courier to the start location for this request.' data-toggle="tooltip">
+            <input id="assign-courier" value="0" style="margin-top: 10px; width: 100%" />
+        </div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-xs-4">
+                <span title="Check this to send the request immediately." data-toggle="tooltip" data-placement="top"><input type="checkbox" id="stat"> STAT</span>
+            </div>
+            <div class="col-xs-8 text-right">
+                <div title='Pick time in day to send this request. This will be disabled when "STAT" is checked.' data-toggle="tooltip" data-placement="top">
+                    <input id="time-picker" />
+                </div>
+            </div>
+        </div>
+        <div title="Take notes about this request." data-toggle="tooltip" data-placement="top">
+            <textarea class="form-control" style="min-width: 100%;max-width: 100%; margin-top: 10px" rows="2" placeholder="Take notes here..."></textarea>
+        </div>
+        <div class="col-xs-6 col-xs-offset-8" style="margin-top: 10px; padding-right:0">
+            <button class="btn btn-primary" type="button" onclick="sendNewRequest()"><i class="fa fa-envelope-o"></i> Send</button>
+        </div>
+    </div>*@

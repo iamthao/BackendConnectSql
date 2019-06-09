@@ -1,0 +1,19 @@
+﻿@using QuickspatchWeb.Models
+@using QuickspatchWeb.Models.Courier
+@model DashboardCourierDataViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+}
+
+<div ng-controller="createCourierController">
+    @Html.Partial("_Shared", Model.SharedViewModel)
+</div>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Create", "fa-save", FooterActionEnum.Save, "createCourierController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "createCourierController", false)
+
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}
+

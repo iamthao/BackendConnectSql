@@ -1,0 +1,16 @@
+﻿@model QuickspatchWeb.Models.Home.DashboardHomeIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var isQuickTour = Model.IsQuickTour.ToString().ToLower();
+}
+
+<div id="content" data-ng-controller="shell as vm" ng-init="init('@isQuickTour')">
+    <div ng-show='isBusy' class='loading-indicator'>
+        <div class='loading-indicator-body'>
+            <h3 class='loading-title'>Loading...</h3>
+            <div class='spinner'><rotating-plane-spinner></rotating-plane-spinner></div>
+        </div>
+    </div>
+    <div ui-view="main"></div>
+</div> 

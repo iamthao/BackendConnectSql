@@ -1,0 +1,15 @@
+﻿@model QuickspatchWeb.Models.Customer.DashboardCustomerIndexViewModel
+@{
+    Layout = null;
+}
+
+<div class="panel panel-table">
+    <div class="panel-heading">
+        <div class="panel-title-small">Manage Customers</div>
+    </div>
+
+    <div id="content-container" ng-controller="customerController">
+        @Html.Partial("~/Views/Shared/Grid/_ReadOnlyGrid.cshtml", @Model.GridViewModel)
+    </div>
+</div>
+

@@ -1,0 +1,110 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <!-- Icon -->
+    <link rel="icon" href="/Content/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/Content/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Content/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Content/img/favicon.png">
+
+    <!-- SITE TITLE HERE -->
+    <title>QuickSpatch - Camino Information Services</title>
+
+    <!-- Page Loading -->
+    <!-- Google Font -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+
+    <!-- Bootstrap CSS File -->
+    <link href="/Content/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="/Content/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS Code -->
+    <link href="/Content/stylesubmit.css" rel="stylesheet">
+    <link href="/Content/deepblue.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script src="~/Scripts/jquery-2.1.1.js"></script>
+</head>
+<body class="videobg" ng-app="myApp" ng-controller="myCtrl">
+    <!--///////////////////////////////////
+    /////// Loading Animation Start //////
+    ///////////////////////////////////-->
+    <div id="register-loading" class="overlayer clearfix">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+    <!--/////////////////////////////////
+    /////// Loading Animation End //////
+    //////////////////////////////////-->
+    <div class="row" style="margin-left: 30px; margin-right: 30px; margin-top: 10px;">
+        <div class="col-md-12">
+            <a href="javascript:back()" style="cursor: pointer; cursor: hand;">Login</a>
+
+        </div>
+    </div>
+    <section class="at-contact bgwhite" style="padding-top: 30px;">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="sec-title">
+                        <h3>
+                            <a href="/" class="logo"><img src="/Content/img/logo-o.svg" alt="logo" height="50"></a>
+                        </h3>
+
+                    </div><!-- .sec-title -->
+                </div><!-- .col-md-12 -->
+            </div><!-- .row -->
+
+            <div class="row">
+                <div class="col-md-12" style="text-align: center">
+                    <h2>Thanks for choosing QuickSpatch software.</h2>
+                    <h3>Please wait until you receive an email notification successfully installed.</h3><br />
+                    <img src="/Content/img/inbox.png" alt="mail" height="180" />
+                </div><!-- .col-md-6 -->
+
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </section>
+    <!--/////////////////////////////////
+    ///////// Footer Section ////////////
+    //////////////////////////////////-->
+    <footer class="bgwhite" style=" bottom: 0; position: fixed; width: 100%">
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        &copy; 2016 Camino Information Services. All Rights Reserved.
+                    </div><!-- .col-md-12 -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .copyright -->
+    </footer>
+
+    <!--/////////////////////////////////////
+    ///////// Footer Section End ////////////
+    //////////////////////////////////////-->
+    <!-- jQuery and Necessary plugins -->
+</body>
+</html>
+<script>
+    function back() {
+        window.location.href = '/';
+    }
+</script>

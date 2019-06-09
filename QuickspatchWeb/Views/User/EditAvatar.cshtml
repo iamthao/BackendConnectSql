@@ -1,0 +1,56 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@using QuickspatchWeb.Models
+@using QuickspatchWeb.Models.User
+@model DashboardUserProfileViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+
+}
+<fieldset ng-controller="userEditAvatarProfileController">
+    <div class="container ">
+        <table>
+            <tr>
+                @*<th style="width: 50%">
+                    Old Avatar:<br>
+                    <img src="@Model.Avatar" class="effect1 img-rounded" style="height: 150px" />
+                </th>
+                <th style="width: 10%">
+                    <p>&nbsp;</p>
+                </th>*@
+                <th>
+                    @Html.CustomFileUpload("Avatar", "Profile Picture", "User.Avatar", 12, previewWidth: 450, previewHeight: 450, acceptType: "image/*", isAvatar: true)
+                </th>
+            </tr>
+</table>
+</div>
+
+
+</fieldset>
+
+<script type="text/javascript">
+    function UserViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Password = @Html.Raw(Json.Encode(Model.Password));
+        self.UserName = @Html.Raw(Json.Encode(Model.UserName));
+        self.UserRoleId = @Html.Raw(Json.Encode(Model.UserRoleId));
+        self.FirstName = @Html.Raw(Json.Encode(Model.FirstName));
+        self.LastName = @Html.Raw(Json.Encode(Model.LastName));
+        self.MiddleName = @Html.Raw(Json.Encode(Model.MiddleName));
+        self.HomePhone = @Html.Raw(Json.Encode(Model.HomePhone));
+        self.MobilePhone = @Html.Raw(Json.Encode(Model.MobilePhone));
+        self.Email = @Html.Raw(Json.Encode(Model.Email));
+        self.LastModified = @Html.Raw(Json.Encode(Model.LastModified));
+        self.IsActive=@Html.Raw(Json.Encode(Model.IsActive));
+        self.Avatar = @Html.Raw(Json.Encode(Model.Avatar));
+    }
+</script>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Update", "fa-save", FooterActionEnum.Save, "userEditAvatarProfileController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "userEditAvatarProfileController", false)
+
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}

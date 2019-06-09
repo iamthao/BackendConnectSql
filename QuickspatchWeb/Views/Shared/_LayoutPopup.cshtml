@@ -1,0 +1,53 @@
+﻿@model QuickspatchWeb.Models.ViewModelBase
+
+<div id="content-header" style="display:none">
+    <h1>
+        @RenderSection("Breadcrums", required: false)
+    </h1>
+</div>
+<div class="portlet-content">
+    <form class="smart-form" role="form" style="width:100%; margin:0;padding: 0;" autocomplete="off">
+        <div class="popup-body modal-body" data-ng-controller="baseFormPopupController" style="overflow-y: auto; overflow-x: hidden;">
+            @RenderBody()
+        </div>
+        <div class="popup-footer">
+            <!--footer-->
+            @RenderSection("FooterActions", required: false)
+            <!--end footer-->
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    EnableCreateFooterButton(false);
+    $('form').attr('autocomplete', 'off');
+    
+    // Setup dirty dialog handling across all forms
+    $('form').areYouSure({
+        message: '@Html.Raw(Model.DirtyDialogMessageText)',
+        change: function () {
+            var formElement = $(this);
+            if (formElement[0] === undefined) {
+                formElement = $(document).find('form');
+            }
+
+            if (formElement.hasClass('dirty')) {
+                EnableCreateFooterButton(true);
+            } else {
+                EnableCreateFooterButton(false);
+            }
+        }
+    });
+
+   
+    //$(".popup-body.modal-body").css({ height: $(".popup-body.modal-body").parent.height() - 55 })    
+    var eles = $(".popup-body.modal-body").parents();
+ 
+    for (var i = 0; i < eles.length; i++) {
+        if ($(eles[i]).hasClass("k-window") ) {
+            $(eles[i]).find(".popup-body.modal-body").css({ height: $(eles[i]).height() - 55 });
+        } 
+    }
+   
+
+</script>

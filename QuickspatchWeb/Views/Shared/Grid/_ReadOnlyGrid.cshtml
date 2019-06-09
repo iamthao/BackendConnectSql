@@ -1,0 +1,124 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@using Newtonsoft.Json
+@model QuickspatchWeb.Models.GridViewModel
+
+
+
+<script type="text/x-kendo-template" id="templateHeader">
+    <div class="row" style="padding:0 20px 0 10px;">
+        <div class="col-xs-8" style="padding:0">
+            @if (Model.CanAddNewRecord)
+            {
+                <div style="float: left;margin-right:10px"><button class="btn btn-default btn-primary" ng-click="Add()"><span class="fa fa-plus"></span> Add</button></div>
+
+            }
+            @if (Model.CanExportGrid)
+            {
+                <div class="btn-group" id="dropdown-export">
+                    <button data-toggle="dropdown" class="btn dropdown-toggle" type="button">
+                        <i class="fa fa-file-excel-o"></i>&nbsp;Export excel &nbsp;<span class="caret"></span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu">
+                        <li>
+                            <a href="javascript:;">
+                                <input type='radio' name='chk-export' id="chk-1000" value="1000" class="k-radio" checked="checked" />
+                                <label class="k-radio-label large" for="chk-1000"> &nbsp;1000 rows</label>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <input type='radio' name='chk-export' id="chk-5000" value="5000" class="k-radio" />
+                                <label class="k-radio-label large" for="chk-5000"> &nbsp;5000 rows</label>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <input type='radio' name='chk-export' id="chk-10000" value="10000" class="k-radio" />
+                                <label class="k-radio-label large" for="chk-10000"> &nbsp;10000 rows</label>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;">
+                                <input type='radio' name='chk-export' id="chk-all" value="-1" class="k-radio" />
+                                <label class="k-radio-label large" for="chk-all"> &nbsp;All</label>
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+                        <li style="padding:0 5px 5px  5px;overflow: hidden;text-align: center;">
+                            <button class="btn btn-primary" ng-click="ExportToExcel()"><i class="fa fa-file-excel-o"></i> Export</button>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+        <div class="col-xs-4" style="padding:0">
+            @if (Model.CanSearchGrid)
+            {
+                <div class="k-widget search-box">
+                    <span class="k-picker-wrap k-state-default">
+                        <input type="text" class="k-input" placeholder="Enter keyword" ng-model="SearchText" ng-enter="Search($event)">
+                        <span class="k-select" ng-click="Search()">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </span>
+                </div>
+            }
+        </div>
+    </div>
+
+
+</script>
+
+<script type="text/x-kendo-template" id="commandTemplate">
+    <div class="btn-group">
+
+        @if (Model.CanUpdateRecord)
+        {
+            <button class="btn btn-sm btn-default" ng-click="Edit(${ Id });"><i class="fa fa-edit"></i></button>
+
+        }
+        @if (Model.CanDeleteRecord)
+        {
+
+            <button class="btn btn-sm btn-default" ng-click="Delete(${ Id });"><i class="fa fa-remove"></i></button>
+        }
+        @if (Model.CanResetPasswordRecord)
+        {
+            <button class="btn btn-sm btn-default" ng-click="ResetPassword(${ Id });"><i class="fa fa-key"></i></button>
+        }
+
+    </div>
+</script>
+
+<div class="panel-content screen-fit-1">
+    <div ng-controller="gridController">
+        <panther-grid model-name="@Model.ModelName"
+                      view-schema-config-data='@Html.GetGridViewSchemaConfigData(Model)'
+                      view-columns-config-data='@Html.GetGridColumnsConfigData(Model)'
+                      view-columns-data="@(JsonConvert.SerializeObject(Model.ViewColumns))"
+                      grid-id="@Model.Id"
+                      user-id="@Model.CurrentUser.User.Id"
+                      document-type-id="@Model.DocumentTypeId"
+                      grid-internal-name="@Model.GridInternalName"
+                      show-column-menu="true"
+                      custom-header-template="@Model.CustomHeaderTemplate">
+
+            <div kendo-grid k-options="mainGridOptions" id="@Model.ModelName"></div>
+        </panther-grid>
+        <a id="dlink" style="display:none;"></a>
+        <script type="text/javascript">
+            function PopupViewModel() {
+                var self = this;
+                self.PopupWidth=@Model.PopupWidth;
+                self.PopupHeight=@Model.PopupHeight;
+            }
+        </script>
+    </div>
+
+</div>
+<style type="text/css">
+    .search-grid input {
+        width: 120%;
+    }
+</style>

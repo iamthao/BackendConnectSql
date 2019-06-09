@@ -1,0 +1,17 @@
+﻿@using QuickspatchWeb.Models
+@model QuickspatchWeb.Models.SystemConfiguration.DashboardSystemConfigurationDataViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+}
+
+<div ng-controller="createSystemConfigurationController">
+    @Html.Partial("_Shared", Model.SharedViewModel)
+</div>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Create", "fa-save", FooterActionEnum.Save, "createSystemConfigurationController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "createSystemConfigurationController", false)
+
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}

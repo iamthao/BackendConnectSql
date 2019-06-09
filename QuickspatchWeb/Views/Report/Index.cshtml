@@ -1,0 +1,62 @@
+﻿@using System.Web.UI.WebControls
+@using QuickspatchWeb.HtmlHelpers
+
+@{
+    Layout = null;
+}
+
+<div class="panel panel-table" ng-controller="reportController">
+    <div class="panel-heading">
+        <div class="panel-title-small">Report</div>
+    </div>
+
+    <div id="content-container-report" >
+        <div id="horizontal" style="height: 100%; width: 100%;">
+            <div id="left-pane">
+                <div class="pane-content">
+                    <!-- Kendo UI datepicker -->
+                    <form class="smart-form">
+                        <fieldset class="no-padding-left no-padding-right">
+                            @Html.Lookup("Courier", "{{CourierDisplayName}}", "Courier", "Tracking.Courier", 12, urlToReadData: "Courier/GetLookupForReport", showAddEdit: false, isRequired: true)
+                            @Html.CustomDatetimePicker("From", "From Date", "Tracking.From", 12, "MM/dd/yyyy", required: true)
+                            @Html.CustomDatetimePicker("To", "To Date", "Tracking.To", 12, "MM/dd/yyyy", required: true)
+                            <section class="col col-12">
+                                <button class="btn btn-primary pull-right" ng-click="getData()"><i class="fa fa-filter"></i> Filter</button>
+                                <button class="btn btn-default pull-right margin-right-5" ng-click="clearData()"><i class="fa fa-remove"></i> Clear</button>
+                            </section>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div id="right-pane" style="background: #ebebeb; position: relative;">
+                <div class="report-content">
+                    @*<div class="border-cccccc margin-top-10 padding-10 content-report" ng-bind-html="Content"></div>*@
+                    <div kendo-grid k-options="reportDriverGridOptions" id="report-driver-grid"></div>
+                </div>
+                <div class="customize-report-content" style="text-align: right;height: 50px; background: #ffffff;  position: absolute;bottom: 0; width: 100%">
+                    @*<button class="btn btn-primary margin-right-5" style="margin-top: 10px;"><i class="fa fa-print"></i> Print</button>*@
+                    <button class="btn btn-primary" style="margin-top: 10px; margin-right: 10px;" ng-click="pdf();" ng-disabled="ShowPreviewPdf"><i class="fa fa-print"></i> Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $("#content-container-report").css({ 'height': $(window).height() - 122 });
+        $("#horizontal").kendoSplitter({
+            panes: [
+                { collapsible: true, size: "220px" },
+                { collapsible: false }
+            ]
+        });
+
+
+    });
+</script>
+
+<script type="text/x-kendo-template" id="templateButtons">
+    <div class="btn-group">
+        <button class="btn btn-sm btn-default btn-note-request" title="View Detail" ng-click="viewDetail(${Id});"><i class="fa fa-ellipsis-h"></i></button>
+    </div>
+</script>

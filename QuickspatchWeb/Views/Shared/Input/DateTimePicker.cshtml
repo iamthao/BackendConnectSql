@@ -1,0 +1,63 @@
+﻿@model QuickspatchWeb.Models.Date.DateTimePickerViewModel
+<section class="col col-@Model.Col @Model.MoreClass">
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.Label
+    </label>
+
+    <label class="input">
+        <input id='@Model.Id' style="width:100%" @Model.RequiredAttribute
+               class="@Model.Class" @Model.RequiredAttribute
+               ng-model="@Model.DataBindingValue" placeholder="@Model.PlaceHolderText" />
+    </label>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            function @(Model.Id)_onChange(e) {
+                //console.log(e, 'zo');
+                $(this).parents('form').addClass('dirty');
+                EnableCreateFooterButton(true);
+
+            }
+
+            var dtPicker;
+
+            @if (Model.HasTime)
+        {
+            <text>
+            dtPicker = $("#@Model.Id").kendoDateTimePicker({
+                change: @(Model.Id)_onChange,
+
+                format: "@Model.Format"
+            }).data("kendoDateTimePicker");
+
+            $("#@Model.Id").kendoMaskedTextBox({
+                mask: "00/00/0000 00:00"
+            });
+            </text>
+        }
+        else
+        {
+            <text>
+            dtPicker = $("#@Model.Id").kendoDatePicker({
+                //change: ,
+                change: function (e) {
+                    @(Model.Id)_onChange(e);
+                },
+                format: "@Model.Format"
+            }).data("kendoDatePicker");
+
+            $("#@Model.Id").kendoMaskedTextBox({
+                mask: "00/00/0000"
+            });
+            </text>
+        }
+            dtPicker.enable(@((!Model.ReadOnly).ToString().ToLower()));
+        });
+    </script>
+
+
+</section>

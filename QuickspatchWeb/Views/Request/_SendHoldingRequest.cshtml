@@ -1,0 +1,46 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Request.SendHoldingRequestViewModel
+<div ng-controller="sendHoldingRequestController" id="send-holding-request-controller">
+    <form class="smart-form">
+        <div class="popup-body modal-body" style="overflow-y: auto; overflow-x: hidden;">
+            <fieldset class="panel-control border-bottom no-padding" style="border-top-width: 0; padding-top: 0px; margin: 10px 10px 0 10px">
+                <section class="col col-12">
+                    <div class="col col-6 no-padding">
+                        <label><span class='red'>*</span> Courier</label>
+                    </div>
+                    <div class="col col-6 no-padding" style="margin-top: -7px;">
+                        <label class="checkbox pull-right"><input type="checkbox" ng-model="HoldingToRequest.AutoAssign" /><i></i> Auto assign</label>
+                    </div>
+                    @Html.Lookup("HoldingToRequestCourierId", "", "CourierHoldingToRequest", "HoldingToRequest.CourierId", 12, urlToReadData: "Courier/GetLookup", isRequired: true, showAddEdit: false, moreClass: "no-margin no-padding")
+                </section>
+                <section class="col col-12 no-margin">
+                    <div class="col col-6 no-padding">
+                        <label><span class='red'>*</span> Dispatch Time</label>
+                    </div>
+                    <div class="col col-6 no-padding" style="margin-top: -7px;">
+                        <label class="checkbox pull-right red"><input type="checkbox" ng-model="HoldingToRequest.IsStat" /><i></i> STAT</label>
+                    </div>
+                    @Html.CustomTimePicker("HoldingRequestSendingTime", "", "HoldingToRequest.SendingTime", 12, "hh:mm tt", hasMin: true, moreClass: "no-padding")
+                </section>
+            </fieldset>
+        </div>
+        <div class="popup-footer">
+            <!--footer-->
+            <div class="pull-right">
+                <button class="btn btn-default" type="button" ng-click="cancel()"><i class="fa fa-remove"></i> Cancel</button>
+                <button class="btn btn-primary" ng-show="!IsShowLoading" type="button" ng-click="sendHoldingRequest()"><i class="fa fa-plus"></i> Send</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function HoldingToRequestViewModel() {
+        var self = this;
+        self.Id = @Model.Id;
+        self.CourierId = 0;
+        self.SendingTime = '';
+        self.IsStat = false;
+        self.AutoAssign = false;
+    }
+</script>

@@ -1,0 +1,28 @@
+﻿@model QuickspatchWeb.Models.Input.InputNumericViewModel
+<section class="col col-@Model.Col">
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.Label
+    </label>
+
+    <label class="input">
+        <input id='@Model.Id' type='number' style="text-align:right;width: 100%;"
+               maxlength='@Model.Length' kendo-numeric-text-box k-min="@Model.MinimumValue"
+               k-max="@Model.MaximumValue" k-ng-model="@Model.DataBindingValue" k-format="'@Model.Format'"
+               k-step="@Model.StepValue" k-decimals="@Model.Decimals" k-model-spinners="true"
+               k-model-placeholder="@Model.PlaceHolderText" />
+    </label>
+</section>
+<script type="text/javascript">
+    $('#@Model.Id').kendoNumericTextBox();
+
+    var kendoNumberic = $('#@Model.Id').data("kendoNumericTextBox");
+
+    $('#@Model.Id').keyup(function () {
+        if (!this.value) {
+            kendoNumberic.value(@Model.MinimumValue);
+        }
+    });
+</script>

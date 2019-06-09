@@ -1,0 +1,18 @@
+﻿@model QuickspatchWeb.Models.Input.FileUploadViewModel
+<style type="text/css">
+    .k-upload-sync .k-upload-button, .k-ie7 .k-upload-button, .k-ie8 .k-upload-button, .k-ie9 .k-upload-button {
+        margin: 0;
+    }
+</style>
+
+<section class="col col-@Model.Col">
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.Label
+    </label>
+    <label class="input">
+        <custom-upload id-upload="@Model.Id" multiple='@(Model.IsMultiple.ToString().ToLower())' bind-value="bindingValue(@Model.DataBindingValue)" file-uploadeds="@Model.DataBindingValue" save-url="@Model.SaveUrl" remove-url="@Model.RemoveUrl" accept-type="@Model.AcceptType" destroy="controlFileUploadDestroy" call-uploading="callUploading()" call-completed="callCompleted()" call-cancelled="callCancelled()" cancel-status="cancelUploadForControl" call-init="callInit"></custom-upload> 
+    </label>
+</section>

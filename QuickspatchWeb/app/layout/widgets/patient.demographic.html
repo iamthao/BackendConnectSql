@@ -1,0 +1,13 @@
+﻿<div class="block-flat patient-demographic">
+    <div class="patient-info-section"><i class="fa fa-user"></i>&nbsp;<strong>Patient Name:</strong> {{patient.FullName}}</div>
+    <div class="patient-info-section"><i class="fa  fa-angle-right"></i>&nbsp;{{patient.Age}} Years Old {{patient.Profile.Sex}} <span class="header-sub">(09/10/1960)</span></div>
+    <div class="patient-info-section"><i class="fa  fa-angle-right"></i>&nbsp;<strong>Patient Id:</strong> {{patient.PatientId}}</div>
+    <div class="patient-info-section"><i class="fa  fa-angle-right"></i>&nbsp;<strong>Home Phone:</strong> {{ (patient.Profile.Phones | filter: { PhoneType : 'Home' })[0].PhoneNumber }}</div>
+    <div class="patient-info-section"><i class="fa  fa-angle-right"></i>&nbsp;<strong>Resp Provider:</strong> <a href="#">{{patient.RespProviderName}}</a></div>
+    <div class="patient-info-section"><i class="fa  fa-angle-right"></i>&nbsp;<strong>PCP:</strong> <a href="#">{{patient.PCPName}}</a></div>
+    <div class="patient-info-section"><i class="fa  fa-angle-right"></i>&nbsp;<strong>Primary Midlevel:</strong> <a href="#">Jessica Horwath PAC</a></div>
+    <div class="patient-info-section"><i class="fa  fa-angle-right"></i>&nbsp;<strong>Insurance:</strong> Medicare</div>
+    <div class="patient-info-section"><i class="fa  fa-angle-right"></i>&nbsp;<strong>Group:</strong> Abc Group</div>
+    <div class="patient-info-section"><i class="fa  fa-angle-right"></i>&nbsp;<strong>Reg Notes:</strong> {{patient.RegNotes}}</div>
+    <div class="clearfix"></div>
+</div>

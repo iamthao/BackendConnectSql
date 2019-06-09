@@ -1,0 +1,22 @@
+﻿@model QuickspatchWeb.Models.Module.DashboardModuleIndexViewModel
+@{
+    Layout = null;
+}
+
+<script type="text/x-kendo-template" id="commandModule">
+    <div class="btn-group">
+        <button class="btn btn-sm btn-default" ng-click="SetupPermission(${ Id });"><i class="fa fa-tasks"></i></button>
+        <button class="btn btn-sm btn-default" ng-click="Edit(${ Id });"><i class="fa fa-edit"></i></button> 
+        <button class="btn btn-sm btn-default" ng-click="Delete(${ Id });"><i class="fa fa-remove"></i></button>       
+    </div>
+</script>
+
+<div class="panel panel-table">
+    <div class="panel-heading">
+        <div class="panel-title-small">Manage Modules</div>
+    </div>
+
+    <div id="content-container" ng-controller="moduleController">
+        @Html.Partial("~/Views/Shared/Grid/_ReadOnlyGrid.cshtml", @Model.GridViewModel)
+    </div>
+</div>

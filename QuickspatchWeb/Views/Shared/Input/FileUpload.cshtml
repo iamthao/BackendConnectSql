@@ -1,0 +1,76 @@
+﻿@model QuickspatchWeb.Models.Input.FileUploadViewModel
+<section class="col col-@Model.Col">
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.Label  (@(Model.PreviewWidth) x @(Model.PreviewHeight))
+    </label>
+
+    <label class="input"  style="margin-top: 10px;">
+        <input name="file" id="@Model.Id-fileUpload" type="file" accept="@Model.AcceptType" />
+        <input ng-model="@Model.DataBindingValue" id="@Model.Id" type="hidden" />
+        <div ng-if="@Model.DataBindingValue !== null && @Model.DataBindingValue !== '' && @Model.DataBindingValue !== undefined " style="background: #073648;margin-top: 10px;" >
+            <img ng-src="{{@Model.DataBindingValue}}" style="max-height:@(Model.PreviewHeight)px;max-width:@(Model.PreviewWidth)px; padding: 5px;" />
+        </div>
+    </label>
+    <style>
+        .k-button.k-upload-button{width: 160px;height: 30px;line-height: 30px;border-radius: 0;}
+    </style>
+    <script type="text/javascript">
+    $("#@Model.Id-fileUpload").kendoUpload({
+        async: {
+            saveUrl: "@Model.SaveUrl",
+            removeUrl: "@Model.RemoveUrl",
+            autoUpload: true
+        },
+        multiple: false,
+        success: @(Model.Id)_onSuccess,
+        remove: @(Model.Id)_onRemove,
+        select: function(e) {
+            $.each(e.files, function (index, value) {
+
+                var ok = value.extension == ".JPG"|| value.extension == ".jpg"
+                            || value.extension == ".JPEG"|| value.extension == ".jpeg"
+                            || value.extension == ".PNG"|| value.extension == ".png";
+
+                if (!ok) {
+                    e.preventDefault();
+                    var common = angular.element('#@Model.Id').injector().get("common");
+                    common.showErrorModelState(new FeedbackViewModel("error", "Please upload jpg/png image file", "", []));
+                }
+            });
+        }
+    });
+
+    function @(Model.Id)_onSuccess(e) {
+        $("#@Model.Id").parents('form').addClass('dirty');
+        EnableCreateFooterButton(true);
+        var file = e.response.file;
+        var scope = angular.element("#@Model.Id").scope();
+        scope.$apply(function() {
+            scope.@(Model.DataBindingValue) = file;
+        });
+    }
+
+    function @(Model.Id)_onRemove(e) {
+        $("#@Model.Id").parents('form').addClass('dirty');
+        EnableCreateFooterButton(true);
+        var scope = angular.element("#@Model.Id").scope();
+        e.data = {file: scope.@(Model.DataBindingValue)};
+    }
+    </script>
+    <style type="text/css">
+        .k-dropzone {
+            padding: 0;
+        }
+
+        .k-widget, .k-block, .k-inline-block, .k-draghandle {
+            border: none;
+        }
+
+        .k-upload-files {
+            margin: 10px 0;
+        }
+    </style>
+</section>

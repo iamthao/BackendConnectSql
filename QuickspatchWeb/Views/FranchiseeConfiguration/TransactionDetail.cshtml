@@ -1,0 +1,150 @@
+﻿@using Framework.Utility
+@using QuickspatchWeb.Models.FranchiseeConfiguration
+@model TransactionDetailViewModel
+@{
+    Layout = null;
+    var trans = Model != null ? Model : null;
+}
+@*<div id="content-header" style="display:none">
+        <h1>
+            @RenderSection("Breadcrums", required: false)
+        </h1>
+    </div>*@
+<div class="portlet-content" ng-controller="transactionDetailController">
+    <form class="smart-form" role="form" style="width:100%; margin:0;padding: 0;" autocomplete="off">
+        <div class="popup-body modal-body" data-ng-controller="baseFormPopupController" style="overflow-y: auto; overflow-x: hidden;">
+            <div style="min-height: 270px;">
+                @if (trans != null)
+                {
+                    <fieldset class="account-section" style="padding: 0;margin-left: 10px;margin-right: 10px;">
+                        <legend style="border: 0" class="label-legend">Transaction</legend>
+                    </fieldset>
+                    <fieldset class="account-section" style="padding: 0;margin-left: 20px;margin-right: 20px;border-top-width: 0;">
+                        <section class="col col-6">
+                            <label>Transaction#</label>
+
+                            <label class="input">
+                                @trans.TransactionId
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label>Transaction Type</label>
+                            <label class="input">
+                                @trans.TransactionType
+                            </label>
+                        </section>
+                    </fieldset>
+                    <fieldset class="account-section" style="padding: 0;margin-left: 20px;margin-right: 20px;border-top-width: 0;">
+                        <section class="col col-6">
+                            <label>Price</label>
+                            <label class="input">
+                                @trans.SettleAmount
+                            </label>
+                        </section>
+                        <section class="col col-6">
+                            <label>Status</label>
+                            <label class="input">
+                                @trans.Status
+                            </label>
+                        </section>
+                    </fieldset>
+                    <fieldset class="account-section" style="padding: 0;margin-left: 10px;margin-right: 10px;">
+                        <hr />
+                    </fieldset>
+
+                    <fieldset class="account-section" style="padding: 0;margin-left: 10px;margin-right: 10px;">
+                        <legend style="border: 0" class="label-legend">Payment Info</legend>
+                    </fieldset>
+                    <fieldset class="account-section" style="padding: 0;margin-left: 20px;margin-right: 20px;border-top-width: 0;">
+                        <section class="col col-4">
+                            <label>Name</label>
+
+                            <label class="input">
+                                @trans.Name
+                            </label>
+                        </section>                       
+                        <section class="col col-8">
+                            <label>Address</label>
+                            <label class="input">
+                                @trans.Address
+                            </label>
+                        </section>
+                    </fieldset>
+                    <fieldset class="account-section" style="padding: 0;margin-left: 20px;margin-right: 20px;border-top-width: 0;">
+                        <section class="col col-4">
+                            <label>City</label>
+                            <label class="input">
+                                @trans.City
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label>State</label>
+                            <label class="input">
+                                @trans.State
+                            </label>
+                        </section>
+                        <section class="col col-4">
+                            <label>Zip</label>
+                            <label class="input">
+                                @trans.Zip
+                            </label>
+                        </section>
+                    </fieldset>
+                }
+                else
+                {
+                    <h3>No Information</h3>
+                }
+            </div>
+        </div>
+        <div class="popup-footer">
+            <div style="margin-right: 5px; margin-top: 10px">
+                <button ng-click="closePopUp();" class="btn btn-primary pull-right">
+                    OK
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+    .account-section label {
+        font-size: 11px;
+        font-weight: 600;
+        color: /*#999*/ black;
+        text-transform: uppercase;
+    }
+
+    .label-legend {
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: /*#999*/ black;
+        text-transform: uppercase;
+    }
+</style>
+<script type="text/javascript">
+    EnableCreateFooterButton(false);
+    $('form').attr('autocomplete', 'off');
+
+    // Setup dirty dialog handling across all forms
+    $('form').areYouSure({
+        message: '@Html.Raw(Model.DirtyDialogMessageText)',
+        change: function () {
+            var formElement = $(this);
+            if (formElement[0] === undefined) {
+                formElement = $(document).find('form');
+            }
+
+            if (formElement.hasClass('dirty')) {
+                EnableCreateFooterButton(true);
+            } else {
+                EnableCreateFooterButton(false);
+            }
+        }
+    });
+
+   // $(".popup-body.modal-body").css({ height: $(".k-widget.k-window").height() - 230 });
+</script>
+
+

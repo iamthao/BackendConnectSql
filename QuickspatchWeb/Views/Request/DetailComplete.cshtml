@@ -1,0 +1,54 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+
+<div id="request-detail-complete" style="overflow-y: auto;">
+    <div id="horizontal" style="height: auto; width: 100%;" ng-controller="requestDetailCompleteController">
+        <div id="right-pane">
+            <div class="pane-content" ng-if="isComplete">
+                <div class="panel panel-table" style="border: 1px solid #ccc;">
+                    <ul class="nav nav-tabs" id="request-detail-complete-tab">
+                        <li class="active"><a href="javascript:void(0)" data-target="#signature" aria-controls="signature" data-toggle="tab" ng-click="selectTabDetailComplete(1);"><span class=" panel-title-small">Signature</span></a></li>
+                        <li><a href="javascript:void(0)" data-target="#picture-note" data-toggle="tab" aria-controls="picture-note" ng-click="selectTabDetailComplete(2);"><span class="panel-title-small">Picture & Note</span></a></li>
+                       
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="signature">
+                            <div ng-show="tabIndexDetailComplete==1">
+                                <div id="report-detail-complete" style=" width: 98%; padding: 10px">
+                                    <iframe id="iframeFile" style="height: 100%;width: 100%;" ng-src="{{currentProjectUrl}}"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="picture-note">
+                            <div ng-if="tabIndexDetailComplete==2">
+                                <div id="report-detail-complete" style=" width: 98%; padding: 10px">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Picture</label>
+                                            <p ng-show="showPicture"><img style="height: 360px" ng-src="{{picture}}" /></p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label>Note</label>
+                                            <p ng-bind-html="notes"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <h4 style="text-align: center" ng-if="!isComplete">This request has not been completed.</h4>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#report-detail-complete').css({ 'height': $(window).height() - 390 });
+    $("#request-detail-complete").css({ 'height': $(window).height() - 300 });
+</script>

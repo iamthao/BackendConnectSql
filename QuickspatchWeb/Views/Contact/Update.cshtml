@@ -1,0 +1,18 @@
+﻿@using QuickspatchWeb.Models
+@using QuickspatchWeb.Models.Contact
+@model DashboardContactDataViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+}
+
+<div ng-controller="updateContactController">
+    @Html.Partial("_Shared", Model.SharedViewModel)
+</div>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Update", "fa-save", FooterActionEnum.Save, "updateContactController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "updateContactController", false)
+
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}

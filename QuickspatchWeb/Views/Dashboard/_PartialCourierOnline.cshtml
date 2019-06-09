@@ -1,0 +1,33 @@
+﻿<div class="panel panel-table" ng-controller="courierOnlineController" ng-init="loadAll()"  >
+    <div class="panel-heading">
+        <div class="panel-title-small">
+            Online {{CourierDisplayName}}
+            <div class="pull-right">
+                <span class="btn icon no-border" style="padding: 0 !important;" ng-click="fullscreenOn($event)" name="panel-maximize"><i class="fa fa-expand"></i></span>
+                <span class="btn icon no-border" style="padding: 0 !important;display: none" ng-click="fullscreenOff($event)" name="panel-minimize"><i class="fa fa-compress"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="screen-fit-2">
+        <div id="courier-map" style="width: 100%; height: 100%">
+            <ui-gmap-google-map center='Map.Center' zoom='Map.Zoom' style="height: 100%;" bounds="Map.Bounds" control="Map.control">
+                @*<ui-gmap-marker coords="Marker.Coords" options="Marker.Options" idkey="Marker.Id"></ui-gmap-marker>*@
+                <ui-gmap-marker ng-repeat="m in Marker" coords="m.Coords" options="m.Options" idkey="m.Id" click='m.Click'>
+
+                    <ui-gmap-window ng-cloak coords="map.Coords" show="m.Show">
+                        <table>
+                            <tr>
+                                <td rowspan="3"><img src="{{m.Avatar}}" alt="" title="{{m.FullName}}" width="48" style="margin-right: 10px" /></td>
+                                <td>Name: <b>{{m.FullName}}</b></td>
+                            </tr>
+                            <tr><td>Current Req: <b>{{m.RequestNo}}</b></td></tr>
+                            <tr><td>Current Speed: <b>{{m.CurrentVelocity}} (mph)</b></td></tr>
+                        </table>
+
+                    </ui-gmap-window>
+                </ui-gmap-marker>
+            </ui-gmap-google-map>
+            <button class="btn btn-default" style="position: absolute;z-index: 999;margin-top: -40px;margin-left: 10px" ng-click="loadAll()" title="Show all couriers online"><i class="fa fa-map-marker"></i><i class="fa fa-map-marker"></i><i class="fa fa-map-marker"></i></button>
+        </div>
+    </div>
+</div>

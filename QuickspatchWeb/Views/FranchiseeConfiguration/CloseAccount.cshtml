@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+}
+
+
+<div ng-controller="billingCloseAccountController">
+    <div id="content-container">
+        <div class="row" style="margin-left: 30px; margin-right: 30px; margin-top: 10px;">
+            <div class="col-md-12">
+                <a ng-click="goBack();" style="cursor: pointer; cursor: hand;">Go back</a>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 30px; margin-right: 30px; margin-top: 10px; text-align: center" id="loading-billing">
+            <img src="~/Content/quickspatch/img/loading-blue.gif" />
+        </div>
+        <div id="content-close-account">
+            <div class="row " style="margin-left: 30px; margin-right: 30px; margin-top: 10px;">
+                <div class="col-md-7">
+                    <div class="modal-body">
+                        <p>When you close account:  </p><ul>
+                            <li>You will be able to access your projects and data until {{EndDate}}. </li>
+                            <li>Last day to change your mind {{DateChangeMind}}.</li>
+                        </ul>
+                        <p></p>
+                        <hr>
+                        <p>
+                            Say goodbye before you go
+                        </p>
+                        <div class="form-group">
+                            <span class="customSelect" style="width:100%">
+                                <select id="cancel-reason" name="reason" class="form-control" ng-model="data.Question">
+                                    <option value="I am leaving because ..." style="color:#ccc">I am leaving because ...</option>
+                                    <option value="I have another account with Proto.io">I have another account with QuickSpatch.</option>
+                                    <option value="I have finished my project and dont need it any more">I have finished my project and don't need it any more.</option>
+                                    <option value="I am taking a break, I will probably be back later">I am taking a break, I will probably be back later.</option>
+                                    <option value="I find it very difficult to use">I find it very difficult to use.</option>
+                                    <option value="I find it too expensive">I find it too expensive.</option>
+                                    <option value="I am not satisfied with Proto.io">I am not satisfied with QuickSpatch.</option>
+                                    <option value="I will switch to another prototyping tool">I will switch to another prototyping tool.</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </span>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name="feedback" class="form-control" onchange="" placeholder="We would like to hear more" ng-model="data.Description"></textarea>
+                        </div>
+
+                        <hr>
+
+                        <div class="col-sm-6">
+                            <div class="text-danger" style="">
+                                <div class="icon-warning " aria-hidden="true" style=""></div>
+
+                                <div class="">
+                                    On  {{EndDate}} all of your account and project data will be permanently destroyed!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group  ">
+                                <label for="password" class="control-label">
+                                    Enter your password to confirm&nbsp;<span style="color:red">*</span>
+
+                                </label>
+                                <input class="form-control" id="password" name="password" type="password" placeholder="" value="" ng-model="data.Password">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" style="text-align: center; margin-top: 30px;">
+                            <div class="form-group  ">
+                                <button class=" btn btn-sm btn-danger" ng-click="close();">Close My Account</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#content-container").css({ 'min-height': $(window).height() - 130 });
+    });
+</script>
+

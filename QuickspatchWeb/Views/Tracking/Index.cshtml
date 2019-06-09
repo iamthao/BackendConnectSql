@@ -1,0 +1,148 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Tracking.DashboardTrackingIndexViewModel
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+        line-height: 40px;
+    }
+     .table>thead>tr>th {
+         padding: 0 10px;
+    }
+    .cell-item-request:hover {
+        cursor: pointer;
+        background-color: #ecf3fa;
+    }
+    .row-item-request:hover {
+        background-color: #ecf3fa;
+    }
+    .row-item-request.row-selected {
+        color: #428bca;
+    }
+</style>
+<div class="panel panel-table" >
+    <div class="panel-heading">
+        <div class="panel-title-small">Tracking</div>
+    </div>
+
+    <div id="content-container-tracking">
+        <div id="horizontal" style="height: 100%; width: 100%;" ng-controller="trackingController">
+            <div id="left-pane">
+                <div class="pane-content">
+                    <div style="width: 100%;border-bottom: 1px solid #ccc;padding: 10px 0;">
+                        <b style="padding-left: 10px;">FILTER</b>
+                    </div>
+                    <!-- Kendo UI datepicker -->
+                    <form class="smart-form">
+                        <fieldset class="no-padding">
+                            @Html.CustomDatetimePicker("Datepicker", "", "Tracking.Datepicker", 12, "MM/dd/yyyy")
+                            @Html.Lookup("Courier", "", "Courier", "Tracking.Courier", 12, urlToReadData: "Courier/GetLookupForTracking", showAddEdit: false, dataSource: new { KeyId = 0, DisplayName = "---All---" }, moreClass: "courier-tracking")
+                        </fieldset>
+                    </form>
+
+
+                    <div style="border-top: 1px solid #ccc;">
+                        <div style="width: 100%;border-bottom: 1px solid #ccc;padding: 10px 0;">
+                            <b style="padding-left: 10px;">REQUEST LIST</b>
+                        </div>
+
+                        <div class="panel panel-table slipter-tracking">
+                            @*<div class="panel-heading">
+                                    <div class="panel-title">Courier: <b>{{CourierName}}</b></div>
+
+                                </div>*@
+                            <div id="request-list">
+                                <table class="table" style="margin-bottom:0;" >
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 45%">#</th>
+                                            <th style="width: 35%">@Model.DisplayNameForCourier</th>
+                                            <th style="width: 20%"></th>
+                                        </tr>
+                                        
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="p in RequestList" class="row-item-request" ng-class="{'row-selected':IdRequestSelected==p.RequestId}">
+                                            <td class="cell-item-request" ng-click="SelectCourier(p.RequestId)">
+                                                <span ng-class="{'request-active':p.IsActiveRequest==true,'request-selected':IdRequestSelected==p.RequestId}">{{p.RequestNo}}</span>
+                                            </td>
+                                            <td class="cell-item-request" ng-click="SelectCourier(p.RequestId)">
+                                                <span ng-class="{'request-selected':IdRequestSelected==p.RequestId}">{{p.FullName}}</span>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:void(0)" style="margin-top: 5px;" class="btn btn-sm btn-default pull-right" ng-click="viewDetail(p.RequestId, $event)"><span class="fa fa-ellipsis-h"></span></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="right-pane-tracking">
+                <div class="pane-content-tracking">
+                    <!-- Map -->
+                    <div id="tracking-map-tracking" style=" width: 100%; height: 100%">
+                        <ui-gmap-google-map center='Map.Center' zoom='Map.Zoom' control="Map.control" bounds="Map.Bounds">
+                            <ui-gmap-polylines models="Map.Polys" path="'path'" stroke="'stroke'" visible="'visible'" geodesic="'geodesic'" editable="'editable'" draggable="'draggable'" static="true"></ui-gmap-polylines>
+                            <ui-gmap-marker ng-repeat="m in MarkerStart" coords="m.Coords" options="m.Options" idkey="m.Id" ng-if="m.IsShow">
+                                <ui-gmap-window isiconvisibleonclick="true">
+                                    <p>
+                                        Time: <b>{{m.TimeTracking}}</b><br />
+                                        Velocity: <b>{{m.Velocity}} (mph)</b>
+                                    </p>
+                                </ui-gmap-window>
+                            </ui-gmap-marker>
+
+                            <ui-gmap-marker ng-repeat="m in MarkerEnd" coords="m.Coords" options="m.Options" idkey="m.Id" ng-if="m.IsShow">
+                                <ui-gmap-window isiconvisibleonclick="true">
+                                    <p>
+                                        Time: <b>{{m.TimeTracking}}</b><br />
+                                        Velocity: <b>{{m.Velocity}} (mph)</b>
+                                    </p>
+                                </ui-gmap-window>
+                            </ui-gmap-marker>
+
+                            <ui-gmap-marker coords="MarkerStartDirection.Coords" options="MarkerStartDirection.Options" idkey="MarkerStartDirection.Id"></ui-gmap-marker>
+                            <ui-gmap-marker coords="MarkerEndDirection.Coords" options="MarkerEndDirection.Options" idkey="MarkerEndDirection.Id"></ui-gmap-marker>
+
+                            <ui-gmap-marker ng-repeat="m in Marker" coords="m.Coords" options="m.Options" idkey="m.Id" ng-if="m.IsShowPoint">
+                                <ui-gmap-window ng-cloak isiconvisibleonclick="true" ng-if="m.ShowWindow">
+                                    <p>
+                                        Time: <b>{{m.TimeTracking}}</b><br />
+                                        Velocity: <b>{{m.Velocity}} (mph)</b>
+                                    </p>
+                                </ui-gmap-window>
+                            </ui-gmap-marker>
+
+                        </ui-gmap-google-map>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    </style>
+<script>
+
+    $(function() {
+        $("#content-container-tracking").css({ height: $(window).height() - 122 });
+        $("#horizontal").kendoSplitter({
+            panes: [
+                { collapsible: true, size: "320px" },
+                { collapsible: false }
+            ]
+        });
+        $("#request-list").css({ height: $(window).height() - 310 });
+        
+    });
+    function TrackingViewModel()
+    {
+        var self = this;
+        self.Datepicker = '';
+        self.Courier = 0;
+    }
+</script>

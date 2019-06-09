@@ -1,0 +1,53 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@{
+    Layout = null;
+}
+@model int
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <!-- Icon -->
+    <link rel="icon" href="/Content/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/Content/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Content/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Content/img/favicon.png">
+
+    <!-- SITE TITLE HERE -->
+    <title>QuickSpatch - Camino Information Services</title>
+
+    <!-- Page Loading -->
+    <!-- Google Font -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300italic,400italic,700italic,400,300,700|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+
+    <!-- Bootstrap CSS File -->
+    <link href="/Content/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="/Content/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <!-- Custom CSS Code -->
+    <link href="/Content/stylesubmit.css" rel="stylesheet">
+    <link href="/Content/deepblue.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script src="~/Scripts/jquery-2.1.1.js"></script>
+</head>
+<body>
+    <div style="position: absolute;left: 50%;top: 50%;margin-left: -32px;margin-top: -32px; ">
+        <img src="~/Content/quickspatch/img/loading-blue.gif" />
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (parent != undefined) {
+            parent.close(@Model);
+        }
+    });
+</script>

@@ -1,0 +1,11 @@
+﻿@model System.Collections.ObjectModel.Collection<QuickspatchWeb.Models.FooterAction>
+
+<div style="position: fixed; z-index: 100; bottom: 10px; right: 15px;background:#1B1E24" ng-controller="footerController">
+    <a href="javascript:void(0)" ng-click="CreateNewOrder('updatePatientController')" class="btn btn-default btn-primary"><i class="fa fa-plus"></i> Create New Order</a>
+    @foreach (var action in Model)
+    {
+        <a href="javascript:void(0);" data-function="@Html.Raw(action.ActionMethodKey)" ng-click="@Html.Raw(action.ActionMethod)" class="btn @action.ClassType">
+            <i class="fa @action.Icon"></i> @Html.Raw(action.Text)
+        </a>
+    }
+</div>

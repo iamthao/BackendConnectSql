@@ -1,0 +1,24 @@
+﻿@using System.Web.UI.WebControls
+@using Framework.DomainModel.ValueObject
+@using QuickspatchWeb.HtmlHelpers
+@using QuickspatchWeb.Models
+@model QuickspatchWeb.Models.Template.DashboardTemplateShareViewModel
+<fieldset data-ng-controller="templateShareController" >
+    @Html.CustomTextBox("Title", "Title", "Data.Title", 6, required: true, length: 200, isDisabled:true)
+
+    @Html.CustomDropDownList("TemplateType", "Template Type", "Data.TemplateType", 6, "/Common/TemplateTypeLookup?mode=" + (Model.CreateMode ? 1 : 0), true, @Model.TemplateType, readOnly: !Model.CreateMode)
+
+    @Html.CustomEditor("Content", "Content", "Data.Content", 12, true, 50, 500)
+</fieldset>
+
+<script type="text/javascript">
+    function TemplateViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Title = @Html.Raw(Json.Encode(Model.Title));
+        self.TemplateType = @Model.TemplateType;
+        self.Content = _.unescape(@Html.Raw(Json.Encode(Model.Content)));
+        self.LastModified = @Html.Raw(Json.Encode(Model.LastModified));      
+    }
+</script>

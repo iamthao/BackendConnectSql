@@ -1,0 +1,31 @@
+﻿@model QuickspatchWeb.Models.Location.DashboardLocationIndexViewModel
+@{   
+    Layout = null;
+}
+
+<div class="panel panel-table" >
+    <div class="panel-heading">
+        <div class="panel-title-small">Manage Locations</div>
+    </div>
+
+    <div id="content-container" ng-controller="locationController">
+        @Html.Partial("~/Views/Shared/Grid/_ReadOnlyGrid.cshtml", @Model.GridViewModel)
+    </div>
+</div>
+<script>
+    function resizeGrid() {
+        var gridElement = $("#Location"),
+            dataArea = gridElement.find(".k-grid-content"),
+            gridHeight = gridElement.innerHeight(),
+            otherElements = gridElement.children().not(".k-grid-content"),
+            otherElementsHeight = 0;
+        otherElements.each(function () {
+            otherElementsHeight += $(this).outerHeight();
+        });
+        dataArea.height(gridHeight - otherElementsHeight);
+    }
+
+    $(window).resize(function () {
+        resizeGrid();
+    });
+</script>

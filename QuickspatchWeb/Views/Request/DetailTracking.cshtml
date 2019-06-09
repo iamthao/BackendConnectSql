@@ -1,0 +1,57 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+
+@{
+    Layout = null;
+}
+<div id="content-container">
+    <div id="horizontal" style="height: 100%; width: 100%;" ng-controller="requestDetailTrackingController">
+        <div id="right-pane">
+            <div class="pane-content">
+                <!-- Map -->
+                <div id="tracking-map" style=" width: 100%; height: 100%">
+                    <ui-gmap-google-map center='Map.Center' zoom='Map.Zoom' control="Map.control" bounds="Map.Bounds">
+                        <ui-gmap-polylines models="Map.Polys" path="'path'" stroke="'stroke'" visible="'visible'" geodesic="'geodesic'" editable="'editable'" draggable="'draggable'" static="true"></ui-gmap-polylines>
+                        <ui-gmap-marker ng-repeat="m in MarkerStart" coords="m.Coords" options="m.Options" idkey="m.Id" ng-if="m.IsShow">
+                            <ui-gmap-window isiconvisibleonclick="true">
+                                <p>
+                                    Time: <b>{{m.TimeTracking}}</b><br />
+                                    Speed: <b>{{m.Velocity}} (mph)</b>
+                                </p>
+                            </ui-gmap-window>
+                        </ui-gmap-marker>
+
+                        <ui-gmap-marker ng-repeat="m in MarkerEnd" coords="m.Coords" options="m.Options" idkey="m.Id" ng-if="m.IsShow">
+                            <ui-gmap-window isiconvisibleonclick="true">
+                                <p>
+                                    Time: <b>{{m.TimeTracking}}</b><br />
+                                    Speed: <b>{{m.Velocity}} (mph)</b>
+                                </p>
+                            </ui-gmap-window>
+                        </ui-gmap-marker>
+
+                        <ui-gmap-marker coords="MarkerStartDirection.Coords" options="MarkerStartDirection.Options" idkey="MarkerStartDirection.Id"></ui-gmap-marker>
+                        <ui-gmap-marker coords="MarkerEndDirection.Coords" options="MarkerEndDirection.Options" idkey="MarkerEndDirection.Id"></ui-gmap-marker>
+
+                        <ui-gmap-marker ng-repeat="m in Marker" coords="m.Coords" options="m.Options" idkey="m.Id" ng-if="m.IsShowPoint">
+                            <ui-gmap-window ng-cloak isiconvisibleonclick="true" ng-if="m.ShowWindow">
+                                <p>
+                                    Time: <b>{{m.TimeTracking}}</b><br />
+                                    Speed: <b>{{m.Velocity}} (mph)</b>
+                                </p>
+                            </ui-gmap-window>
+                        </ui-gmap-marker>
+
+                    </ui-gmap-google-map>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function() {
+        $("#content-container").css({ height: $(window).height() - 300 });
+    });
+   
+</script>

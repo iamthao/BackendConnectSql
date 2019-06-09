@@ -1,0 +1,56 @@
+﻿<div id="search-email">
+    <div id="leftDual" style="border-bottom: 1px solid #DCDCDC; border-right: 1px solid #DCDCDC; float: left;" ng-style="{ height: fullHeight + 'px' }">
+        <div style="height: 35px; background: #cacaca; border-bottom: 1px solid #DCDCDC;">
+            <span style="margin-left: 5px;">{{DualGridAllText}}</span>
+            <span style="width: 285px; margin-top: 3px;" class="k-widget k-combobox k-header">
+                <span class="k-dropdown-wrap k-state-default">
+                    <input class="k-input" id="search-string" type="text" data-ng-model="DualGridSearchString" data-ng-keypress="DualGridKeyPressEnterSearch($event)" />
+                    <span class="k-select">
+                        <span class="k-icon k-i-search" data-ng-click="DualGridClickSearchString()">select</span>
+                    </span>
+                </span>
+            </span>
+        </div>
+        <div kendo-grid k-options="dualGridAll" id="grid-dual-all" ng-style="{ height: height + 'px' }"></div>
+
+    </div>
+        <div style="width: 40px; float: left;">
+            <div style="display: flex; flex-direction: row; justify-content: center; width: 100%">
+                <div style="display: flex; flex-direction: column; justify-content: center; " ng-style="{ height: fullHeight + 'px' }">
+                    <button class="k-button" style="margin: 2px 6px; width: 28px;" data-ng-click="DualGridMoveSelected()"><span class="fa fa-chevron-right"></span></button>
+                    <button class="k-button" style="margin: 2px 6px; width: 28px;" data-ng-click="DualGridRemoveSelected()"><span class="fa fa-chevron-left"></span></button>
+                    <button class="k-button" style="margin: 2px 6px; width: 28px;" data-ng-click="DualGridRemoveAllSelected()"><span class="fa fa-angle-double-left"></span></button>
+                </div>
+            </div>
+
+    </div>
+    <div id="rightDual" style="border-bottom: 1px solid #DCDCDC; border-left: 1px solid #DCDCDC; float: left; " ng-style="{ height: fullHeight + 'px' }">
+        <div style="height: 35px;line-height: 30px; background: #cacaca; border-bottom: 1px solid #DCDCDC; ">
+            <span style="margin-left: 5px;">{{DualGridSelectedText}}</span>
+            <span style="width: 285px; margin-top: 3px;" class="k-widget k-combobox k-header">
+                <span class="k-dropdown-wrap k-state-default">
+                    <input class="k-input" id="search-string" type="text" data-ng-model="DualGridSelectedSearchString" data-ng-keypress="DualGridSelectedKeyPressEnterSearch($event)" />
+                    <span class="k-select">
+                        <span class="k-icon k-i-search" data-ng-click="DualGridSelectedClickSearchString()">select</span>
+                    </span>
+                </span>
+            </span>
+        </div>
+        <div kendo-grid k-options="dualGridSelected" id="grid-dual-selected" ng-style="{ height: height + 'px' }"></div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if ($(".k-widget.k-window").css("display") != "none") {
+            $('#leftDual,#rightDual').css({ 'height': '240px' });
+            $('#leftDual,#rightDual').css({ 'width': (parseInt($(".k-widget.k-window").css("width").replace("px", "")) - 100) / 2 });
+        } else {
+            $('#leftDual,#rightDual').css({ 'width': ($(window).width() - 70) / 2 });
+        }
+        
+    });
+    $(window).onload = function() {
+        $('#grid-dual-all,#grid-dual-selected').css({ 'height': '240px' });
+    }
+</script>

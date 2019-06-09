@@ -1,0 +1,22 @@
+﻿@using System.Configuration
+@using Newtonsoft.Json
+@model Framework.DomainModel.ValueObject.MenuViewModel
+@{
+   
+}
+    
+    <ul class="nav navbar-nav" data-cc-sidebar data-ng-controller="sidebar as vm" ng-init="init('@(JsonConvert.SerializeObject(Model))')">
+        <li data-ng-class="vm.isCurrent(r,r.config.settings.children.length)" data-ng-repeat="r in vm.navRoutes" data-ng-if="vm.isVisible(r)">
+            <a ng-href="{{createRoute(r)}}" data-ng-bind-html="r.config.settings.content" ng-class="vm.classDropdownMenu(r.config.settings.children.length)" ng-attr-data-toggle="{{r.config.settings.children.length>0?'dropdown':''}}"></a>
+            <ul data-ng-if="r.config.settings.children.length>0" class="dropdown-menu" role="menu" style="width: 180px">
+                <li data-ng-repeat="childR in r.config.settings.children" data-ng-if="vm.isVisible(childR)">
+                    <a ng-href="{{createRoute(childR)}}" data-ng-bind-html="childR.config.settings.content" class="material"></a>
+                    <ul data-ng-if="childR.config.settings.children.length>0" class="dropdown-menu" role="menu">
+                        <li data-ng-repeat="childRLevel2 in childR.config.settings.children" data-ng-if="vm.isVisible(childRLevel2)">
+                            <a ng-href="{{createRoute(childRLevel2)}}" data-ng-bind-html="childRLevel2.config.settings.content" class="material"></a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>

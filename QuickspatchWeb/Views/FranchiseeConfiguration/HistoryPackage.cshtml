@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+<div ng-controller="historyPackageController">
+    <div id="content-container" style="margin-left: 15px;margin-right: 15px;">
+        @*<div class="col-sm-12">
+                    <div class="k-widget search-box pull-right">
+                        <span class="k-picker-wrap k-state-default">
+                            <input type="text" class="k-input ng-pristine ng-valid" placeholder="Enter keyword" ng-model="SearchTextPackage" ng-enter="Search($event)" style="max-width: 350px">
+                            <span class="k-select" ng-click="Search()">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </span>
+                    </div>
+            </div>*@
+        <div class="col-sm-12">
+            <div kendo-grid k-options="packageGridOptions" id="package-grid"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#content-container").css({ 'min-height': $(window).height() - 165 });
+
+    });
+</script>
+<script type="text/x-kendo-template" id="withdrawButtons">
+    <div class="btn-group">
+        <button class="btn btn-sm btn-default btn-note-request" ng-show="${ RequestId } > 0" title="View Transaction" ng-click="viewDetail(${ RequestId });"><i class="fa fa-send"></i></button>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="packageTemplate">    
+    # if(IsApply == true) { #
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="fa fa-check" style="color:\\#5cb85c"></span>
+    # } else { #
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="fa fa-times" style="color:\\#d9534f"></span>
+    # } #
+</script>
+

@@ -1,0 +1,50 @@
+﻿@using Framework.DomainModel.Entities
+@using QuickspatchWeb.HtmlHelpers
+@using QuickspatchWeb.Models.SystemConfiguration
+@model QuickspatchWeb.Models.SystemConfiguration.DashboardSystemConfigurationShareViewModel
+
+<fieldset data-ng-controller="systemConfigurationShareController">
+    @Html.CustomTextBox("Name", "Name", "Data.Name", 12, required: true, length: 500, isDisabled: true)
+    @if (Model.SystemConfigType == SystemConfigType.DefaultLocationFrom)
+    {
+        <section class="col col-12">
+            <label>From</label>
+            <label class="select" style="width: 100%; margin-top: 5px;">
+                <select id="froms" kendo-drop-down-list style="width: 100%" k-options="locationFromOptions"></select>
+            </label>
+        </section>
+    }
+    @if (Model.SystemConfigType == SystemConfigType.DefaultLocationTo)
+    {
+        <section class="col col-12">
+            <label>To</label>
+            <label class="select" style="width: 100%;margin-top: 5px;">
+                <select id="tos" kendo-drop-down-list style="width: 100%" k-options="locationToOptions"></select>
+            </label>
+        </section>
+    }
+    @if (Model.SystemConfigType == SystemConfigType.RequestNo)
+    {
+      
+        @Html.CustomTextBox("Value", "Value", "Data.Value", 12, required: true, length: 2000)
+    }
+    @if (Model.SystemConfigType == SystemConfigType.DispatchTimeDefault)
+    {     
+        @Html.CustomTextBox("Value", "Value", "Data.Value", 12, required: true, length: 2000)
+    }
+</fieldset>
+
+<script type="text/javascript">
+    function SystemConfigurationViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Name = @Html.Raw(Json.Encode(Model.Name));
+        self.Value = @Html.Raw(Json.Encode(Model.Value));
+        self.DataType = @Html.Raw(Json.Encode(Model.DataType));
+        self.DataTypeId = @Model.DataTypeId;
+        self.SystemConfigType = @Html.Raw(Json.Encode(Model.SystemConfigType));
+        self.SystemConfigTypeId = @Model.SystemConfigTypeId;
+        self.LastModified = @Html.Raw(Json.Encode(Model.LastModified));
+    }
+</script>

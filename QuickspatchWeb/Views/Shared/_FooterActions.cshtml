@@ -1,0 +1,10 @@
+﻿@model System.Collections.ObjectModel.Collection<QuickspatchWeb.Models.FooterAction>
+
+<div style="margin-right:5px" ng-controller="footerController">
+    @foreach (var action in Model)
+    {
+        <a href="javascript:void(0);" data-function="@Html.Raw(action.ActionMethodKey)" ng-click="@Html.Raw(action.ActionMethod)" class="btn @action.ClassType float-right" >
+             <i class="fa @action.Icon"></i> @Html.Raw(action.Text)
+        </a>
+    }
+</div>

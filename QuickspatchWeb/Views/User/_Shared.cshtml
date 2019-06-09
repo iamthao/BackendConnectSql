@@ -1,0 +1,40 @@
+﻿@using System.Configuration
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.User.DashboardUserShareViewModel
+@{
+    bool isReadOnlyUserRole = !Model.CreateMode;
+}
+<fieldset data-ng-controller="userShareController">
+    @Html.CustomDropDownList("UserRoleId", "Role", "User.UserRoleId", 6, "/UserRole/GetListRolesNoCourier", required: true, currentValue: Model.UserRoleId, moreClass: "no-margin-bottom")
+    @Html.CustomTextBox("UserName", "Username", "User.UserName", 6, required: true, length: 100, isReadonly: !Model.CreateMode, isDisabled: !Model.CreateMode)
+    @Html.CustomTextBox("FirstName", "First Name", "User.FirstName", 5, required: true, length: 50)
+    @Html.CustomTextBox("MiddleName", "Midd Name", "User.MiddleName", 2, length: 50)
+    @Html.CustomTextBox("LastName", "Last Name", "User.LastName", 5, required: true, length: 50)
+    @Html.CustomTextBox("Email", "Email", "User.Email", 4, required: true, length: 100)
+    @Html.CustomPhone("HomePhone", "Home Phone", "User.HomePhone", 4, isRequired: true)
+    @Html.CustomPhone("MobilePhone", "Mobile Phone", "User.MobilePhone", 4, isRequired: true)
+    @Html.CustomCheckBox("IsActive", "Active", "User.IsActive", 3)
+    @Html.CustomFileUpload("Avatar", "Profile Picture", "User.Avatar", 9, previewWidth: 450, previewHeight: 450, acceptType: "image/*", isAvatar: true)
+
+</fieldset>
+
+<script type="text/javascript">
+    function UserViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Password = @Html.Raw(Json.Encode(Model.Password));
+        self.UserName = @Html.Raw(Json.Encode(Model.UserName));
+        self.UserRoleId = @Html.Raw(Json.Encode(Model.UserRoleId));
+        self.FirstName = @Html.Raw(Json.Encode(Model.FirstName));
+        self.LastName = @Html.Raw(Json.Encode(Model.LastName));
+        self.MiddleName = @Html.Raw(Json.Encode(Model.MiddleName));
+        self.HomePhone = @Html.Raw(Json.Encode(Model.HomePhone));
+        self.MobilePhone = @Html.Raw(Json.Encode(Model.MobilePhone));
+        self.Email = @Html.Raw(Json.Encode(Model.Email));
+        self.LastModified = @Html.Raw(Json.Encode(Model.LastModified));
+        self.IsActive=@Html.Raw(Json.Encode(Model.IsActive));
+        self.Avatar = @Html.Raw(Json.Encode(Model.Avatar));
+    }
+</script>
+

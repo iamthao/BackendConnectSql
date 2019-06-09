@@ -1,0 +1,161 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@using QuickspatchWeb.Models.Request
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    span.all-button {
+        padding:2px 2px 0px 2px !important;
+        text-transform: none !important;
+        background-color: #428bca;
+        border-color: #428bca;
+        color: #fff;
+    }
+     span.all-button:hover, span.all-button:focus, span.all-button.inactive:hover, span.all-button.inactive:hover {
+        background-color: #428bca !important;
+        border-color: #428bca  !important;
+        color: #fff;
+    }
+    span.all-button.inactive {
+        background-color: #F8F9FA;
+        color: #333;
+    }
+
+</style>
+<div id="courier-status-area" class="panel panel-table" ng-controller="courierStatusController" >
+
+    <div class="panel-heading">
+        <div style="width: 100%; display: table">
+            <div class="panel-title-small" style="display: table-cell; width: 30%; min-width: 170px">{{CourierDisplayName}} status</div>
+            <div style="text-align: center; display: table-cell; width: 60%">
+                <span class="panel-title courier-selected-title" data-ng-bind-html="SelectedCourier" style="line-height: 15px;width: 100%;"></span>
+            </div>
+            <div style="display: table-cell; width: 10%; text-align: right">
+                @*<input type="checkbox" name="chk-courier-status" checked data-size="normal" data-label-text="Auto refresh">*@
+                <span id="all-dashboard" class="btn icon no-border all-button" ng-class="classAll" ng-click="showAllRequest()" name="panel-maximize"><small>All</small></span>
+                <span class="btn icon no-border" style="padding: 0 !important;" ng-click="showCourierList()" name="panel-maximize"><i class="fa fa-refresh"></i></span>
+                <span class="btn icon no-border" style="padding: 0 !important;" ng-click="fullscreenOn($event)" name="panel-maximize"><i class="fa fa-expand"></i></span>
+                <span class="btn icon no-border" style="padding: 0 !important;display: none" ng-click="fullscreenOff($event)" name="panel-minimize"><i class="fa fa-compress"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-content screen-fit-2">
+        <div class="col-xs-12 col-sm-3 my-col no-padding" style="background-color: #fff;border-right: 1px #ccc solid">
+            <div>
+                <div class="k-widget search-box">
+                    <span class="k-picker-wrap k-state-default" style="border: none;border-bottom: 1px solid #EBEBEB;">
+                        <input type="text" class="k-input" placeholder="Find {{CourierDisplayName}}" ng-model="SearchCourier" ng-enter="search()">
+                        <span class="k-select ">
+                            <i class="fa fa-search" ng-click="search()"></i>
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div id="courier-list-wrapper">
+                <ul id="courier-list" class="reponsive-list" style="padding: 0;margin:0; overflow: auto;"></ul>
+                <br clear="all" />
+                <script type="text/x-kendo-template" id="courierListViewTemplate">
+                    <div class="stripe stripe-#:StatusString# material">
+                        <div style="width: 100%;line-height:30px;  display: flex;">
+                            <div style="float:left; text-align:left; width:70%; display: flex; flex-direction: column; justify-content: center">
+                                <span class="courier-name" style="vertical-align: middle;text-overflow: ellipsis; white-space: nowrap;display: block;overflow: hidden">
+                                    <i class="fa fa-circle badge-#:StatusString#" style="margin-right: 10px" title='#:StatusString#'></i><span class="badge-#:StatusString#">${name}</span>
+                                </span>
+                            </div>
+                            <div style="float:left;width: 30%;text-align: right">
+                                #if(Imei!=null &&Imei!=''){#
+                                <span class="icon no-border btnForceSignOut" id="courierSignOut-#:Id#" title="Force Sign Out"><i class="fa fa-sign-out"></i></span>
+                                #}#
+                                <span class="icon no-border btnCallRequestCard" id="courier-#:Id#" title="New Request"><i class="fa fa-send"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </script>
+            </div>
+        </div>
+
+        <div class="col-xs-10 col-sm-9 no-padding" style="height: 100%;">
+            <!-- Couriers' jobs completion -->
+            <div kendo-grid="requestGrid" k-options="mainGridOptions" id="courier-route" class="reponsive-grid hidden-pager"></div>
+
+            <script type="text/x-kendo-template" id="requestStatus">
+                #if(Status != 'null'){#
+                <span class="label label-#:Status.toLowerCase().replace(/\s+/g,'')#">#=Status#</span>
+                #}#
+            </script>
+            <script type="text/x-kendo-template" id="requestNo">
+                #if(IsActiveRequest ==true){#
+                <span class="request-active"> &nbsp;#=RequestNo#</span>
+                #}else{#
+
+                <span>#=RequestNo#</span>
+                #}                
+                if (IsWarning == true) {#
+                    <span class="fa fa-exclamation-triangle" ng-click="showWarning(dataItem);" style="color:\\#FFDC00;cursor: pointer;"></span>
+                #}#
+
+            </script>
+            <script type="text/x-kendo-template" id="requestButtons">
+                <div class="btn-group">
+                    <button class="btn btn-sm btn-default btn-copy-request" title="Copy request" data-ng-click="copyRequest(dataItem);"><i class="fa fa-copy"></i></button>
+
+                    <button class="btn btn-sm btn-default btn-note-request" title="Show detail" data-ng-click="showNoteRequest(dataItem,true);"><i class="fa fa-ellipsis-h"></i></button>
+
+                    #if(Status != 'Cancelled' && Status != 'Completed' && IsExpired != true){#
+                    <button class="btn btn-sm btn-default btn-cancel-request" title="Cancel request" data-ng-click="cancelRequestForm(dataItem,true);"><i class="fa fa-ban"></i></button>
+                    #}#
+
+                    @*#if(IsExpired != true && IsSchedule != true && (Status == 'Declined' || Status == 'Abandoned'|| Status == 'Not Sent')){#
+                    <button class="btn btn-sm btn-default btn-reassign-request" title="Re-assign courier" data-ng-click="callReAssignCourier(dataItem,true);"><i class="fa fa-user"></i></button>
+                    #}#*@
+
+                </div>
+            </script>
+        </div>
+    </div>
+    <div id="cancel-request" ng-show="IsShowCancelRequestForm" class="card border-info" style="position: absolute; z-index:100; width: 300px; padding: 10px;">
+
+        <form class="smart-form">
+            <fieldset class="panel-control border-bottom no-padding">
+                <section class="col col-12">
+                    <label ng-bind="ContentCancel"></label>
+                </section>
+                <section class="col col-12">
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-default" type="button" ng-click="cancelRequestForm(null,false);"><i class="fa fa-remove"></i> No</button>
+                        <button class="btn btn-primary" type="button" ng-click="cancelRequest()"><i class="fa fa-check"></i> Yes</button>
+                    </div>
+                </section>
+
+            </fieldset>
+        </form>
+    </div>
+    <div id="re-assign-courier" ng-show="IsShowReAssignCourierForm" class="card border-info" style="position: absolute; z-index:100; width: 250px; padding: 10px;">
+
+        <form class="smart-form">
+            <fieldset class="panel-control border-bottom no-padding">
+                @Html.Lookup("ReAssignCourierId", "Courier", "ReAssignCourier", "ReAssignCourierId", 12, urlToReadData: "Courier/GetLookup", isRequired: true, showAddEdit: false)
+                <section class="col col-12">
+                    <div class="btn-group pull-right">
+
+                        <button class="btn btn-default" type="button" ng-click="callReAssignCourier(null,false)"><i class="fa fa-remove"></i> Cancel</button>
+                        <button class="btn btn-primary" type="button" ng-click="assignCourier()"><i class="fa fa-user"></i> Assign</button>
+                    </div>
+                </section>
+
+            </fieldset>
+        </form>
+    </div>
+    @*noterequest*@
+    <div id="show-note-request" ng-show="IsShowNoteRequestForm" class="card border-info" style="position: absolute; z-index:100; width: 500px; padding: 10px;">
+
+        <form class="smart-form">
+            <fieldset class="panel-control border-bottom no-padding">
+                <div kendo-grid k-options="noteGridOptions" id="noterequest-grid"></div>
+            </fieldset>
+        </form>
+    </div>
+    @Html.Partial("~/Views/Request/_CreateRequest.cshtml", new DashboardRequestShareViewModel())
+</div>

@@ -1,0 +1,56 @@
+﻿@using System.Configuration
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.FranchiseeConfiguration.DashboardFranchiseeConfigurationShareViewModel
+@{
+    bool isReadOnlyUserRole = !Model.CreateMode;
+}
+<fieldset data-ng-controller="franchiseeConfigurationShareController">
+  
+    @Html.CustomTextBox("Name", "Name", "FranchiseeConfiguration.Name", 12, required: true, length: 200, isReadonly: true, isDisabled: true)
+    @*@Html.CustomPhone("OfficePhone", "Office Phone", "FranchiseeConfiguration.OfficePhone", 6, true)
+    @Html.CustomPhone("FaxNumber", "Fax Number", "FranchiseeConfiguration.FaxNumber", 6, true)*@
+    @Html.CustomTextBox("PrimaryContactEmail", "Email", "FranchiseeConfiguration.PrimaryContactEmail", 6, true)
+    @Html.CustomPhone("PrimaryContactPhone", "Phone", "FranchiseeConfiguration.PrimaryContactPhone", 6, true)
+    @Html.CustomPhone("PrimaryContactCellNumber", "Cell", "FranchiseeConfiguration.PrimaryContactCellNumber", 6, true)
+    @Html.CustomPhone("PrimaryContactFax", "Fax", "FranchiseeConfiguration.PrimaryContactFax", 6)
+    @Html.CustomTextBox("Address1", "Address 1", "FranchiseeConfiguration.Address1", 8, true)
+    @Html.CustomTextBox("Address2", "Address 2", "FranchiseeConfiguration.Address2", 4, false)
+    @Html.CustomTextBox("City", "City", "FranchiseeConfiguration.City", 4, true)
+    @Html.CustomTextBox("State", "State", "FranchiseeConfiguration.State", 4, true)
+    @Html.CustomTextBox("Zip", "Zip", "FranchiseeConfiguration.Zip", 4, true,5)
+    @Html.CustomFileUpload("Logo", "Logo", "FranchiseeConfiguration.Logo", 6, previewWidth: 200, previewHeight: 40, acceptType: "image/*", isAvatar: true)
+    @*<section class="col col-12">
+        <h3>Franchisee Contact</h3>
+    </section>
+    @Html.CustomTextBox("FranchiseeContact", "Contact Name", "FranchiseeConfiguration.FranchiseeContact", 12, required: true, length: 200)
+    @Html.CustomTextBox("PrimaryContactEmail", "Email", "FranchiseeConfiguration.PrimaryContactEmail", 6, true)
+    @Html.CustomPhone("PrimaryContactPhone", "Phone", "FranchiseeConfiguration.PrimaryContactPhone", 6, true)  
+    @Html.CustomPhone("PrimaryContactFax", "Fax", "FranchiseeConfiguration.PrimaryContactFax", 6, false)
+    @Html.CustomPhone("PrimaryContactCellNumber", "Cell Number", "FranchiseeConfiguration.PrimaryContactCellNumber", 6, false)*@
+</fieldset>
+
+<script type="text/javascript">
+    function FranchiseeConfigurationViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Name = @Html.Raw(Json.Encode(Model.Name));
+        self.Address1 = @Html.Raw(Json.Encode(Model.Address1));
+        self.OfficePhone = @Html.Raw(Json.Encode(Model.OfficePhone));
+        self.FaxNumber = @Html.Raw(Json.Encode(Model.FaxNumber));
+        self.City = @Html.Raw(Json.Encode(Model.City));
+        self.State = @Html.Raw(Json.Encode(Model.State));
+        self.Zip = @Html.Raw(Json.Encode(Model.Zip));
+        self.LicenseKey = @Html.Raw(Json.Encode(Model.LicenseKey));
+        self.Logo = @Html.Raw(Json.Encode(Model.Logo));
+        self.FranchiseeId = @Html.Raw(Json.Encode(Model.FranchiseeId));
+
+        self.FranchiseeContact = @Html.Raw(Json.Encode(Model.FranchiseeContact));
+        self.PrimaryContactPhone = @Html.Raw(Json.Encode(Model.PrimaryContactPhone));
+        self.PrimaryContactEmail = @Html.Raw(Json.Encode(Model.PrimaryContactEmail));
+        self.PrimaryContactFax = @Html.Raw(Json.Encode(Model.PrimaryContactFax));
+        self.PrimaryContactCellNumber = @Html.Raw(Json.Encode(Model.PrimaryContactCellNumber));
+        self.LastModified = @Html.Raw(Json.Encode(Model.LastModified));
+    }
+</script>
+

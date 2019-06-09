@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <ServiceName>QuickSpatchWindowsService</ServiceName>
+  <ServiceDesciption>QuickSpatchWindowsService for franchisee</ServiceDesciption>
+  <CourierStatusTimeoutBySecond>600</CourierStatusTimeoutBySecond>
+  <RequestStatusTimeoutBySecond>3600</RequestStatusTimeoutBySecond>
+</root>

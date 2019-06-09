@@ -1,0 +1,47 @@
+﻿@using Framework.Utility
+@model QuickspatchWeb.Models.ExportExcelModel
+<table style="border: 5px;">
+    <thead>
+        <tr>
+            @foreach (var column in Model.Columns)
+            {
+                <th>
+                    @column.Title
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @*<img src="@data[column.Field]" style="width: '@width'; height: '@height'" />*@
+        @foreach (var data in Model.DataSource)
+        {
+            <tr>
+                @foreach (var column in Model.Columns)
+                {
+
+                    if (column.Type == "image")
+                    {
+                        var width = column.Width + "px";
+                        var height = column.Height + "px";
+                        <img src="https://www.google.com.vn/images/srpr/logo11w.png" style="width:40px; height:120px" />
+                    }
+                    else
+                    {
+                        <td>
+                            @{
+                                var displayData = data.ToDictionary()[column.Field];
+                                if (@data.ToDictionary()[column.Field] != null && data.ToDictionary()[column.Field].GetType().FullName == "System.DateTime")
+                                {
+                                    displayData = ((DateTime)displayData).ToClientTime("MM/dd/yyyy hh:mm tt");
+                                }
+
+                            }
+                            
+                            @displayData
+                        </td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,20 @@
+﻿@model QuickspatchWeb.Models.Report.DriverReportPdfViewModel
+@{
+    Layout = null;
+}
+<div class="portlet-content" ng-controller="driverReportExportPdfController">
+    <form class="form-horizontal" role="form" style="width:100%; margin:0;padding: 0">
+        <div class="popup-body modal-body">
+            <iframe id="iframeFile" style="height: 100%;width: 100%;" src="/Report/GetPdf?filePath=@Model.FullPath" title="Main menu"></iframe>
+        </div>
+        <div class="popup-footer" style="height: 40px">           
+            <a href="javascript:void(0);" ng-click="Cancel()" class="btn btn-default float-right">
+                <i class="fa fa-close"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+<script>
+    $(".popup-body.modal-body").css({ height: $(".portlet-content").parent().parent().height() - 79 });
+</script>
+

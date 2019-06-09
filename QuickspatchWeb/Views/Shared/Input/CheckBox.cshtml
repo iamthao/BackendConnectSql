@@ -1,0 +1,61 @@
+﻿@model QuickspatchWeb.Models.Input.CheckBoxViewModel
+@{
+    var readOnlyCheckbox = "";
+    if (Model.ReadOnly)
+    {
+        readOnlyCheckbox = "disabled";
+    }
+}
+
+@if (Model.LabelTop)
+{
+    <section class="col col-@Model.Col @Model.MoreClass">
+        <label>
+            @Model.Label
+        </label>
+
+        <label class="checkbox">
+            @{
+    var disabledStr = Model.IsDisabled ? "disabled='disabled'" : "";
+    if (Model.NgChangeFunction == "")
+    {
+
+        <input id="@Model.Id" type="checkbox" class="@Model.Class" data-ng-model="@Model.DataBindingValue" @readOnlyCheckbox style="margin-top: 7px;" @disabledStr />
+    }
+    else
+    {
+        <input id="@Model.Id" type="checkbox" class="@Model.Class" data-ng-model="@Model.DataBindingValue" @readOnlyCheckbox ng-change="@Model.NgChangeFunction" style="margin-top:7px" @disabledStr />
+    }
+            }
+            <i></i>
+        </label>
+    </section>
+}
+else
+{
+    <section class="col col-@Model.Col @Model.MoreClass" style="margin-top: 20px;">
+        <label class="checkbox">
+            @{
+    var disabledStr = Model.IsDisabled ? "disabled='disabled'" : "";
+    if (Model.NgChangeFunction == "")
+    {
+
+        <input id="@Model.Id" type="checkbox" class="@Model.Class" data-ng-model="@Model.DataBindingValue" @readOnlyCheckbox style="margin-top: 7px;" @disabledStr />
+    }
+    else
+    {
+        <input id="@Model.Id" type="checkbox" class="@Model.Class" data-ng-model="@Model.DataBindingValue" @readOnlyCheckbox ng-change="@Model.NgChangeFunction" style="margin-top:7px" @disabledStr />
+    }
+            }
+            <i></i>@Model.Label
+        </label>
+
+    </section>
+}
+<style>
+    .k-checkbox, .k-radio {
+        display: block !important;
+    }
+</style>
+
+

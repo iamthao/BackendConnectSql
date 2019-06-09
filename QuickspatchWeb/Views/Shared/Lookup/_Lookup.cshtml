@@ -1,0 +1,45 @@
+﻿@using Newtonsoft.Json
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.LookupViewModel
+@{
+    var controllerLookup = "";
+    if (!string.IsNullOrEmpty(Model.HierarchyGroupName) && !string.IsNullOrEmpty(Model.AngularLookupController))
+    {
+        controllerLookup = " data-ng-controller=" + Model.AngularLookupController + " data-ng-init=init('" + @Model.HierarchyGroupName + "','" + @Model.ModelName + "')";
+    }
+}
+
+<section id="lookup-container-@Model.ID" class="col col-@Model.Col @Model.MoreClass" ng-show="@Model.IsShow" @controllerLookup>
+    @if (!string.IsNullOrEmpty(Model.Label))
+    {
+        <label>
+            @if (Model.RequiredAttribute == "required=\"required\"")
+            {
+                <span class='red'>*</span>
+            }@Model.Label
+        </label>
+    }
+
+    @*<label class="pull-right"><a href='#' ng-click='EditLookup()'><i class='fa fa-edit'></i> Edit</a> | <a href='#' ng-click='AddLookup()'><i class='fa fa-plus'></i> Add</a></label>*@
+    <label class="select">
+        @{
+            if (Model.HtmlAttributes.ContainsKey("style"))
+            {
+                if (!Model.HtmlAttributes["style"].ToString().Contains("width"))
+                {
+                    Model.HtmlAttributes["style"] = Model.HtmlAttributes["style"] + "width: 350px;";
+                }
+            }
+            else
+            {
+                Model.HtmlAttributes.Add("style", "width: 350px;");
+            }
+
+        }
+
+        @*@Html.InputWithAttributes(Model.ID, Model.HtmlAttributes)*@
+        <custom-lookup class="custom-lookup" custom-params="@Model.CustomParams" url-read-data="@Model.UrlToReadData" url-get-lookup-item="@Model.UrlToGetLookupItem" model-name="@Model.ModelName" id-lookup="@Model.ID" model-binding="@Model.DataBindingValue"
+                       hierarchy-group-name="@Model.HierarchyGroupName" add-popup-lookup='@Model.AddLookupPopupFunction' edit-popup-lookup='@Model.EditLookupPopupFunction' client-data-source="@(JsonConvert.SerializeObject(Model.DataSource))" show-add-edit="@Model.ShowAddEdit" enable-lookup="@Model.Enable">
+        </custom-lookup>
+    </label>
+</section>

@@ -1,0 +1,112 @@
+﻿@using System.Configuration
+@using Framework.Utility
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Schedule.DashboardScheduleShareViewModel
+
+<fieldset id="schedule-share-controller" data-ng-controller="scheduleShareController">
+    @Html.CustomTextBox("RouteName", "Route Name", "Schedule.RouteName", 12, required: true, length: 100)
+    @Html.Lookup("LocationFrom", "From", "LocationFrom", "Schedule.LocationFrom", 6, urlToReadData: "Location/GetLookup", isRequired: true, showAddEdit: false, dataSource: @Model.LocationFromDataSource)
+    @Html.Lookup("LocationTo", "To", "LocationTo", "Schedule.LocationTo", 6, urlToReadData: "Location/GetLookup", isRequired: true, showAddEdit: false, dataSource: @Model.LocationToDataSource)
+
+    <section class="col col-12 margin-bottom-10">
+        <div class="subtitle">Frequency</div>
+        <hr />
+    </section>
+    @Html.CustomRadio("FrequencySelected", "Daily", "Schedule.FrequencySelected", 4, value: "daily", moreClass: "no-margin-bottom")
+    @Html.CustomRadio("FrequencySelected", "Weekly", "Schedule.FrequencySelected", 4, value: "weekly", moreClass: "no-margin-bottom")
+    @Html.CustomRadio("FrequencySelected", "Monthly", "Schedule.FrequencySelected", 4, value: "monthly", moreClass: "no-margin-bottom")
+
+    <section class="col col-12" id="frequency-weekly" style="display: none">
+        <span class="col-xs-3" style="padding-right:0;margin-top: 10px" ng-repeat="d in DayOfWeekArray">
+            <label class="checkbox">
+                <input type="checkbox" class="k-checkbox" ng-model="FrequencyWeek[d.ShortText]" ng-change="ChangeFrequencyWeek()"><i></i> {{d.FullText}}
+            </label>
+        </span>
+
+    </section>
+
+    <section class="col col-12" id="frequency-monthly" style="display: none">
+        <span class="btn btn-default" ng-class="{'switch-on':FrequencyDaysOfMonthArray.indexOf(m.toString())>=0}" style="width:12px;border-radius: 0;" ng-click="changeSwitch($event)" ng-repeat="m in GenerateArray(1,31)">{{m}}</span>
+    </section>
+    <section class="col col-6 margin-bottom-10">
+        <div class="subtitle">Expected process time</div>
+        <hr />
+    </section>
+    <section class="col col-6 margin-bottom-10">
+        <div class="subtitle">Duration</div>
+        <hr />
+    </section>
+    @*@Html.CustomTimePicker("StartTime", "Arrival Window From", "Schedule.StartTime", 3, "hh:mm tt", true, moreClass: "format-label")
+    @Html.CustomTimePicker("EndTime", "Arrival Window To", "Schedule.EndTime", 3, "hh:mm tt", true, moreClass: "format-label")*@
+    <section class="col col-3">
+        <label>
+            <span class="red">*</span>Arrival Window From
+        </label>
+
+        <div style="width:100%">
+            <time-schedule time-id="start-hour" bind-obj="Schedule" bind-val="StartTime"></time-schedule>
+
+        </div>
+    </section>
+    <section class="col col-3 " style="padding-right: 0">
+        <label>
+            <span class="red">*</span>Arrival Window To
+        </label>
+        <div style="width:100%">
+            <time-schedule time-id="end-hour" bind-obj="Schedule" bind-val="EndTime"></time-schedule>
+        </div>
+
+    </section>
+    @Html.CustomDatetimePicker("DurationStart", "Start Date", "Schedule.DurationStart", 3, "MM/dd/yyyy", moreClass: "no-margin-bottom", required: true)
+    @Html.CustomDatetimePicker("DurationEnd", "End Date", "Schedule.DurationEnd", 3, "MM/dd/yyyy", moreClass: "no-margin-bottom")
+    <section class="col col-9">
+        <div></div>
+    </section>
+    @Html.CustomCheckBox("IsNoDurationEnd", "No end date", "Schedule.IsNoDurationEnd", 3)
+    @Html.CustomTextArea("Description", "Description", "Schedule.Description", 12, height: 30)
+</fieldset>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("input[type=radio][name=FrequencySelected]").click(function(e) {
+            switch (e.target.value) {
+                case "daily":
+                    if ($("#frequency-weekly").is(":visible"))
+                        $("#frequency-weekly").slideUp(400);
+                    if ($("#frequency-monthly").is(":visible"))
+                        $("#frequency-monthly").slideUp(400);
+                    break;
+                case "weekly":
+                    if (!$("#frequency-weekly").is(":visible"))
+                        $("#frequency-weekly").slideDown(400);
+                    if ($("#frequency-monthly").is(":visible"))
+                        $("#frequency-monthly").slideUp(400);
+                    break;
+                case "monthly":
+                    if ($("#frequency-weekly").is(":visible"))
+                        $("#frequency-weekly").slideUp(400);
+                    if (!$("#frequency-monthly").is(":visible"))
+                        $("#frequency-monthly").slideDown(400);
+                    break;
+            }
+        });
+    });
+    function ScheduleViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.RouteName = @Html.Raw(Json.Encode(Model.Name));
+        self.LocationFrom = @Html.Raw(Json.Encode(Model.LocationFrom));
+        self.LocationTo = @Html.Raw(Json.Encode(Model.LocationTo));
+        self.StartTime = @Html.Raw(Json.Encode(Model.StartTime != null ? ((DateTime)Model.StartTime).ToClientTime("hh:mm tt") : ""));
+        self.EndTime = @Html.Raw(Json.Encode(Model.EndTime != null ? ((DateTime)Model.EndTime).ToClientTime("hh:mm tt") : ""));
+        self.DurationStart = @Html.Raw(Json.Encode(Model.DurationStart != null ? ((DateTime)Model.DurationStart).ToClientTime("MM/dd/yyyy") : ""));
+        self.DurationEnd = @Html.Raw(Json.Encode(Model.DurationEnd != null ? ((DateTime)Model.DurationEnd).ToClientTime("MM/dd/yyyy") : ""));
+        self.IsNoDurationEnd = @Html.Raw(Json.Encode(Model.IsNoDurationEnd));
+        self.Description = @Html.Raw(Json.Encode(Model.Description));
+        self.FrequencySelected = @Html.Raw(Json.Encode(Model.FrequencySelected));
+        self.FrequencyWeekString = @Html.Raw(Json.Encode(Model.FrequencyWeek));
+        self.FrequencyMonthString = @Html.Raw(Json.Encode(Model.FrequencyMonth));
+        self.Confirm = false;
+    }
+</script>

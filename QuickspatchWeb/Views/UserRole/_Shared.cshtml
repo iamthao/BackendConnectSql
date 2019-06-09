@@ -1,0 +1,41 @@
+﻿@using System.Web.UI.WebControls
+@using Framework.DomainModel.ValueObject
+@using QuickspatchWeb.HtmlHelpers
+@using QuickspatchWeb.Models
+@model QuickspatchWeb.Models.UserRole.DashboardUserRoleShareViewModel
+<fieldset data-ng-controller="userRoleShareController" ng-init="shareInit(@((Model.AppRoleName==AppRole.GlobalAdmin.ToString()).ToString().ToLower()))">
+    @if (Model.AppRoleName != AppRole.GlobalAdmin.ToString())
+    {
+        @Html.CustomTextBox("Name", "Name", "UserRole.Name", 6, true)
+    }
+    else
+    {
+        @Html.CustomTextBox("Name", "Name", "UserRole.Name", 6, cssClass: "k-input k-state-disabled", isDisabled: true)
+    }
+
+    @if (Model.AppRoleName != AppRole.GlobalAdmin.ToString())
+    {
+        @Html.CustomCheckBox("CheckAll", "Check All", "UserRole.CheckAll", 6, ngChangeFunction: "CheckAll()")
+    }
+    else
+    {      
+        @Html.CustomCheckBox("CheckAll", "Check All", "UserRole.CheckAll", 6, isDisabled: true)             
+    }            
+  
+        <section class="col col-12">
+            <div kendo-grid k-options="mainGridOptions" id="userRoleGrid" style="border: 1px solid #ccc;"></div>
+        </section>
+
+</fieldset>
+
+<script type="text/javascript">
+    function UserRoleViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Name = @Html.Raw(Json.Encode(Model.Name));
+        self.CheckAll = false;
+        self.UserRoleFunctionData = "";
+        self.AppRoleName=@Html.Raw(Json.Encode(Model.AppRoleName));
+    }
+</script>

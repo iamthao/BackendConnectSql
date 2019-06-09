@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<style>
+    #send-reset-code {
+        display: none;
+    }
+    #sign-in-button {
+       display: none; 
+    }
+</style>
+<div id="main" role="main" ng-controller="loginController">
+    <!-- MAIN CONTENT -->
+    <div id="sign-in-form" class="panel panel-table" style="width: 400px;position: absolute">
+        <div class="panel-heading extended-height" style="text-align: center">
+            <img src="/Content/quickspatch/img/logo-o.svg" style="width:90%; margin: 20px 0 10px 0" alt="logo">
+        </div>
+        <div class="panel-body">
+            <div class="smart-form">
+                <fieldset id="sign-in-main" ng-show="!isShowForgotPassword">
+                    <section class="col col-12">
+                        <label class="input">
+                            <input type="text" class="form-control" name="username" ng-model="userName" placeholder="Username" ng-keydown="autoLogin($event)" autofocus>
+                        </label>
+                    </section>
+                    <section class="col col-12">
+                        <label class="input">
+                            <input type="password" class="form-control" name="password" ng-model="password" placeholder="Password" ng-keydown="autoLogin($event)" style="margin:10px 0">
+                        </label>
+                    </section>
+                    <section class="col col-6">
+                        <label class="checkbox"><input type="checkbox" name="RememberMe" id="RememberMe" ng-model="rememberMe"><i></i> Remember me</label>
+                        
+                    </section>
+                    <section class="col col-6">
+                        <a ng-click="showForgotPassowrd(true)" class="pull-right">Forgot password?</a>
+                    </section>
+                    <section class="col col-12">
+                        <button class="btn btn-primary" style="width: 94%;padding: 3% !important" ng-show="!IsShowLoading" id="sign-in-button" ng-click="login()"><i class="fa fa-sign-in"></i> SIGN IN</button>
+                        <button class="btn btn-primary" style="width: 94%;padding: 3% !important" ng-show="IsShowLoading" id="loading-button"><img src="@(Url.Content("~/Content/quickspatch/img/loading.gif"))" alt="" height="14" /></button>
+                    </section>
+                </fieldset>
+                <fieldset ng-show="isShowForgotPassword" style="border-top: 0;" id="send-reset-code">
+                    <section class="col col-12">
+                        <label class="input">
+                            <input type="email" ng-model="email" class="form-control" placeholder="Enter your registered email...">
+                        </label>
+                    </section>
+                    <section class="col col-12">
+                        <label class="input">
+                            <a class="col-sm-12 text-right" ng-click="showForgotPassowrd(false)">Back</a>
+                        </label>
+                    </section>
+                    <section class="col col-12">
+                        <button class="btn btn-primary" style="width: 94%;padding: 3% !important" ng-click="resetPassword()"><i class="fa fa-key"></i> SEND RESET CODE</button>
+                    </section>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/angularApp/form.login.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/app/controllers/loginController.js")"></script>
+
+}

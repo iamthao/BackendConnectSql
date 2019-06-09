@@ -1,0 +1,55 @@
+﻿@model QuickspatchWeb.Models.Date.DateTimePickerViewModel
+<section class="col col-@Model.Col @Model.MoreClass">
+    @if (!string.IsNullOrEmpty(Model.Label))
+    {
+        <label>
+            @if (Model.RequiredAttribute == "required=\"required\"")
+            {
+                <span class='red'>*</span>
+            }@Model.Label
+        </label>
+    }
+
+
+    <div class="input" style="@(!string.IsNullOrEmpty(Model.Label)?"":"width:100%")">
+        <input id='@Model.Id' style="width:100%" @Model.RequiredAttribute
+               class="@Model.Class" @Model.RequiredAttribute
+               ng-model="@Model.DataBindingValue" />
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function @(Model.Id)_onChange() {
+                $(this).parents('form').addClass('dirty');
+                EnableCreateFooterButton(true);
+            }
+            var hasMin = '@(Model.HasMin)';
+            var now = new Date();
+            var minute = now.getMinutes();
+            var hour = now.getHours();
+            if (minute > 0 && minute <= 30) {
+                minute = 30;
+            } else {
+                minute = 0;
+                hour = (hour + 1 > 24 ? 24 : hour + 1);
+            }
+
+            $("#@Model.Id").kendoTimePicker({
+                change: @(Model.Id)_onChange,
+                format: "@Model.Format",
+                min: (hasMin == 'True' ? new Date(now.getFullYear(), now.getMonth() + 1, now.getDay(), hour, minute) : new Date(now.getFullYear(), now.getMonth() + 1, now.getDay(), 0, 0, 0)),
+                max: new Date(now.getFullYear(), now.getMonth() + 1, now.getDay(), 23, 30, 0),
+                open: function () {
+                }
+            }).data("kendoTimePicker");
+            $("#@Model.Id").kendoMaskedTextBox({
+                mask: "00:00 ~^",
+                rules: {
+                    "~": /[PA]/,
+                    "^": /[M]/
+                }
+            });
+        });
+    </script>
+
+</section>

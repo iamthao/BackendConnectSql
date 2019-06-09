@@ -1,0 +1,62 @@
+﻿@model QuickspatchWeb.Models.Courier.DashboardCourierIndexViewModel
+@{
+    Layout = null;
+}
+
+<div class="panel panel-table" >
+    <div class="panel-heading">
+        <div class="panel-title-small">Manage @Model.DisplayNameForCourier</div>
+    </div>
+
+    <div id="content-container" ng-controller="courierController">
+        @Html.Partial("~/Views/Shared/Grid/_ReadOnlyGrid.cshtml", @Model.GridViewModel)
+    </div>
+</div>
+
+<script type="text/x-kendo-template" id="courierTemplate">
+    #if(IsActive == true){#
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="fa fa-check" style="color:\\#5cb85c"></span>
+    #}#
+    #if(IsActive == false){#
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="fa fa-times" style="color:\\#d9534f"></span>
+    #}#
+</script>
+
+<script type="text/x-kendo-template" id="courierCleanImeiTemplate">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="btn-group">
+        #if(Imei!=null && Imei!=""){
+        #
+        <button class="btn btn-sm btn-default" ng-click="CleanImei(${ Id });"><i class="fa fa-sign-out"></i></button>
+        #
+        }
+        else
+        {
+        #
+        <button class="btn btn-sm btn-default" ng-click="CleanImei(${ Id });" disabled><i class="fa fa-sign-out"></i></button>
+        #
+        }#
+        
+    </div>
+
+</script>
+
+<script>
+    function resizeGrid() {
+        var gridElement = $("#Courier"),
+            dataArea = gridElement.find(".k-grid-content"),
+            gridHeight = gridElement.innerHeight(),
+            otherElements = gridElement.children().not(".k-grid-content"),
+            otherElementsHeight = 0;
+        otherElements.each(function () {
+            otherElementsHeight += $(this).outerHeight();
+        });
+        dataArea.height(gridHeight - otherElementsHeight);
+    }
+
+    $(window).resize(function () {
+        resizeGrid();
+    });
+</script>

@@ -1,0 +1,16 @@
+﻿@using QuickspatchWeb.Models
+@model QuickspatchWeb.Models.FranchiseeModule.DashboardFranchiseeModuleDataViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+}
+
+<div ng-controller="updateFranchiseeModuleController" data-ng-init="init(@Model.Id)">
+    @Html.Partial("_Shared", Model.SharedViewModel)
+</div>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Update", "fa-save", FooterActionEnum.Save, "updateFranchiseeModuleController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "updateFranchiseeModuleController", false)
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}

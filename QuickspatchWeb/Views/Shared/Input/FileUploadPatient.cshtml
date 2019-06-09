@@ -1,0 +1,77 @@
+﻿@model QuickspatchWeb.Models.Input.FileUploadViewModel
+<section class="col col-@Model.Col">
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.Label
+    </label>
+
+    <label class="input">
+        <div id="@Model.Id-fileUpload">
+            <input name="file" type="file" accept="image/*" />
+            <input ng-model="@Model.DataBindingValue" id="@Model.Id" type="hidden" />
+            <img src="~/Content/img/avatars/patient.jpg" style=" left: 0;top: 0; width:80px" ng-src="{{@Model.DataBindingValue}}" />
+        </div>
+    </label>
+
+    <script type="text/javascript">
+        $("#@Model.Id-fileUpload").kendoUpload({
+            async: {
+                saveUrl: "@Model.SaveUrl",
+                removeUrl: "@Model.RemoveUrl",
+                autoUpload: true
+            },
+            multiple: false,
+            success: @(Model.Id)_onSuccess,
+            upload: function(e) {
+                var scope = angular.element("#@Model.Id").scope();
+                //console.log(scope.$root.PatientId);
+                e.data = { patientId: scope.$root.PatientId };
+            },
+            select: function(e) {
+                $.each(e.files, function(index, value) {
+
+                    var ok = value.extension == ".JPG" || value.extension == ".jpg"
+                        || value.extension == ".JPEG" || value.extension == ".jpeg"
+                        || value.extension == ".PNG" || value.extension == ".png";
+
+                    if (!ok) {
+                        e.preventDefault();
+                        var common = angular.element('#@Model.Id').injector().get("common");
+                        common.showErrorModelState(new FeedbackViewModel("error", "Please upload jpg/png image file", "", []));
+                    }
+                });
+            }
+        });
+
+        function @(Model.Id)_onSuccess(e) {
+            if (e.response.file != undefined && e.response.file != null) {
+                var file = e.response.file;
+                var scope = angular.element("#@Model.Id").scope();
+                scope.$apply(function() {
+                    scope.@(Model.DataBindingValue) = file;
+                });
+            }
+            $("div[data-role='upload']").show();
+        }
+    </script>
+    <style type="text/css">
+        .k-dropzone {
+            padding: 0;
+        }
+
+        .k-widget, .k-block, .k-inline-block, .k-draghandle {
+            border: none;
+        }
+
+        .k-upload-files {
+            margin: 10px 0;
+            display: none;
+        }
+
+        .k-upload-status-total {
+            display: none;
+        }
+    </style>
+</section>

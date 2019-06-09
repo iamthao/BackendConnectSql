@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="content/angular/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="content/angular/css/amelia-bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="Content/angular/css/toaster.css" rel="stylesheet" />
+    <link href="content/angular/css/loading-bar.min.css" rel="stylesheet" />
+    <link href="content/angular/css/site.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body>
+    <div id="page">
+        <header class="container" data-ng-controller="navigationController">
+            <div id="menu" class="navbar navbar-default">
+                <div class="navbar-header">
+                    <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </button>
+                    <div id="logo">
+                        <a href='#/'>
+                            <h4>Explore Foursquare</h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="navbar-collapse collapse" data-collapse="!navbarExpanded">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li data-ng-class="{'active':isActive('/explore')}"><a href="#/explore">Explore</a></li>
+                        <li data-ng-class="{'active':isActive('/places')}"><a href="#/places">My Places</a></li>
+                        <li data-ng-class="{'active':isActive('/about')}"><a href="#/about">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <section id="body" class="container">
+            <div data-ng-view=""></div>
+        </section>
+        <hr />
+        <footer class="container">
+            <p>Created by Taiseer Joudeh. Twitter: <a target="_blank" href="http://twitter.com/tjoudeh">@tjoudeh</a></p>
+            <p>Taiseer Joudeh Blog: <a target="_blank" href="http://www.bitoftech.net">bitoftech.net</a></p>
+        </footer>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-resource.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-animate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls.min.js"></script>
+    
+    <!-- Load app main script -->
+    <script src="app/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+﻿@using System.Configuration
+@using Framework.Utility
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.FranchiseeTenant.DashboardFranchiseeTenantShareViewModel
+
+<fieldset data-ng-controller="franchiseeShareController">
+    <section class="col col-12">
+        <h3>Frachisee Information</h3>
+    </section>
+    @Html.CustomTextBox("Name", "Name", "Franchisee.Name", 12, required: true, length: 200, isReadonly: !Model.CreateMode, isDisabled: !Model.CreateMode)
+    @Html.CustomTextBox("Address1", "Address 1", "Franchisee.Address1", 6, true,length:25)
+    @Html.CustomTextBox("Address2", "Address 2", "Franchisee.Address2", 6, length:25)
+    @Html.CustomTextBox("City", "City", "Franchisee.City", 4, true)
+    @Html.CustomTextBox("State", "State", "Franchisee.State", 4, true)
+    @Html.CustomTextBox("Zip", "Zip", "Franchisee.Zip", 4, true,length:10)
+    @Html.CustomPhone("OfficePhone", "Office Phone", "Franchisee.OfficePhone", 4, true)
+    @Html.CustomPhone("FaxNumber", "Fax Number", "Franchisee.FaxNumber", 4, true)
+    @Html.CustomDropDownList("Industry", "Industry", "Franchisee.IndustryId", 4, "/FranchiseeTenant/GetListIndustry", required: true, currentValue: Model.IndustryId)
+    <section class="col col-12">
+        <h3>Database Information</h3>
+    </section>  
+    @Html.CustomTextBox("Server", "Server", "Franchisee.Server", 6, required: true, length: 50)
+    @Html.CustomTextBox("Database", "Database", "Franchisee.Database", 6, required: true, length: 50)
+    @Html.CustomTextBox("UserName", "Username", "Franchisee.UserName", 6, required: true, length: 50,autoComplete:"off")
+    @Html.CustomTextBox("Password", "Password", "Franchisee.Password", 6, true, 50, isPasswordType: true, autoComplete: "off")
+    <section class="col col-12">
+        <h3>Primary Contact</h3>
+    </section>
+    @Html.CustomTextBox("FranchiseeContact", "Franchisee Contact", "Franchisee.FranchiseeContact", 6, true, length: 100)
+    @Html.CustomPhone("PrimaryContactPhone", "Phone", "Franchisee.PrimaryContactPhone", 6,true)
+    @Html.CustomTextBox("PrimaryContactEmail", "Email", "Franchisee.PrimaryContactEmail", 6, length: 100)
+    @Html.CustomPhone("PrimaryContactFax", "Fax", "Franchisee.PrimaryContactFax", 6)
+    @Html.CustomPhone("PrimaryContactCellNumber", "Cell Number", "Franchisee.PrimaryContactCellNumber", 6)
+    @Html.CustomFileUpload("Logo", "Logo", "Franchisee.Logo", 6, previewWidth: 200, previewHeight: 40, acceptType: "image/*", isAvatar: true)
+    <section class="col col-12">
+        <h3>License Information</h3>
+    </section> 
+    @Html.CustomDatetimePicker("StartActiveDate", "Start Active Date", "Franchisee.StartActiveDate", 6, "MM/dd/yyyy", required: true)
+    @Html.CustomDatetimePicker("EndActiveDate", "End Active Date", "Franchisee.EndActiveDate", 6, "MM/dd/yyyy", required: true)
+    @*@Html.InputPositiveNumeric("NumberOfCourier", "Number Of Courier", "Franchisee.NumberOfCourier", 3)*@
+    @Html.CustomTextBoxWithButton("LicenseKey", "License Key", "Franchisee.LicenseKey", 10, true,length:200, buttonFunctionName: "generateKey()", buttonFunctionText: "Generate new key",isReadonly:true)
+    @Html.CustomCheckBox("IsActive", "Active", "Franchisee.IsActive", 2)
+</fieldset>
+
+<script type="text/javascript">
+    function FranchiseeViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Name = @Html.Raw(Json.Encode(Model.Name));
+        self.Server = @Html.Raw(Json.Encode(Model.Server));
+        self.Database = @Html.Raw(Json.Encode(Model.Database));
+        self.UserName = @Html.Raw(Json.Encode(Model.UserName));
+        self.Password = @Html.Raw(Json.Encode(Model.Password));
+        self.Address1 = @Html.Raw(Json.Encode(Model.Address1));
+        self.Address2 = @Html.Raw(Json.Encode(Model.Address2));
+        self.OfficePhone = @Html.Raw(Json.Encode(Model.OfficePhone));
+        self.FaxNumber = @Html.Raw(Json.Encode(Model.FaxNumber));
+        self.City = @Html.Raw(Json.Encode(Model.City));
+        self.State = @Html.Raw(Json.Encode(Model.State));
+        self.Zip = @Html.Raw(Json.Encode(Model.Zip));
+        self.LicenseKey = @Html.Raw(Json.Encode(Model.LicenseKey));
+        self.StartActiveDate = @Html.Raw(Json.Encode(Model.StartActiveDate != null ? ((DateTime)Model.StartActiveDate).ToClientTime("MM/dd/yyyy") : ""));
+        self.EndActiveDate = @Html.Raw(Json.Encode(Model.EndActiveDate != null ? ((DateTime)Model.EndActiveDate).ToClientTime("MM/dd/yyyy") : ""));
+        self.IsActive = @Html.Raw(Json.Encode(Model.IsActive));
+        self.NumberOfCourier = @Html.Raw(Json.Encode(Model.NumberOfCourier ?? 0));
+
+        self.FranchiseeContact = @Html.Raw(Json.Encode(Model.FranchiseeContact));
+        self.PrimaryContactPhone = @Html.Raw(Json.Encode(Model.PrimaryContactPhone));
+        self.PrimaryContactEmail = @Html.Raw(Json.Encode(Model.PrimaryContactEmail));
+        self.PrimaryContactFax = @Html.Raw(Json.Encode(Model.PrimaryContactFax));
+        self.PrimaryContactCellNumber = @Html.Raw(Json.Encode(Model.PrimaryContactCellNumber));
+        self.Logo = @Html.Raw(Json.Encode(Model.Logo));
+    }
+
+</script>
+

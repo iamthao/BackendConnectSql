@@ -1,0 +1,14 @@
+﻿@{
+    Layout = null;
+}
+<div ng-controller="franchiseeBillingController" id="billing-controller">
+    <div ng-if="action==1">
+        <div ng-include="'/FranchiseeConfiguration/BillingIndex'"> </div>
+    </div>
+    <div ng-if="action==2">
+        <div ng-include="'/FranchiseeConfiguration/BillingPackage'"> </div>
+    </div>
+    <div ng-if="action==3">
+        <div ng-include="'/FranchiseeConfiguration/CloseAccount'"> </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<style type="text/css">
+    .color-timeline-badge {
+        background-color: #286090 !important;
+        color: #fff !important;
+    }
+
+    .clock-timeline {
+        background-color: #286090 !important;
+        color: #fff !important;
+        padding: 2px;
+    }
+    .icon-timeline {
+        color: #286090 !important;
+        padding-right: 2px;
+        font-size: 1.3em;
+    }
+</style>
+
+<div id="request-detail" style="overflow-y: auto;">
+    <div id="horizontal" style="height: 100%; width: 100%;" ng-controller="requestDetailRequestController">
+        <div id="right-pane">
+            <div class="pane-content">
+                <div id="tracking-map" style=" width: 98%; height: 100%; padding: 10px">
+                    <!-- view -->
+                    <timeline side="right">
+                        <timeline-event ng-repeat="event in events" side="right">
+                            <timeline-badge class="color-timeline-badge">
+                                <i class="fa fa-clock-o"></i>
+                            </timeline-badge>
+                            <timeline-panel>
+                                <timeline-heading>
+                                    <div>
+                                        <small class="icon-timeline" title="{{event.Tag}}"><span class="fa" ng-class="event.Tag == 'Mobile'? 'fa-mobile': 'fa-desktop'"></span></small>&nbsp;&nbsp;<strong>{{event.Title}}</strong> <i>by</i> <i ng-if="!event.IsSchedule">{{event.CourierName}}</i> <i ng-if="event.IsSchedule"> schedule (<strong>{{event.CourierName}}</strong>)</i>  <small class="clock-timeline pull-right"><span class="fa fa-clock-o"></span>&nbsp;&nbsp;<span>{{event.CreateTime | date:'MM/dd/yyyy HH:mm'}}</span></small>
+                                    </div>
+                                </timeline-heading>
+                                <div style="min-height: 20px;padding-top: 10px;" ng-bind-html="event.Content"></div>
+                            </timeline-panel>
+                        </timeline-event>
+                    </timeline>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function() {
+        $("#request-detail").css({ height: $(window).height() - 300 });
+    });
+
+</script>

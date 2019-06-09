@@ -1,0 +1,53 @@
+﻿@model QuickspatchWeb.Models.Date.DropDownListViewModel
+<section class="col col-@Model.Col @Model.MoreClass ">
+    @if (!string.IsNullOrEmpty(Model.Label))
+    {
+        <label>
+            @if (Model.RequiredAttribute == "required=\"required\"")
+            {
+                <span class='red'>*</span>
+            }@Model.Label
+        </label>
+
+    }
+
+    <label class="select" style="@(!string.IsNullOrEmpty(Model.Label) ? "" : "width:100%")">
+        <select id="@Model.Id-dropdownlist" style="width:100%;"></select>
+        <input type="hidden" id="@Model.Id" ng-model="@Model.DataBindingValue" />
+    </label>
+    <script type="text/javascript">
+        var ddl_@Model.Id = $("#@Model.Id-dropdownlist").kendoDropDownList({
+            dataTextField: "DisplayName",
+            dataValueField: "KeyId",
+            enable:@((!Model.ReadOnly).ToString().ToLower()),
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "@Model.ReadUrl",
+                    }
+                }
+            },
+            change: function (e) {
+                $("#@Model.Id").parents('form').addClass('dirty');
+                EnableCreateFooterButton(true);
+                var scope = angular.element("#@Model.Id").scope();
+                scope.$apply(function() {
+                    scope.@Model.DataBindingValue = ddl_@(Model.Id).data("kendoDropDownList").value();
+                });
+            },
+            dataBound:function(e) {
+
+                var scope = angular.element("#@Model.Id").scope();
+                scope.$apply(function() {
+                    scope.@Model.DataBindingValue = ddl_@(Model.Id).data("kendoDropDownList").value();
+                });
+            }
+        });
+        //console.log(@Model.CurrentValue);
+        var currentValue = '@(Model.CurrentValue!=null?Model.CurrentValue.ToString():"")';
+        if (currentValue !== '0' && currentValue !== '') {
+            ddl_@(Model.Id).data("kendoDropDownList").value(parseInt(currentValue));
+        }
+    </script>
+</section>
+

@@ -1,0 +1,28 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Report.PrintPdfFileViewModel
+@{
+    Layout = null;
+}
+
+<div class="portlet-content">
+    <form class="smart-form" role="form" style="width:100%; margin:0;padding: 0;">
+        <div class="popup-body modal-body scroll">
+            <div id="contentPdf" class="tab-content" style="height:100%;overflow: hidden;">
+                <!-- Show Information -->
+                <iframe id="iframeFile" style="height: 100%;width: 100%;" src="/Report/GetPdf?filePath=@Model.FullPath"></iframe>
+            </div>
+        </div>
+    </form>
+</div>
+<script language="javascript">
+    function SendReportViewModel() {
+        var self = this;
+
+        self.FileName = @Html.Raw(Json.Encode(Model.FileName));
+        self.Email = @Html.Raw(Json.Encode(Model.Email));
+        self.ContentEmail = "";
+        self.EmailSubject = @Html.Raw(Json.Encode(Model.EmailSubject));
+    }
+    
+    $(".popup-body.modal-body").css({ height: 500 });
+</script>

@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+   
+}
+<div ng-controller="franchiseeIndexController">
+    <div class="panel panel-table">
+        <ul class="nav nav-tabs" id="request-tab">
+            <li class="active "><a href="javascript:void(0)" data-target="#franchisee-configuration" aria-controls="franchisee-configuration" data-toggle="tab" ng-click="selectTab(1);"><span class=" panel-title-small"> Configuration</span></a></li>
+            <li><a id="select-tab-billing" href="javascript:void(0)" data-target="#billing" data-toggle="tab" aria-controls="billing" ng-click="selectTab(2);"><span class="panel-title-small">Billing</span></a></li>
+            <li><a href="javascript:void(0)" data-target="#billing-history" data-toggle="tab" aria-controls="billing-history" ng-click="selectTab(3);"><span class="panel-title-small">Billing History</span></a></li>
+        </ul>
+        <div class="tab-content" id="franchisee-tab-control">
+            <div class="tab-pane active" id="franchisee-configuration">
+                <div ng-if="tabIndex==1">
+                    <div ng-include="'/FranchiseeConfiguration/FranchiseeConfiguration'"> </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="billing">
+                <div ng-if="tabIndex==2">
+                    <div ng-include="'/FranchiseeConfiguration/Billing'"> </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="billing-history">
+                <div ng-if="tabIndex==3">
+                    <div ng-include="'/FranchiseeConfiguration/BillingHistory'"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(function () {
+        $("#content-container").css({ height: $(window).height() - 122 });
+
+    });
+</script>

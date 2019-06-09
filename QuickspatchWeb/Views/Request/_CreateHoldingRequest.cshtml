@@ -1,0 +1,93 @@
+﻿@using Framework.Utility
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.HoldingRequest.DashboardHoldingRequestShareViewModel
+@{
+    bool isCreate = Model.CreateMode;
+}
+<style>
+    .k-dropdown-wrap .k-state-default {
+        height: 31px;
+    }
+</style>
+<div ng-controller="createHoldingRequestController" id="create-holding-request-controller">
+    <form class="smart-form">
+        <div class="popup-body modal-body" style="overflow-y: auto; overflow-x: hidden;">
+            <fieldset class="panel-control border-bottom no-padding" style="border-top-width: 0; padding-top: 0px; margin: 20px 20px 0 20px">
+                <section class="col col-6" style="padding-left: 0;margin-bottom: 15px">
+                    <label>
+                        <span class="red">*</span> From
+                    </label>
+                    <a href="javascript:void(0);" style="float: right" ng-click="setFromDefault();">Default</a>
+                    <dropdown-holding-request drop-id="from" drop-type="location" bind-val="LocationFrom" bind-obj="HoldingRequest" refer-val="LocationTo" refer-ctr="to"></dropdown-holding-request>
+                </section>
+
+                <section class="col col-6 no-padding" style="padding-left: 0;margin-bottom: 15px">
+                    <label>
+                        <span class="red">*</span> To
+                    </label>
+                    <a href="javascript:void(0);" style="float: right" ng-click="setToDefault();">Default</a>
+                    <dropdown-holding-request drop-id="to" drop-type="location" bind-val="LocationTo" bind-obj="HoldingRequest" refer-val="LocationFrom" refer-ctr="from"></dropdown-holding-request>
+                </section>
+                @Html.CustomDatetimePicker("SendDate", "Dispatch Date", "HoldingRequest.SendDate", 6, "MM/dd/yyyy", required: true, moreClass: "no-padding-left")
+            </fieldset>
+            <fieldset class="panel-control border-bottom no-padding" style="border-top-width: 0; padding-top: 0px; margin: 0 20px 0 20px">
+                <section class="col col-6" style="padding-left: 0">
+                    <label>
+                        <span class="red">*</span> Arrival Window From
+                    </label>
+
+                    <div  style="width:100%">
+                        <time-holding-request time-id="start-time" bind-obj="HoldingRequest" bind-val="StartTime"></time-holding-request>
+                       
+                    </div>
+                </section>
+                <section class="col col-6 no-padding" style="padding-left: 0">
+                    <label>
+                        <span class="red">*</span> Arrival Window To
+                    </label>
+                    <div style="width:100%">
+                        <time-holding-request time-id="end-time" bind-obj="HoldingRequest" bind-val="EndTime"></time-holding-request>
+                    </div>
+
+                </section>
+                  @Html.CustomTextArea("Description", "Notes", "HoldingRequest.Description", placeHolderText: "Take notes here...", height: 50, col: 12, maxlength: 1000, moreClass: "no-padding")
+
+            </fieldset>
+        </div>
+        <div class="popup-footer">
+            <!--footer-->
+            <div class="pull-right">
+                @if (Model.CreateMode)
+                {
+                    <button class="btn btn-primary" type="button" ng-click="AddHoldingRequest()"><i class="fa fa-save"></i> Create</button>
+                }
+                else
+                {
+                    <button class="btn btn-primary" type="button" ng-click="UpdateHoldingRequest()"><i class="fa fa-save"></i> Update</button>
+                }
+                <button class="btn btn-default" type="button" ng-click="cancel()"><i class="fa fa-remove"></i> Cancel</button>
+            </div>
+
+
+        </div>
+    </form>
+</div>
+
+
+
+<script type="text/javascript">
+    function HoldingRequestViewModel() {
+        var self = this;
+        self.Id = @Model.Id;
+        self.LocationFrom =  @Html.Raw(Json.Encode(Model.LocationFrom > 0 ? Model.LocationFrom : 0)) ;
+        self.LocationTo =  @Html.Raw(Json.Encode(Model.LocationTo > 0 ? Model.LocationTo : 0));
+        self.LocationFromName =  @Html.Raw(Json.Encode(Model.LocationFromName)) ;
+        self.LocationToName =  @Html.Raw(Json.Encode(Model.LocationToName));
+        self.StartTime =  @Html.Raw(Json.Encode(Model.StartTime != null ? ((DateTime)Model.StartTime).ToClientTime("hh:mm tt") : ""));
+        self.EndTime =  @Html.Raw(Json.Encode(Model.EndTime != null ? ((DateTime)Model.EndTime).ToClientTime("hh:mm tt") : ""));
+        self.SendDate =   @Html.Raw(Json.Encode(Model.SendDate != null ? ((DateTime)Model.SendDate).ToClientTime("MM/dd/yyyy") : ""));
+        self.Description = @Html.Raw(Json.Encode(Model.Description));
+        self.SetDefaultFrom = false;
+        self.SetDefaultTo = false;
+    }
+</script>

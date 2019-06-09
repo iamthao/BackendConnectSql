@@ -1,0 +1,19 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Customer.DashboardCustomerShareViewModel
+<div data-ng-controller="customerShareController">
+    <div class="row">
+        <div class="col-md-5">
+            @Html.CustomTextBox("CustomerName", "Name", "Customer.CustomerName", 4, required: true, length: 100, isReadonly: !Model.CreateMode)
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function CustomerViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.CustomerName = @Html.Raw(Json.Encode(Model.Name));
+    }
+</script>
+

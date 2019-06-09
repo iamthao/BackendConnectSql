@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+@using Framework.Utility
+@model Framework.DomainModel.ValueObject.WarningScheduleVo
+
+<style type="text/css">
+    .left-margin-info {
+        margin-left: 10px;
+    }
+    /* Tooltip */
+      .warning-tooltip + .tooltip > .tooltip-inner {
+      background-color: #fff; 
+      color: #000; 
+      border: 1px solid #ccc; 
+      padding: 10px;
+      text-align: left;
+      width:auto;
+      min-width:300px;
+      max-width:600px;
+  }
+  /* Tooltip on top */
+  .warning-tooltip + .tooltip.top > .tooltip-arrow {
+      border-top: 5px solid #337ab7;
+  }
+  /* Tooltip on bottom */
+  .warning-tooltip + .tooltip.bottom > .tooltip-arrow {
+      border-bottom: 5px solid #337ab7;
+  }
+  /* Tooltip on left */
+  .warning-tooltip + .tooltip.left > .tooltip-arrow {
+      border-left: 5px solid #337ab7;
+  }
+  /* Tooltip on right */
+  .warning-tooltip + .tooltip.right > .tooltip-arrow {
+      border-right: 5px solid #337ab7;
+  }
+</style>
+
+<div class="row" style="margin: 10px">
+        <div class="col-md-11 form-group">
+            <p>
+            <strong>
+                This schedule has been conflict with previous schedule <a class="warning-tooltip" href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+               <h5>The information:</h5>
+                <ul>
+                    <li><strong>Arrival Window From:</strong> @Model.PreviousStartTime.ToClientTime("HH:mm")</li>
+                    <li><strong>Arrival Window To:</strong> @Model.PreviousEndTime.ToClientTime("HH:mm")</li>
+                </ul>
+            ">@Model.PreviousName</a>.
+            </strong>
+        </p>
+        <p>This schedule has Arrival Window From (@Model.StartTime.ToClientTime("HH:mm")) and Arrival Window To (@Model.EndTime.ToClientTime("HH:mm")). This is conflict.</p>
+        </div>
+</div>
+<div class="row" style="width: 100%;position: fixed; bottom: 0; margin-left: 20px">
+    <div class="col-md-11 form-group">
+        <strong class="pull-right">Are you sure to want to save this schedule?</strong>
+    </div>
+    <div class="col-md-11 form-group">
+        <button id="btn-Warning-Ok" class="btn btn-primary pull-right" style="margin-left: 5px;" onclick="okWarning()">OK</button>
+        <button id="btn-Warning-Cancel" class="btn btn-default pull-right" onclick="closeWarning()">Cancel</button>
+    </div>
+</div>
+<script type="text/javascript">
+    function closeWarning() {
+        $('#popupWindowChild').data('kendoWindow').close();
+    }
+
+    function okWarning() {
+        $('#btn-Warning-Ok').prop('disabled', true);
+        $('#btn-Warning-Cancel').prop('disabled', true);
+        var isUpdate = @Model.IsUpdate.ToString().ToLower();
+        
+        var scopeShare = angular.element('#schedule-share-controller').scope();
+        if (scopeShare != undefined) {
+            scopeShare.Schedule.Confirm = true;
+            $('a[data-function=FOOTER_ACTION_SAVE]').click();
+        }
+        $('#popupWindowChild').data('kendoWindow').close();
+    }
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+

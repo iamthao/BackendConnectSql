@@ -1,0 +1,17 @@
+﻿@using System.Configuration
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Module.DashboardModuleShareViewModel
+
+<fieldset data-ng-controller="moduleShareController">
+   @Html.CustomTextBox("Name", "Name", "Module.Name",  12, required: true, length: 200)
+</fieldset>
+
+<script type="text/javascript">
+    function ModuleViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Name = @Html.Raw(Json.Encode(Model.Name));
+    }
+</script>
+

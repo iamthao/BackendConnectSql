@@ -1,0 +1,21 @@
+﻿@model QuickspatchWeb.Models.DashboardViewModel
+
+@{
+    Layout = null;
+}
+<div class="row" ng-controller="dashboardController">
+   
+    <div class="col-md-8 col-lg-8 my-col">
+        <!-- Couriers area -->
+        @Html.Partial("_PartialCourierStatus")
+        <!-- Routes area -->
+        @Html.Partial("_PartialRequestStatus")
+
+        @*@Html.Partial("_PartialRequestStatus", @Model);*@
+
+    </div>
+    <div class="col-md-4 col-lg-4">
+        @Html.Partial("_PartialCourierOnline")
+        @Html.Partial("_PartialEvent")
+    </div>
+</div>

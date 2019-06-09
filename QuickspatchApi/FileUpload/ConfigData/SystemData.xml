@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Gender>
+    <item value="1">Male</item>
+    <item value="2">Female</item>
+  </Gender>
+  <Status>
+    <item value="1">Not Sent</item>
+    <item value="2">Sent</item>
+    <item value="3">Waiting</item>
+    <item value="4">Declined</item>
+    <item value="5">Received</item>
+    <item value="6">Abandoned</item>
+    <item value="7">Started</item>
+    <item value="8">Completed</item>
+    <item value="9">Cancelled</item>
+    <item value="10">Expired</item>
+  </Status>
+  <StatusCourier>
+    <item value="1">Offline</item>
+    <item value="2">Online</item>
+    <item value="3">Idle</item>
+  </StatusCourier>
+
+  <EventMessage>
+    <item value="1">Courier [Courier] logged in.</item>
+    <item value="2">Courier [Courier] logged out.</item>
+    <item value="3">Courier [Courier] is online.</item>
+    <item value="4">Courier [Courier] is offline.</item>
+    <item value="5">Courier [Courier] accepted request [Request].</item>
+    <item value="6">Courier [Courier] declined request [Request].</item>
+    <item value="7">Courier [Courier] started request [Request].</item>
+    <item value="8">Courier [Courier] completed request [Request].</item>
+    <item value="9">Request [Request] was created for courier [Courier].</item>
+    <item value="10">Request [Request] was reassigned from courier [FromCourier] to courier [ToCourier].</item>
+    <item value="11">Request [Request] was cancelled for courier [Courier].</item>
+    <item value="12">Request [Request] was sent to courier [Courier]</item>
+    <item value="13">Request [Request] was abandoned, courier [Courier]</item>
+  </EventMessage>
+</root>

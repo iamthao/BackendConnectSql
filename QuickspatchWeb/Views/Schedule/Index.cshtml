@@ -1,0 +1,238 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+
+@{
+    Layout = null;
+}
+<style type="text/css">
+    .tile .des {
+        text-align: center;
+        font-size: 80%;
+        font-weight: 600;
+    } 
+    .tile .request-no {
+        text-align: center;
+        font-size: 95%;
+        font-weight: 700;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    } 
+    
+</style>
+<div id="schedule-controller" class="panel panel-table" ng-controller="scheduleController" ng-init="loadCouriers()" >
+    <div class="panel-heading">
+        <div style="width: 100%; min-height: 20px">
+            <div class="panel-title-small" style="position: absolute">Schedule</div>
+            <div style="text-align: center">
+                <div class="panel-title" ng-bind-html="CourierSelected"></div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-content screen-fit-1" id="content-container-schedule">
+        <div class="row">
+            <div class="col-xs-2 my-col">
+                <div style="border-right: 1px #ccc solid">
+
+                    <div class="k-widget search-box">
+                        <span class="k-picker-wrap k-state-default" style="border: none;border-bottom: 1px solid #EBEBEB;">
+                            <input type="text" class="k-input" placeholder="Find {{CourierDisplayName}}" ng-model="SearchCourier" ng-enter="search()">
+                            <span class="k-select" ng-click="search()">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </span>
+                    </div>
+                    <div id="courier-list-wrapper">
+                        <ul id="courier-list" style="padding: 0;margin:0" class="reponsive-list"></ul>
+
+                        <script type="text/x-kendo-template" id="courierListViewTemplate">
+                            <div class="stripe material">
+                                <div style="display:table; width: 100%;line-height:30px;">
+                                    <div style="display:table-cell">${Name}</div>
+                                    <div style="display:table-cell; text-align: right">
+                                        <div class="badge">${RouteNum}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </script>
+
+                    </div>
+                    <div id="pager" class="k-pager-wrap" style="border-left:none;border-bottom:none;border-right:none"></div>
+                </div>
+            </div>
+            <div class="col-xs-10">
+                <div style="margin-left: -15px">
+                    <div class="panel-control border-bottom">
+                        <span id="btn-new-route" class="btn btn-primary" ng-click="Add()"><i class="fa fa-plus"></i> Add Route</span>
+
+                    </div>
+                    <div id="vertical">
+                        <div id="top-pane">
+                            <div class="pane-content">
+                                <div ng-show="IsShowLoadingRoute">
+                                    <img src="@Url.Content("/Content/quickspatch/img/loading-blue.gif")" alt="" style="position: absolute;top:50%;left:45%;z-index: 9999;" />
+                                </div>
+                                <div style="width: 100%;float: left;height: 150px;" ng-show="!IsShowLoadingRoute">
+                                    <div kendo-list-view id="routes-collection" k-data-source="ScheduleOfCourierDataSource">
+                                        <div k-template>
+                                            <div name="${Name}" class="tile tile-large" style="width: 280px;height:100px;overflow-y:auto;">
+                                                <div class="btn-group group-event-schedule">
+                                                    <button class="btn btn-default no-radius no-border-top" ng-click="EditSchedule(${ Id });"><i class="fa fa-edit"></i></button>
+                                                    <button class="btn btn-default no-radius no-border-right no-border-top" ng-click="DeleteSchedule(${ Id });"><i class="fa fa-remove"></i></button>
+                                                </div>
+                                                <div class="schedule-content">
+                                                    <div class="tile-icon"><i class="fa fa-tasks"></i></div>
+                                                    <div class="title">
+                                                        ${Name}
+                                                    </div>
+                                                    <div class="content" ng-style="dataItem.IsExpried?{'background-repeat':'no-repeat','background-image':'url(/Content/quickspatch/img/out-of-date.png)','background-position': center}:{'background':'\\#FFFFFF'}">
+                                                        <span>${From}</span>
+                                                        <span><i class="fa fa-arrow-right"></i> ${To}</span>
+                                                        <div>Frequency: ${Frequency}</div>
+                                                        <div>
+                                                            # if (ByDates) { # <span> Date(s): ${ByDates}</span>#}#
+                                                            # if (ByDays) { # <span> Day(s): ${ByDays}</span>#}#
+                                                        </div>
+                                                        <div>Arrival Time: <strong ng-style="dataItem.IsWarning && !dataItem.IsExpried? {color: '\\#FFDC00'}: {color: ''}">${StrStartTime} <span class="fa fa-arrow-right"></span> ${StrEndTime}</strong> <span ng-click="showWarning(dataItem)" ng-if="dataItem.IsWarning&& !dataItem.IsExpried" style="color:\\#FFDC00;cursor: pointer;" class="fa fa-exclamation-triangle"></span></div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/x-kendo-template" id="routeReviewTemplate">
+                            <div class="tile" name="#:Name#" onclick="show('${Name}', '${RequestNo}', ${IsSchedule}, ${HistoryScheduleId})">
+                                <div class="tile-icon"><i class="fa fa-location-arrow"></i></div>
+                                <div class="title">${Name}</div>
+                                <div class="request-no" ng-if="${RequestNo} != ''">${RequestNo}</div>
+                                <div class="des">
+                                    <small>${From} <span class="fa fa-arrow-right"></span> ${To}</small>
+                                </div>
+                            </div>
+                        </script>
+                        <div id="bottom-pane">
+                            <div class="pane-content">
+                                <div style="float: left;width:100%;">
+
+                                    <div style="display: table; width:98%; padding-left:1%;padding-right:1%;height: 45px;">
+                                        <div style="display: table-cell; width:10%"><button class="btn btn-default" ng-click="Pre()" style="margin-top: -6px;"><i class="fa fa-chevron-left"></i></button></div>
+                                        <div style="display: table-cell; width:80%; text-align: center; font-weight:700; font-size:18px; padding: 10px 0">
+                                            <span ng-bind-html="FromDate"></span> - <span ng-bind-html="ToDate"></span>
+                                        </div>
+                                        <div style="display: table-cell; width:10%; text-align: right"><button class="btn btn-default" ng-click="Next()" style="margin-top: -6px;"><i class="fa fa-chevron-right"></i></button></div>
+                                    </div>
+                                    <table class="table task-board" style="width:100%;table-layout: fixed;margin-bottom:0;height: 30px;">
+                                        <tr>
+                                            <th style="text-align: center">Sunday</th>
+                                            <th style="text-align: center">Monday</th>
+                                            <th style="text-align: center">Tuesday</th>
+                                            <th style="text-align: center">Wednesday</th>
+                                            <th style="text-align: center">Thursday</th>
+                                            <th style="text-align: center">Friday</th>
+                                            <th style="text-align: center">Saturday</th>
+                                        </tr>
+                                    </table>
+                                    <div id="tabstrip-bottom" kendo-tab-strip k-options="configOptions" k-content-urls="[ null, null]">
+                                        <ul>
+                                            <li class="k-state-active">
+                                                Weekly
+                                            </li>
+                                            <li>
+                                                Monthly
+                                            </li>
+                                        </ul>
+                                        <div style="padding: 0">
+
+                                            <div class="preview-table-wrapper">
+                                                <table class="table task-board table-week" style="width:100%;table-layout: fixed;">
+                                                    <tr style="vertical-align: top">
+                                                        <td><div id="preview-table-sunday"></div></td>
+                                                        <td><div id="preview-table-monday"></div></td>
+                                                        <td><div id="preview-table-tuesday"></div></td>
+                                                        <td><div id="preview-table-wednesday"></div></td>
+                                                        <td><div id="preview-table-thursday"></div></td>
+                                                        <td><div id="preview-table-friday"></div></td>
+                                                        <td><div id="preview-table-saturday"></div></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div style="padding: 0">
+
+                                            <div class="preview-table-wrapper">
+                                                <table class="table task-board table-month" style="width:100%;table-layout: fixed;">
+                                                    <tr style="vertical-align: top" ng-repeat="m in GenerateArray(1,6)">
+                                                        <td><div class="date" id="date-sunday-{{m}}"></div><div id="preview-table-sunday-{{m}}"></div></td>
+                                                        <td><div class="date" id="date-monday-{{m}}"></div><div id="preview-table-monday-{{m}}"></div></td>
+                                                        <td><div class="date" id="date-tuesday-{{m}}"></div><div id="preview-table-tuesday-{{m}}"></div></td>
+                                                        <td><div class="date" id="date-wednesday-{{m}}"></div><div id="preview-table-wednesday-{{m}}"></div></td>
+                                                        <td><div class="date" id="date-thursday-{{m}}"></div><div id="preview-table-thursday-{{m}}"></div></td>
+                                                        <td><div class="date" id="date-friday-{{m}}"></div><div id="preview-table-friday-{{m}}"></div></td>
+                                                        <td><div class="date" id="date-saturday-{{m}}"></div><div id="preview-table-saturday-{{m}}"></div></td>
+                                                    </tr>
+                                                </table>
+                                                <script type="text/x-kendo-template" id="routeMonthReviewTemplate">
+                                                    <div class="tile" name="#:Name#" onclick="show('${Name}', '${RequestNo}', ${IsSchedule}, ${HistoryScheduleId})">
+                                                        <div class="tile-icon"><i class="fa fa-location-arrow"></i></div>
+                                                        <div class="title">${Name}</div>
+                                                        <div class="request-no" ng-if="${RequestNo} != ''">${RequestNo}</div>
+                                                        <div class="des">
+                                                            <small>${From} <span class="fa fa-arrow-right"></span> ${To}</small>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="@Url.Content("~/Content/quickspatch/img/loading-blue.gif")" ng-show="IsShowLoading" alt="" style="position: absolute;top:50%;left:45%;z-index: 9999;" />
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function PopupViewModel() {
+        var self = this;
+        self.PopupWidth = 800;
+        self.PopupHeight = 500;
+    }
+
+    function show(name, requestNo, isSchedule, historyRequestId) {
+        var scope = angular.element('#schedule-controller').scope();
+        if (scope != undefined) {
+            scope.showDetail(name, requestNo, isSchedule,historyRequestId);
+        }
+       
+    }
+
+    $("#tabstrip-bottom").css({ height: $(window).height() - 393 });
+    $("#vertical").css({ height: $(window).height() - 179 });
+
+    $("#vertical").kendoSplitter({
+        orientation: "vertical",
+        panes: [
+            { collapsible: true, size: "150px" },
+            { collapsible: true, resizable: true }
+        ],
+        resize:function() {
+            var h = parseInt($("#bottom-pane").css("height").replace("px", ""));
+            $(".preview-table-wrapper").css({ height: h - 111, "overflow-y": "auto" });
+        }
+    });
+
+</script>

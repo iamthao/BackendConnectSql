@@ -1,0 +1,29 @@
+﻿@model QuickspatchWeb.Models.Input.InputMaskedViewModel
+<section class="col col-@Model.Col @Model.MoreClass">
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.Label
+    </label>
+
+    <label class="input">
+        <input id="@Model.Id" type="text" class="k-input"
+               data-ng-model="@Model.DataBindingValue" style="width: 100%;" placeholder="@Model.PlaceHolderText" />
+    </label>
+</section>
+
+<script>
+    $(document).ready(function () {
+        var id = '@Model.Id';
+        var format = '@Model.Format';
+        var idValueControl = "#" + id;
+        $(idValueControl).kendoMaskedTextBox({
+            mask: format
+        });
+        var isReadOnly=@Model.ReadOnly.ToString().ToLower();
+        var maskedtextbox =  $(idValueControl).data("kendoMaskedTextBox");
+        maskedtextbox.enable(!isReadOnly);
+        $(idValueControl).removeClass("k-textbox");
+    });
+</script>

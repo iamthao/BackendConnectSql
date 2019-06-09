@@ -1,0 +1,20 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.ModuleDocumentTypeOperation.DashboardModuleDocumentTypeOperationShareViewModel
+<fieldset data-ng-controller="moduleDocumentTypeOperationShareController" ng-init="shareInit(@Model.ModuleId)">
+    @Html.CustomTextBox("Name", "Name", "Module.Name", 6, cssClass: "k-input k-state-disabled", isDisabled: true)
+    @Html.CustomCheckBox("CheckAll", "Check All", "Module.CheckAll", 4, ngChangeFunction: "CheckAll()")
+    <section class="col col-12">
+        <div kendo-grid k-options="mainGridOptions" id="moduleGrid" style="border: 1px solid #ccc;"></div>
+    </section>
+</fieldset>
+
+
+<script type="text/javascript">
+    function ModuleViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Name = @Html.Raw(Json.Encode(Model.ModuleName));
+        self.CheckAll = false;
+    }
+</script>

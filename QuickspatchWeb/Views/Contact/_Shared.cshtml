@@ -1,0 +1,21 @@
+﻿@using System.Configuration
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Contact.DashboardContactShareViewModel
+@{
+   
+}
+<fieldset data-ng-controller="contactShareController">   
+    @Html.CustomTextBox("Name", "Name", "Contact.Name", 12, required: true, length: 50)
+    @Html.CustomPhone("Phone", "Phone", "Contact.Phone", 12, isRequired: true)   
+</fieldset>
+
+<script type="text/javascript">
+    function ContactViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Name = @Html.Raw(Json.Encode(Model.Name));
+        self.Phone = @Html.Raw(Json.Encode(Model.Phone));
+    }
+</script>
+

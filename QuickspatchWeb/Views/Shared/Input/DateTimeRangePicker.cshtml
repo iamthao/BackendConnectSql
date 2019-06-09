@@ -1,0 +1,115 @@
+﻿@model QuickspatchWeb.Models.Date.DatetimeRangePickerViewModel
+<section class="col col-@Model.Col">
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.LabelStart
+    </label>
+
+    <label class="input">
+        <input id='@Model.IdStart' style="width:100%" @Model.RequiredAttribute
+               class="@Model.Class" @Model.RequiredAttribute
+               ng-model="@Model.DataBindingValueStart" />
+    </label>
+</section>
+<section class="col col-@Model.Col">
+    <label>
+        @if (Model.RequiredAttribute == "required=\"required\"")
+        {
+            <span class='red'>*</span>
+        }@Model.LabelEnd
+    </label>
+
+    <label class="input">
+        <input id='@Model.IdEnd' style="width:100%" @Model.RequiredAttribute
+               class="@Model.Class" @Model.RequiredAttribute
+               ng-model="@Model.DataBindingValueEnd" />
+    </label>
+</section>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function startChange() {
+            $(this).parents('form').addClass('dirty');
+            EnableCreateFooterButton(true);
+
+            var startDate = start.value(),
+            endDate = end.value();
+
+            if (startDate) {
+                startDate = new Date(startDate);
+                startDate.setDate(startDate.getDate());
+                end.min(startDate);
+            } else if (endDate) {
+                start.max(new Date(endDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        function endChange() {
+            $(this).parents('form').addClass('dirty');
+            EnableCreateFooterButton(true);
+
+            var endDate = end.value(),
+            startDate = start.value();
+
+            if (endDate) {
+                endDate = new Date(endDate);
+                endDate.setDate(endDate.getDate());
+                start.max(endDate);
+            } else if (startDate) {
+                end.min(new Date(startDate));
+            } else {
+                endDate = new Date();
+                start.max(endDate);
+                end.min(endDate);
+            }
+        }
+
+        @if (Model.HasTime)
+        {
+            <text>
+                var start = $("#@Model.IdStart").kendoDateTimePicker({
+                    change: startChange,
+                    format: "@Model.Format"
+                }).data("kendoDateTimePicker");
+
+                var end = $("#@Model.IdEnd").kendoDateTimePicker({
+                    change: endChange,
+                    format: "@Model.Format"
+                }).data("kendoDateTimePicker");
+            </text>
+        }
+        else
+        {
+            <text>
+                var start = $("#@Model.IdStart").kendoDatePicker({
+                    change: startChange,
+                    format: "@Model.Format"
+                }).data("kendoDatePicker");
+
+                var end = $("#@Model.IdEnd").kendoDatePicker({
+                    change: endChange,
+                    format: "@Model.Format"
+                }).data("kendoDatePicker");
+            </text>
+        }
+
+
+        start.max(end.value());
+        end.min(start.value());
+
+        @*$("#@Model.IdStart").keypress(function (evt) {
+            evt.preventDefault();
+        });
+
+        $("#@Model.IdEnd").keypress(function (evt) {
+            evt.preventDefault();
+        });*@
+    });
+</script>

@@ -1,0 +1,51 @@
+﻿@using System.Configuration
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Courier.DashboardCourierShareViewModel
+@{
+    Layout = null;
+}
+
+<fieldset data-ng-controller="courierShareController">
+    
+    @Html.CustomTextBox("UserName", "Username", "Courier.UserShareViewModel.UserName", 6, required: true, length: 100, isReadonly: !Model.CreateMode, isDisabled: !Model.CreateMode)
+    @Html.CustomTextBox("Email", "Email", "Courier.UserShareViewModel.Email", 6, required: true, length: 100)
+    @Html.CustomTextBox("FirstName", "First Name", "Courier.UserShareViewModel.FirstName", 5, required: true, length: 50)
+    @Html.CustomTextBox("MiddleName", "Midd Name", "Courier.UserShareViewModel.MiddleName", 2, length: 50)
+    @Html.CustomTextBox("LastName", "Last Name", "Courier.UserShareViewModel.LastName", 5, required: true, length: 50)    
+    @Html.CustomPhone("HomePhone", "Home Phone", "Courier.UserShareViewModel.HomePhone", 4, isRequired: true)
+    @Html.CustomPhone("MobilePhone", "Mobile Phone", "Courier.UserShareViewModel.MobilePhone", 4, isRequired: true)
+    @Html.CustomTextBox("CarNo", "Car Number", "Courier.CarNo", 4, required: true, length: 20)
+    @Html.CustomCheckBox("IsActive", "Active", "Courier.UserShareViewModel.IsActive", 3)
+    @Html.CustomFileUpload("Avatar", "Profile Picture", "Courier.UserShareViewModel.Avatar", 9, previewWidth: 450, previewHeight:450, acceptType: "image/*", isAvatar: true)
+    
+</fieldset>
+
+<script type="text/javascript">
+    function CourierViewModel() {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Status = @Model.Status;
+        self.CarNo = @Html.Raw(Json.Encode(Model.CarNo));
+        self.LastModified = @Html.Raw(Json.Encode(Model.LastModified));
+        self.UserShareViewModel = new UserShareViewModel();
+        self.UserName = @Html.Raw(Json.Encode(Model.UserShareViewModel.UserName));
+        
+    }
+
+    function UserShareViewModel() {
+        var self = this;
+        self.Id = @Model.Id;
+        self.UserRoleId = 2;
+        self.Password = @Html.Raw(Json.Encode(Model.UserShareViewModel.Password));
+        self.UserName = @Html.Raw(Json.Encode(Model.UserShareViewModel.UserName));
+        self.Email = @Html.Raw(Json.Encode(Model.UserShareViewModel.Email));
+        self.FirstName = @Html.Raw(Json.Encode(Model.UserShareViewModel.FirstName));
+        self.MiddleName = @Html.Raw(Json.Encode(Model.UserShareViewModel.MiddleName));
+        self.LastName = @Html.Raw(Json.Encode(Model.UserShareViewModel.LastName));
+        self.HomePhone = @Html.Raw(Json.Encode(Model.UserShareViewModel.HomePhone));
+        self.MobilePhone = @Html.Raw(Json.Encode(Model.UserShareViewModel.MobilePhone));
+        self.IsActive = @Html.Raw(Json.Encode(Model.UserShareViewModel.IsActive));
+        self.Avatar = @Html.Raw(Json.Encode(Model.UserShareViewModel.Avatar));
+        }
+</script>
+

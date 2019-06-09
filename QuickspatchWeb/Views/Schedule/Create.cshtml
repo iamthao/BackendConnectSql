@@ -1,0 +1,17 @@
+﻿@using QuickspatchWeb.Models
+@model QuickspatchWeb.Models.Schedule.DashboardScheduleDataViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutPopup.cshtml";
+}
+
+<div id="create-schedule-controller" ng-controller="createScheduleController">
+    @Html.Partial("_Shared", Model.SharedViewModel)
+</div>
+
+@section FooterActions
+{
+    @Model.AddFooterAction("Create", "fa-save", FooterActionEnum.Save, "createScheduleController")
+    @Model.AddFooterAction("Cancel", "fa-close", FooterActionEnum.Cancel, "createScheduleController", false)
+
+    @Html.Partial("~/Views/Shared/_FooterActions.cshtml", Model.FooterActions)
+}

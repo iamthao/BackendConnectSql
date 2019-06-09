@@ -1,0 +1,43 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@{
+    Layout = null;
+}
+
+<div class="portlet-content" data-ng-controller="updateLocationDefaultController">
+    <form class="smart-form" role="form" style="width:100%; margin:0;padding: 0;">
+        <div class="popup-body modal-body" style="overflow-y: auto; overflow-x: hidden;">
+            <fieldset style="border-top-width: 0; padding-top: 0px; margin-top: 20px;margin-bottom: 10px">
+                  <section class="col col-12">
+                    <label>From</label>
+                    <label class="select" style="width: 100%; margin-top: 5px;">
+                        <select id="froms" kendo-drop-down-list style="width: 100%" k-options="locationFromOptions" ></select>
+                    </label>
+                </section>
+
+                <section class="col col-12">
+                    <label>To</label>
+                    <label class="select" style="width: 100%;margin-top: 5px;">
+                        <select id="tos" kendo-drop-down-list style="width: 100%" k-options="locationToOptions" ></select>
+                    </label>
+                </section>
+            </fieldset>
+        </div>
+        <div class="popup-footer">
+            <!--footer-->
+            <div class="pull-right">
+                <button class="btn btn-primary" type="button" ng-click="Update()"><i class="fa fa-edit"></i> Update</button>
+                <button class="btn btn-default" type="button" ng-click="Cancel()"><i class="fa fa-remove"></i> Cancel</button>
+
+            </div>
+
+
+        </div>
+    </form>
+</div>
+<script>
+    function LocationViewModel() {
+        var self = this;
+        self.LocationFrom = 0;
+        self.LocationTo = 0;
+    }
+</script>

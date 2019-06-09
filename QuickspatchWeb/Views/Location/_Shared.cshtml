@@ -1,0 +1,104 @@
+﻿@using System.Configuration
+@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.Location.DashboardLocationShareViewModel
+@{
+
+}
+
+
+@section Scripts {
+    <script src='http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=en&v=3.17'></script>
+}
+
+<fieldset data-ng-controller="locationShareController">
+
+    @Html.CustomTextBox("Name", "Location Name", "Location.Name", 12, required: true, length: 100)
+    @Html.CustomTextBox("Address1", "Address 1", "Location.Address1", 8, required: true, length: 100)
+    @Html.CustomTextBox("Address2", "Address 2", "Location.Address2", 4, length: 100)
+    @Html.CustomTextBox("City", "City", "Location.City", 6, required: true, length: 50)
+    @Html.CustomTextBox("StateOrProvinceOrRegion", "State / Province / Region", "Location.StateOrProvinceOrRegion", 6, required: true, length: 50)
+    <section class="col col-6">
+        <div class="col col-3 no-padding">
+            <label><span class='red'>*</span> Zip</label>
+        </div>
+        <div class="col col-9 no-padding" style="margin-top: -7px;">
+            <label class="checkbox pull-right"><input type="checkbox" checked="checked" id="AutoGetCityState" ng-model="Location.AutoGetCityState" /><i></i> Auto get info city/state</label>
+        </div>
+        @Html.CustomTextBox("Zip", "", "Location.Zip", 12, moreClass: "no-margin no-padding", length: 10)
+    </section>
+
+    @Html.CustomDropDownList("IdCountryOrRegion", "Country / Region", "Location.IdCountryOrRegion", 6, "/CountryOrRegion/GetListCountryOrRegion", required: true, currentValue: Model.IdCountryOrRegion<=0?233: Model.IdCountryOrRegion, moreClass: "no-margin-bottom")
+    <section class="col col-12">
+        <button type="button" class="btn btn-info" style="width: 95%;padding: 3%;" ng-click="CheckLocation()"><i class="fa fa-map-marker"></i> Check</button>
+        <div id="location-map" ng-show="IsShowMap" style="width: 100%; border: 1px solid #ccc;margin-top: 10px;">
+            <div style="height: 200px;overflow: hidden;">
+                <ui-gmap-google-map center='Map.Center' zoom='Map.Zoom' style="height: 200px;">
+                    <ui-gmap-marker coords="Marker.Coords" options="Marker.Options" events="Marker.Events" idkey="Marker.Id"></ui-gmap-marker>
+                </ui-gmap-google-map>
+            </div>
+
+            <button type="button" class="btn btn-default" style="width: 94%;padding: 3%;border-radius: 0;border-left:none;border-bottom: none;border-right:none" ng-click="HideMap()"><i class="fa fa-remove"></i> Hide map</button>
+        </div>
+    </section>
+
+    @*@Html.CustomTimePicker("OpenHour", "Open Hour", "Location.OpenHour", 6, "hh:mm tt")
+    @Html.CustomTimePicker("CloseHour", "Close Hour", "Location.CloseHour", 6, "hh:mm tt")*@
+    <section class="col col-6" style="padding-left: 15px">
+        <label>
+            Open Hour
+        </label>
+
+        <div style="width:100%">
+            <time-location time-id="open-hour" bind-obj="Location" bind-val="OpenHour"></time-location>
+
+        </div>
+    </section>
+    <section class="col col-6 " style="padding-right: 15px">
+        <label>
+            Close Hour
+        </label>
+        <div style="width:100%">
+            <time-location time-id="close-hour" bind-obj="Location" bind-val="CloseHour"></time-location>
+        </div>
+
+    </section>
+    <section class="col col-12">
+        <div class="subtitle">Available Time</div>
+    </section>
+    @Html.CustomCheckBox("Monday", "Monday", "Location.Monday", 3)
+    @Html.CustomCheckBox("Tuesday", "Tuesday", "Location.Tuesday", 3)
+    @Html.CustomCheckBox("Wednesday", "Wednesday", "Location.Wednesday", 3)
+    @Html.CustomCheckBox("Thursday", "Thursday", "Location.Thursday", 3)
+    @Html.CustomCheckBox("Friday", "Friday", "Location.Friday", 3)
+    @Html.CustomCheckBox("Saturday", "Saturday", "Location.Saturday", 3)
+    @Html.CustomCheckBox("Sunday", "Sunday", "Location.Sunday", 3)
+</fieldset>
+
+<script type="text/javascript">
+    function LocationViewModel()
+    {
+        var self = this;
+        self.Id = @Model.Id;
+        self.Name = @Html.Raw(Json.Encode(Model.Name));
+        self.Address1 = @Html.Raw(Json.Encode(Model.Address1));
+        self.Address2 = @Html.Raw(Json.Encode(Model.Address2));
+        self.City = @Html.Raw(Json.Encode(Model.City));
+        self.Zip = @Html.Raw(Json.Encode(Model.Zip));
+        self.OpenHour = @Html.Raw(Json.Encode(Model.OpenHour!=null?((DateTime)Model.OpenHour).ToString("hh:mm tt"):""));
+        self.CloseHour = @Html.Raw(Json.Encode(Model.CloseHour != null ? ((DateTime)Model.CloseHour).ToString("hh:mm tt") : ""));
+        self.Monday=@Model.Monday.ToString().ToLower();
+        self.Tuesday=@Model.Tuesday.ToString().ToLower();
+        self.Wednesday=@Model.Wednesday.ToString().ToLower();
+        self.Thursday=@Model.Thursday.ToString().ToLower();
+        self.Friday=@Model.Friday.ToString().ToLower();
+        self.Saturday=@Model.Saturday.ToString().ToLower();
+        self.Sunday=@Model.Sunday.ToString().ToLower();
+        self.Lat = @Html.Raw(Json.Encode(Model.Lat));
+        self.Lng = @Html.Raw(Json.Encode(Model.Lng));
+        self.Type=@Html.Raw(Json.Encode(Model.Type));
+        
+        self.IdCountryOrRegion = @(Model.IdCountryOrRegion <= 0 ? 234 : Model.IdCountryOrRegion);
+        self.StateOrProvinceOrRegion = @Html.Raw(Json.Encode(Model.StateOrProvinceOrRegion));
+        self.AutoGetCityState = @Html.Raw(Json.Encode(Model.AutoGetCityState));
+    }
+</script>

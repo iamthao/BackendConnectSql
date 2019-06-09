@@ -1,0 +1,462 @@
+﻿@using QuickspatchWeb.HtmlHelpers
+@model QuickspatchWeb.Models.ViewModelBase
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title ng-bind="Title"></title>
+    <link rel="icon" href="~/content/quickspatch/img/favicon.ico" type="image/x-icon" />
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css' />
+    <!-- Bootstrap core CSS -->
+    <link href="@Url.ContentVersion("~/Content/quickspatch/css/bootstrap/bootstrap.min.css")" rel="stylesheet" />
+
+    <!-- Font awesome CSS -->
+    <link href="@Url.ContentVersion("~/Content/quickspatch/font-awesome/css/font-awesome.min.css")" rel="stylesheet" />
+
+    <!-- Kendo UI CSS -->
+    @*<link href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.common-bootstrap.min.css" rel="stylesheet" />
+        <link href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.rtl.min.css" rel="stylesheet" />
+        <link href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.bootstrap.min.css" rel="stylesheet" />
+        <link href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.bootstrap.mobile.min.css" rel="stylesheet" />
+        <link href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.dataviz.min.css" rel="stylesheet" />
+        <link href="http://cdn.kendostatic.com/2015.1.429/styles/kendo.dataviz.bootstrap.min.css" rel="stylesheet"/>*@
+
+    <link href="//kendo.cdn.telerik.com/2015.1.429/styles/kendo.common-bootstrap.min.css" rel="stylesheet" />
+    <link href="//kendo.cdn.telerik.com/2015.1.429/styles/kendo.rtl.min.css" rel="stylesheet" />
+    <link href="//kendo.cdn.telerik.com/2015.1.429/styles/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="//kendo.cdn.telerik.com/2015.1.429/styles/kendo.bootstrap.mobile.min.css" rel="stylesheet" />
+    <link href="//kendo.cdn.telerik.com/2015.1.429/styles/kendo.dataviz.min.css" rel="stylesheet" />
+    <link href="//kendo.cdn.telerik.com/2015.1.429/styles/kendo.dataviz.bootstrap.min.css" rel="stylesheet" />
+
+    @*<link href="@Url.ContentVersion("~/Content/kendo/css/kendo.common-bootstrap.min.css")" rel="stylesheet"/>
+        <link href="@Url.ContentVersion("~/Content/kendo/css/kendo.rtl.min.css")" rel="stylesheet"/>
+        <link href="@Url.ContentVersion("~/Content/kendo/css/kendo.bootstrap.min.css")" rel="stylesheet"/>
+        <link href="@Url.ContentVersion("~/Content/kendo/css/kendo.bootstrap.mobile.min.css")" rel="stylesheet"/>
+        <link href="@Url.ContentVersion("~/Content/kendo/css/kendo.dataviz.min.css")" rel="stylesheet" />
+        <link href="@Url.ContentVersion("~/Content/kendo/css/kendo.dataviz.bootstrap.min.css")" rel="stylesheet"/>*@
+
+
+
+    <link href="@Url.ContentVersion("~/content/quickspatch/css/custom.ripple.circle.css")" rel="stylesheet" />
+    <link href="@Url.ContentVersion("~/content/quickspatch/css/mixins.css")" rel="stylesheet" />
+    <link href="@Url.ContentVersion("~/content/quickspatch/css/daterangepicker.css")" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@Url.ContentVersion("~/content/angular/css/toastr.css")" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@Url.ContentVersion("~/content/animation.css")" />
+    <link href="@Url.ContentVersion("~/Content/bootstrap-duallistbox.css")" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@Url.ContentVersion("~/Scripts/angularApp/spinkit/angular-spinkit.min.css")" />
+
+    <link href="@Url.ContentVersion("~/Scripts/angularApp/timeline/angular-timeline.css")" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="@Url.ContentVersion("~/content/quickspatch/css/bootstrap-switch.css")" rel="stylesheet" />
+    <link href="@Url.ContentVersion("~/content/quickspatch/css/style.css")" rel="stylesheet" />
+
+    <!-- #FAVICONS -->
+    <!--<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon/favicon.ico" type="image/x-icon">-->
+    <!-- #APP SCREEN / ICONS -->
+    <!-- Specifying a Webpage Icon for Web Clip
+    Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
+    <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <style type="text/css">
+        .tooltip-arrow,
+        .red-tooltip + .tooltip > .tooltip-inner {
+            background-color: #008de7;
+            white-space: pre-wrap;
+        }
+
+        .tooltip > .tooltip-inner {
+            width: 140px;
+            font-weight: normal;
+        }
+
+        #alert-extended {
+            display: none;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-brand" style="margin: 0 20px">
+                    <a href="/">
+                        <img src="/Home/GetLogoContent?_t={{randomTimestamp}}" style="height:40px;margin: 5px 0">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                @Html.Partial("_PartialSideBar", @Model.MenuViewModel)
+
+                <ul class="nav navbar-nav navbar-right">
+                    @*<li><button class="btn btn-red"><i class="fa fa-plus"></i> New request</button></li>*@
+
+                    <li ng-controller="notifyPackageController" id="alert-extended">
+                        <a style="color: yellow" href="/#/franchiseeconfiguration?tabIndex=2"
+                           data-toggle="tooltip" data-placement="bottom"
+                           title="Your package will be expired in {{NumberExtended}} day(s). Click to continue using QuickSpatch."
+                           class="red-tooltip">
+                            @*<i class="fa fa-warning" style="font-size: 20px; line-height: 24px;"> </i>*@
+                            <img src="~/Content/quickspatch/img/386.gif" height="20" />
+                        </a>
+
+                    </li>
+                    <li id="notify-decline" class="dropdown" ng-class="IsShowNotifyDecline" ng-if="IsCamino!='true' " ng-controller="notifyDeclineController">
+                        <a ng-show="TotalRowCount > 0" class="dropdown-toggle disabled" ng-click="showNotifyDecline()"><i class="fa fa-bell" style="font-size: 20px; line-height: 24px;"></i><span style="font-weight: bold; color: white; background: red; border-radius: 50%; min-width: 20px; position: absolute; text-align: center; margin-top: -10px; margin-left: -10px; padding: 0 3px;" ng-bind="TotalRowCount"></span></a>
+                        <div ng-show="TotalRowCount > 0" class="dropdown-menu notify-decline" role="menu" style="width: auto; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc;">
+                            <div style="width: 530px; background: #fff;">
+                                <div kendo-grid k-options="notifyDeclineGridOptions" id="notifyDeclineGrid"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li title="Configuration" ng-if="IsCamino!='true'">
+                        <a href="#/franchiseeconfiguration">
+                            <i class="fa fa-cog" style="font-size: 20px; line-height: 24px;"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown navbar-profile">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+                            <img src="/content/quickspatch/img/avatar.png" alt="" width="25" height="25" style="border-radius: 25px;" />
+                        </a>
+                        <ul class="dropdown-menu" role="menu" style=" width:180px">
+                            <li style="display: block">
+                                <a href="javascript:void(0);">
+                                    @{
+                                        var user = User.Identity.Name;
+                                        if (user.Length > 12)
+                                        {
+                                            user = user.Substring(0, 12) + "...";
+                                        }
+                                    }
+                                    <i class="fa fa-info"></i> Hello: <span><b style="display: inline-block; width: 35px;" title="Hello: @User.Identity.Name">@user</b></span>
+                                </a>
+                            </li>
+                            <li><a href="#/profile"><i class="fa fa-user"></i>  My Profile</a></li>
+                            <li><a href="@Url.ContentVersion("~/Authentication/SignOut")"><i class="fa fa-sign-out"></i>  Sign out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- #MAIN PANEL -->
+    <div id="main" role="main" class="container">
+
+        <!-- #MAIN CONTENT -->
+        @RenderBody()
+
+        <!-- END #MAIN CONTENT -->
+
+    </div>
+    <!-- END #MAIN PANEL -->
+    <!--================================================== -->
+    <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
+        <script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
+    <!-- #PLUGINS -->
+    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/jquery-2.1.1.min.js")"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        if (!window.jQuery.ui) {
+            document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="@Url.ContentVersion("~/Scripts/angularApp/jquery.cookie.js")" type="text/javascript"></script>
+
+    <script src="@Url.ContentVersion("~/Scripts/Encoder.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/Base64.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/moment.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/bootstrap.min.js")"></script>
+
+    <script src="@Url.ContentVersion("~/Scripts/jquery.bootstrap-duallistbox.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/angularApp/respond.min.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/Site.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/commons.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/angular.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/angular-ui-router.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/angular-resource.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/angular-animate.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/angular-sanitize.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/angular-route.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/angular-bootstrap-tour.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/lodash.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/angular-google-maps.min.js")"></script>
+    @*<script src='http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=en&v=3.17'></script>*@
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/spinkit/angular-spinkit.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/spinkit/templates.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/kendo.all.min.js")"></script>
+    @*<script src="http://cdn.kendostatic.com/2015.1.429/js/kendo.all.min.js"></script>*@
+
+    <script src="@Url.ContentVersion("~/Scripts/quickspatch/jquery.slimscroll.min.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/quickspatch/moment.min.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/quickspatch/daterangepicker.js")"></script>
+    @*<script src="//kendo-labs.github.io/angular-kendo/angular-kendo.js"></script>*@
+
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/jszip.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/jquery.PrintArea.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/ui-bootstrap.min.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/ui-bootstrap-tpls.min.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/toastr.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/moment.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/spin.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/jquery.qtip.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/timeline/angular-timeline.js")"></script>
+    @*<script src="~/Scripts/angular-kendo.min.js"></script>*@
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/jquery.AreYouSure.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/Postbox.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/angularApp/Common.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/underscore.min.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/jquery.fileDownload.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/bootbox.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/ViewModels/GridConfigViewModel.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/ViewModels/GridColumnViewModel.js")"></script>
+
+
+    <!-- Load app main script -->
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/app.js")"></script>
+    <script src="@Url.ContentVersion("~/app/config.js")"></script>
+    <script src="@Url.ContentVersion("~/app/config.exceptionHandler.js")"></script>
+    <script src="@Url.ContentVersion("~/app/config.route.js")"></script>
+    <script src="@Url.ContentVersion("~/app/message.handler.js")"></script>
+
+    <!-- common Modules -->
+    <script src="@Url.ContentVersion("~/app/common/common.js")"></script>
+    <script src="@Url.ContentVersion("~/app/common/logger.js")"></script>
+    <script src="@Url.ContentVersion("~/app/common/spinner.js")"></script>
+
+    <!-- common.bootstrap Modules -->
+    <script src="@Url.ContentVersion("~/app/common/bootstrap/bootstrap.dialog.js")"></script>
+    <!-- app -->
+    <script src="@Url.ContentVersion("~/app/layout/shell.js")"></script>
+    <script src="@Url.ContentVersion("~/app/layout/sidebar.js")"></script>
+
+    <script src="@Url.ContentVersion("~/app/directives/directives.js")"></script>
+
+    <script src="@Url.ContentVersion("~/Scripts/quickspatch/custom.control.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/quickspatch/custom.screenfit.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/quickspatch/jquery.slimscroll.min.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/quickspatch/jquery.fullscreen.min.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/quickspatch/custom.dropmenu.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/quickspatch/bootstrap-switch.js")"></script>
+    <!-- template scripts -->
+
+    <script src="@Url.ContentVersion("~/Scripts/angularApp/jPushMenu.js")"></script>
+    <script src="@Url.ContentVersion("~/Scripts/angularApp/jquery.sparkline.min.js")" type="text/javascript"></script>
+    <script src="@Url.ContentVersion("~/Scripts/angularApp/jquery.nanoscroller.js")" type="text/javascript"></script>
+    <script src="@Url.ContentVersion("~/Scripts/angularApp/jquery-ui.js")" type="text/javascript"></script>
+    <script src="@Url.ContentVersion("~/Scripts/angularApp/jquery.gritter.js")" type="text/javascript"></script>
+    <script src="@Url.ContentVersion("~/Scripts/angularApp/core.js")" type="text/javascript"></script>
+    <script src="@Url.ContentVersion("~/Scripts/angularApp/kendoExtension.js")" type="text/javascript"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/Scripts/ViewModels/FeedbackViewModel.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/navigationController.js")"></script>
+
+    <!--dual listbox-->
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/footerController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/services/gridService.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/gridController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/dualGridDirectice.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/gridDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/customGridDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/lookupDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/routeLoadingIndicator.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/enterDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/services/masterfileService.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/services/displayCourierService.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/services/Requests/requestDataService.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/services/displayAlertExtended.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/popupDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/bindDynamicHtmlDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/Requests/dropdownRequestDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/Requests/timeRequestDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/Requests/dropdownHoldingRequestDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/Requests/timeHoldingRequestDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/Location/timeLocationDirective.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/directives/Schedule/timeScheduleDirective.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/baseFormPopupController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/notifyDeclineController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/notifyPackageController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/userController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/userProfileController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/changePasswordController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/updateProfileController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/userShareController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/updateUserController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/createUserController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/resetPasswordUserController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/userSharePasswordController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/changePasswordProfileController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/user/userEditAvatarProfileController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/userrole/userRoleController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/userrole/updateUserRoleController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/userrole/createUserRoleController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/userrole/userRoleShareController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/module/moduleController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/module/updateModuleController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/module/createModuleController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/module/moduleShareController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchisee/franchiseeController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchisee/updateFranchiseeController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchisee/createFranchiseeController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchisee/franchiseeShareController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/customer/customerController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/customer/updateCustomerController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/customer/createCustomerController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/customer/customerShareController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeModule/updateFranchiseeModuleController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeModule/franchiseeModuleShareController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/moduleDocumentTypeOperation/updateModuleDocumentTypeOperationShareControllerController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/moduleDocumentTypeOperation/moduleDocumentTypeOperationShareController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/dashboard/dashboardController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/dashboard/courierStatusController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/dashboard/courierOnlineController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/dashboard/requestStatusController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/dashboard/eventController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/requestIndexController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/requestController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/holdingRequestController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/createHoldingRequestController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/createRequestController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/requestDetailController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/requestDetailTrackingController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/requestDetailRequestController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/requestDetailCompleteController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/mapCreateRequestController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/saveRequestController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/mapRequestController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/requestsCourierController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/request/sendHoldingRequestController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/location/locationController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/location/createLocationController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/location/locationShareController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/location/updateLocationController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/courier/courierController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/courier/createCourierController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/courier/courierShareController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/courier/updateCourierController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/courier/resetPasswordCourierController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/courier/courierSharePasswordController.js")"></script>
+
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/tracking/trackingController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/schedule/scheduleController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/schedule/scheduleShareController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/schedule/createScheduleController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/schedule/updateScheduleController.js")"></script>
+
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/franchiseeIndexController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/franchiseeConfigurationController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/franchiseeBillingController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/billingIndexController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/billingPackageController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/updateFranchiseeConfigurationController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/franchiseeConfigurationShareController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/billingHistoryController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/historyPackageController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/historyTransactionController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/billingCloseAccountController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/transactionDetailController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/updateLocationDefaultController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/franchiseeConfiguration/contactUsController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/contact/contactController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/contact/contactShareController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/contact/createContactController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/contact/updateContactController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/template/createTemplateController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/template/templateController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/template/templateShareController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/template/updateTemplateController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/systemconfiguration/createSystemConfigurationController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/systemconfiguration/systemConfigurationController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/systemconfiguration/systemConfigurationShareController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/systemconfiguration/updateSystemConfigurationController.js")"></script>
+
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/report/reportController.js")"></script>
+    <script type="text/javascript" src="@Url.ContentVersion("~/app/controllers/report/driverReportExportPdfController.js")"></script>
+    <script src="~/app/directives/bsDuallistboxDirective.js"></script>
+    @RenderSection("scripts", false)
+
+    <popup k-options-bind="popupOptions">
+        <div kendo-window k-options="popupOptions" id="popupWindow"></div>
+    </popup>
+
+    <popup k-options-bind="popupWindowChildOptions">
+        <div kendo-window k-options="popupWindowChildOptions" id="popupWindowChild"></div>
+    </popup>
+    <script type="text/javascript">
+
+        $('.notify-decline *').click(function (e) {
+            e.stopPropagation();
+        });
+
+        $("body").on("click", function () {
+            if ($("#notify-extended").hasClass("open")) {
+                $("#notify-extended").removeClass("open");
+            }
+            if ($("#notify-decline").hasClass("open")) {
+                $("#notify-decline").removeClass("open");
+            }
+        });
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip({ container: 'body', html: true }); // initialize bootstrap tooltips
+        });
+
+    </script>
+
+
+</body>
+
+
+
+</html>
